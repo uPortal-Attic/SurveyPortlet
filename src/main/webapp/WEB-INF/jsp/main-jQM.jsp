@@ -24,15 +24,7 @@
 <div class="portlet">
     <div data-role="content" class="portlet-content">
 
-        <h2>Hello ${ fn:escapeXml(displayName) }!</h2>
         
-        <p>Your email address is ${ fn:escapeXml(emailAddress) }</p>
-        
-        <portlet:renderURL var="preferencesUrl" portletMode="edit"/>
-        <p><a data-role="button" href="${ preferencesUrl }">Preferences</a></p>
-
-        <portlet:renderURL var="helpUrl" portletMode="help"/>
-        <p><a href="${ helpUrl }">Help</a></p>
     
     </div>
 </div>

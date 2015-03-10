@@ -21,6 +21,4 @@
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
-<h2>Hello ${ fn:escapeXml(displayName) }!</h2>
 
-<p>Your email address is ${ fn:escapeXml(emailAddress) }</p>
