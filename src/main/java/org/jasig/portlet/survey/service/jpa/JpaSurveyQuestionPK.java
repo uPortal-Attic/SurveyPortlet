@@ -28,7 +28,7 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Embeddable
-public class JpaSurveyQuestionPK implements Serializable {
+class JpaSurveyQuestionPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "QUESTION_ID", insertable = false, updatable = false, unique = true, nullable = false)

@@ -30,7 +30,7 @@ import javax.persistence.Embeddable;
  * @since 1.0
  */
 @Embeddable
-public class JpaQuestionAnswerPK implements Serializable {
+class JpaQuestionAnswerPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "ANSWER_ID", insertable = false, updatable = false, unique = true, nullable = false)

@@ -37,7 +37,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = JpaSurveyService.TABLENAME_PREFIX + "question")
-public class JpaQuestion implements Serializable {
+class JpaQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "ALT_TEXT", nullable = true)
