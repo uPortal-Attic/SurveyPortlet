@@ -24,7 +24,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * The primary key class for the svy_question_answer database table.
+ * The primary key class for the survey_question_answer database table.
  * 
  * @author chasegawa
  * @since 1.0
