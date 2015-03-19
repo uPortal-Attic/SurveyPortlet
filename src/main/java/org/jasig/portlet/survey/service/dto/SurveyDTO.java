@@ -3,6 +3,8 @@ package org.jasig.portlet.survey.service.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.jasig.portlet.survey.SurveyState;
 
 public class SurveyDTO implements Serializable {
@@ -16,6 +18,8 @@ public class SurveyDTO implements Serializable {
     private SurveyState status;
     private String title;
 
+    private Set<SurveyQuestionDTO> surveyQuestions = new HashSet<SurveyQuestionDTO>();
+    
     public String getDescription() {
         return description;
     }
@@ -70,6 +74,14 @@ public class SurveyDTO implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Set<SurveyQuestionDTO> getSurveyQuestions() {
+        return surveyQuestions;
+    }
+
+    public void setSurveyQuestions(Set<SurveyQuestionDTO> surveyQuestions) {
+        this.surveyQuestions = surveyQuestions;
     }
     
     

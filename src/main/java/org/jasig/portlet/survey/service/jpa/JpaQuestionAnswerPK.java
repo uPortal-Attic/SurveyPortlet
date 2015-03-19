@@ -33,10 +33,10 @@ import javax.persistence.Embeddable;
 class JpaQuestionAnswerPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "ANSWER_ID", insertable = false, updatable = false, unique = true, nullable = false)
+    @Column(name = "ANSWER_ID", insertable = false, updatable = false, nullable = false)
     private long answerId;
 
-    @Column(name = "QUESTION_ID", insertable = false, updatable = false, unique = true, nullable = false)
+    @Column(name = "QUESTION_ID", insertable = false, updatable = false, nullable = false)
     private long questionId;
 
     public boolean equals(Object other) {

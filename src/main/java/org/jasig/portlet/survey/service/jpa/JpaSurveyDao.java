@@ -13,7 +13,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
     @Autowired
     private JpaSurveyRepository surveyRepository;
     
-    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
+    //@Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
     @Override
     public JpaSurvey getSurvey(Long id) {
         Validate.isTrue( id > 0, "Invalid survey id: " + id);

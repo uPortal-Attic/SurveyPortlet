@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,7 +64,7 @@ class JpaSurvey implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private SurveyState status;
 
-    @OneToMany(mappedBy = "jpaSurvey")
+    @OneToMany(mappedBy = "jpaSurvey", fetch=FetchType.EAGER)
     private List<JpaSurveyQuestion> jpaSurveyQuestions;
 
     @Column(name = "TITLE", nullable = false)

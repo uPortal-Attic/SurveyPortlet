@@ -18,7 +18,7 @@ public class SurveyDataService implements ISurveyDataService {
     private ISurveyMapper surveyMapper;
     
     @Override
-    @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
+    @Transactional(readOnly = true)
     public SurveyDTO getSurvey( long id) {
         JpaSurvey survey = surveyDao.getSurvey( id);
         if( survey == null) {

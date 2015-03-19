@@ -31,10 +31,10 @@ import javax.persistence.*;
 class JpaSurveyQuestionPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "QUESTION_ID", insertable = false, updatable = false, unique = true, nullable = false)
+    @Column(name = "QUESTION_ID", insertable = false, updatable = false, nullable = false)
     private long questionId;
 
-    @Column(name = "SURVEY_ID", insertable = false, updatable = false, unique = true, nullable = false)
+    @Column(name = "SURVEY_ID", insertable = false, updatable = false, nullable = false)
     private long surveyId;
 
     @Override

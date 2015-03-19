@@ -16,12 +16,42 @@
     <mapping wildcard="true">
         <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaSurvey</class-a>
         <class-b>org.jasig.portlet.survey.service.dto.SurveyDTO</class-b>
-        <!--<field >-->
-            <!--<a>attributes</a>-->
-            <!--<b>attributes</b>-->
-            <!--&lt;!&ndash;<a-hint>org.jasig.portlet.notice.service.jpa.JpaAttribute</a-hint>&ndash;&gt;-->
-            <!--&lt;!&ndash;<b-hint>org.jasig.portlet.notice.rest.EntryDTO</b-hint>&ndash;&gt;-->
-        <!--</field>-->
+        <field>
+            <a>jpaSurveyQuestions</a>
+            <b>surveyQuestions</b>
+        </field>
     </mapping>
-
+    
+    <mapping>
+        <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaSurveyQuestion</class-a>
+        <class-b>org.jasig.portlet.survey.service.dto.SurveyQuestionDTO</class-b>
+        <field>
+            <a>jpaQuestion</a>
+            <b>question</b>
+        </field>
+    </mapping>
+    
+    <mapping>
+        <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaQuestion</class-a>
+        <class-b>org.jasig.portlet.survey.service.dto.QuestionDTO</class-b>
+        <field>
+            <a>jpaQuestionAnswers</a>
+            <b>questionAnswers</b>
+        </field>
+    </mapping>
+    
+    <mapping>
+        <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaQuestionAnswer</class-a>
+        <class-b>org.jasig.portlet.survey.service.dto.QuestionAnswerDTO</class-b>
+        <field>
+            <a>jpaAnswer</a>
+            <b>answer</b>
+        </field>
+    </mapping>
+    
+    <mapping>
+        <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaAnswer</class-a>
+        <class-b>org.jasig.portlet.survey.service.dto.AnswerDTO</class-b>
+    </mapping>
+    
 </mappings>
