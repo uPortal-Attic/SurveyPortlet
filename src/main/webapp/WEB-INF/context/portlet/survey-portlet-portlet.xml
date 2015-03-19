@@ -27,11 +27,11 @@
       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <context:component-scan base-package="org.jasig.ssp.portlet.survey.mvc.portlet" />
+    <context:component-scan base-package="org.jasig.portlet.survey.mvc.portlet" />
     <context:annotation-config />
 
     <bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="interceptors"><bean class="org.jasig.ssp.portlet.survey.mvc.MinimizedStateHandlerInterceptor"/></property>
+        <property name="interceptors"><bean class="org.jasig.portlet.survey.mvc.MinimizedStateHandlerInterceptor"/></property>
     </bean>
 
 </beans>

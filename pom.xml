@@ -29,17 +29,20 @@
         <slf4j.version>1.7.5</slf4j.version>
         <servlet-api.version>3.0.1</servlet-api.version>
         <spring.version>4.1.5.RELEASE</spring.version>        
-        
+        <spring-data.version>1.7.2.RELEASE</spring-data.version>
         <!-- The JDBC Driver used by db-init -->
-        <jdbc.groupId>org.hsqldb</jdbc.groupId>
-        <jdbc.artifactId>hsqldb</jdbc.artifactId>
-        <jdbc.version>2.3.2</jdbc.version>
+        <jdbc.groupId>org.postgresql</jdbc.groupId>
+        <jdbc.artifactId>postgresql</jdbc.artifactId>
+        <jdbc.version>9.3-1102-jdbc41</jdbc.version>
         
         <!-- use this instead for postgress
         <jdbc.groupId>org.postgresql</jdbc.groupId>
         <jdbc.artifactId>postgresql</jdbc.artifactId>
         <jdbc.version>9.3-1102-jdbc41</jdbc.version>
          -->
+        <logbackVersion>1.0.13</logbackVersion>
+        <slf4jVersion>1.7.5</slf4jVersion>
+        <jackson.version>2.5.1</jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -96,6 +99,11 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc-portlet</artifactId>
                 <version>${spring.version}</version>
             </dependency>
@@ -110,11 +118,25 @@
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
                 <version>${jstl.version}</version>
             </dependency>
-            
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
             <!-- Logging -->
             <dependency>
                 <groupId>commons-logging</groupId>
@@ -156,6 +178,11 @@
             </dependency>
             
             <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
                 <version>1.4</version>
@@ -180,7 +207,16 @@
                 <artifactId>hibernate-ehcache</artifactId>
                 <version>${hibernate.version}</version>
             </dependency>
-            
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer-spring</artifactId>
+                <version>5.5.1</version>
+            </dependency>
             <!-- Database drivers -->
             <dependency>
                 <groupId>${jdbc.groupId}</groupId>
@@ -224,6 +260,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc-portlet</artifactId>
         </dependency>
         <dependency>
@@ -235,8 +275,20 @@
             <artifactId>spring-tx</artifactId>
         </dependency>
         <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+        <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
         
         <!-- Logging -->
@@ -263,6 +315,10 @@
         <!-- End of logging section -->
         
         <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
         </dependency>
@@ -282,7 +338,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer-spring</artifactId>
+        </dependency>
         <!-- Database drivers -->
         <dependency>
 	        <groupId>${jdbc.groupId}</groupId>
