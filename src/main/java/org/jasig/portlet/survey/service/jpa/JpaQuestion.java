@@ -19,10 +19,11 @@
 package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,11 +49,11 @@ class JpaQuestion implements Serializable {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @OneToMany(mappedBy = "jpaQuestion")
-    private List<JpaQuestionAnswer> jpaQuestionAnswers;
+    @OneToMany(mappedBy = "jpaQuestion", fetch = FetchType.EAGER)
+    private Set<JpaQuestionAnswer> jpaQuestionAnswers;
 
-    @OneToMany(mappedBy = "jpaQuestion")
-    private List<JpaSurveyQuestion> jpaSurveyQuestions;
+    @OneToMany(mappedBy = "jpaQuestion", fetch = FetchType.EAGER)
+    private Set<JpaSurveyQuestion> jpaSurveyQuestions;
 
     @Column(name = "TEXT", nullable = false)
     private String text;
@@ -77,11 +78,11 @@ class JpaQuestion implements Serializable {
         return id;
     }
 
-    public List<JpaQuestionAnswer> getJpaQuestionAnswers() {
+    public Set<JpaQuestionAnswer> getJpaQuestionAnswers() {
         return jpaQuestionAnswers;
     }
 
-    public List<JpaSurveyQuestion> getJpaSurveyQuestions() {
+    public Set<JpaSurveyQuestion> getJpaSurveyQuestions() {
         return jpaSurveyQuestions;
     }
 
@@ -109,11 +110,11 @@ class JpaQuestion implements Serializable {
         this.id = id;
     }
 
-    public void setJpaQuestionAnswers(List<JpaQuestionAnswer> jpaQuestionAnswers) {
+    public void setJpaQuestionAnswers(Set<JpaQuestionAnswer> jpaQuestionAnswers) {
         this.jpaQuestionAnswers = jpaQuestionAnswers;
     }
 
-    public void setJpaSurveyQuestions(List<JpaSurveyQuestion> jpaSurveyQuestions) {
+    public void setJpaSurveyQuestions(Set<JpaSurveyQuestion> jpaSurveyQuestions) {
         this.jpaSurveyQuestions = jpaSurveyQuestions;
     }
 

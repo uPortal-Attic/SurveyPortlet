@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jasig.parent</groupId>
         <artifactId>jasig-parent</artifactId>
-        <version>31</version>
+        <version>39</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -217,6 +217,12 @@
                 <artifactId>dozer-spring</artifactId>
                 <version>5.5.1</version>
             </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>13.0</version>
+            </dependency>
+        
             <!-- Database drivers -->
             <dependency>
                 <groupId>${jdbc.groupId}</groupId>
@@ -345,6 +351,10 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
         <!-- Database drivers -->
         <dependency>

@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = SurveyRestController.REQUEST_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
 public class SurveyRestController {
@@ -37,6 +39,12 @@ public class SurveyRestController {
     private ISurveyDataService dataService;
     
     
+    /**
+     * Search for survey specified by survey.
+     * 
+     * @param survey
+     * @return 
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/{survey}/questions")
     @ResponseBody SurveyDTO getSurveyQuestions( @PathVariable Long survey) {
         log.debug( "Get survey: " + survey);
@@ -45,5 +53,17 @@ public class SurveyRestController {
         return surveyDTO;
     }
     
+    /**
+     * Search for all surveys
+     * 
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    @ResponseBody List<SurveyDTO> getAllSurveyQuestions() {
+        log.debug( "Get all surveys");
+        
+        List<SurveyDTO> surveyDTOList = dataService.getAllSurveys();
+        return surveyDTOList;
+    }
 }
     
