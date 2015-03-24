@@ -16,4 +16,5 @@ interface IJpaSurveyDao {
     
     public JpaQuestion getQuestion( Long id);
     public JpaQuestion updateQuestion(JpaQuestion question);
+    public JpaSurveyQuestion attachQuestionToSurvey( JpaSurvey survey, JpaQuestion question);
 }

@@ -78,6 +78,7 @@ public class SurveyDataService implements ISurveyDataService {
         return newQuestion;
     }
 
+    @Transactional
     @Override
     public QuestionDTO createQuestionForSurvey(Long surveyId, QuestionDTO question) {
         JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion( question);
@@ -90,8 +91,8 @@ public class SurveyDataService implements ISurveyDataService {
             JpaSurvey survey = surveyDao.getSurvey( surveyId);
             JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK( jpaQuestion, survey);
             sq.setId( pk);
-            survey.addJpaSurveyQuestion(sq);
-            surveyDao.createSurvey(survey);
+            
+            surveyDao.attachQuestionToSurvey(survey, jpaQuestion);
         }
         
         return surveyMapper.toQuestion( jpaQuestion);

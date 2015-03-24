@@ -6,8 +6,6 @@ import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 class JpaSurveyDao implements IJpaSurveyDao {
@@ -56,26 +54,36 @@ class JpaSurveyDao implements IJpaSurveyDao {
      * @param survey
      * @return 
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public JpaSurvey createSurvey(JpaSurvey survey) {
         JpaSurvey s = surveyRepository.save( survey);
-        /*
+        
         List<JpaSurveyQuestion> sqList = survey.getJpaSurveyQuestions();
-        for( JpaSurveyQuestion sq: sqList) {
-            sq.getId().setJpaSurvey(s);
-            
-            JpaQuestion q = sq.getId().getJpaQuestion();
-            
-            q = createQuestion( q);
-            sq.getId().setJpaQuestion( q);
-            
-            surveyQuestionRepository.save( sq);
+        if( sqList != null && !sqList.isEmpty()) {
+            for( JpaSurveyQuestion sq: sqList) {
+                sq.getId().setJpaSurvey(s);
+
+                JpaQuestion q = sq.getId().getJpaQuestion();
+
+                q = createQuestion( q);
+                sq.getId().setJpaQuestion( q);
+
+                surveyQuestionRepository.save( sq);
+            }
         }
-        */
         return s;
     }
 
+    @Override
+    public JpaSurveyQuestion attachQuestionToSurvey( JpaSurvey survey, JpaQuestion question) {
+        JpaSurveyQuestion sq = new JpaSurveyQuestion();
+        JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK( question, survey);
+        sq.setId( pk);
+        
+        sq = surveyQuestionRepository.save(sq);
+        return sq;
+    }
+    
     /**
      * 
      * @param question
