@@ -23,8 +23,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -41,30 +39,14 @@ class JpaSurveyQuestion implements Serializable {
     @EmbeddedId
     private JpaSurveyQuestionPK id;
 
-    @ManyToOne // bi-directional many-to-one association to JpaSurvey
-    @JoinColumn(name = "SURVEY_ID", nullable = false, insertable = false, updatable = false)
-    private JpaSurvey jpaSurvey;
-
     @Column(name = "NUM_ALLOWED_ANSWERS", nullable = false)
     private int numAllowedAnswers;
 
     @Column(name = "SEQUENCE", nullable = true)
     private int sequence;
 
-    @ManyToOne // bi-directional many-to-one association to JpaQuestion
-    @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false)
-    private JpaQuestion jpaQuestion;
-
     public JpaSurveyQuestionPK getId() {
         return id;
-    }
-
-    public JpaQuestion getJpaQuestion() {
-        return jpaQuestion;
-    }
-
-    public JpaSurvey getJpaSurvey() {
-        return jpaSurvey;
     }
 
     public int getNumAllowedAnswers() {
@@ -77,14 +59,6 @@ class JpaSurveyQuestion implements Serializable {
 
     public void setId(JpaSurveyQuestionPK id) {
         this.id = id;
-    }
-
-    public void setJpaQuestion(JpaQuestion jpaQuestion) {
-        this.jpaQuestion = jpaQuestion;
-    }
-
-    public void setJpaSurvey(JpaSurvey jpaSurvey) {
-        this.jpaSurvey = jpaSurvey;
     }
 
     public void setNumAllowedAnswers(int numAllowedAnswers) {

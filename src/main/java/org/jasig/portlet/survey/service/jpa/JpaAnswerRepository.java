@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaSurveyRepository extends CrudRepository<JpaSurvey, Long> {
+public interface JpaAnswerRepository extends CrudRepository<JpaAnswer, Long> {
     
 }

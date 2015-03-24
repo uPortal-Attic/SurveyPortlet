@@ -20,6 +20,7 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.jasig.portlet.survey.SurveyState;
 
 /**
  * The persistent class for the survey_question database table.
@@ -49,24 +51,23 @@ class JpaQuestion implements Serializable {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @OneToMany(mappedBy = "jpaQuestion", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id.jpaQuestion", fetch = FetchType.EAGER)
     private Set<JpaQuestionAnswer> jpaQuestionAnswers;
-
-    @OneToMany(mappedBy = "jpaQuestion", fetch = FetchType.EAGER)
-    private Set<JpaSurveyQuestion> jpaSurveyQuestions;
 
     @Column(name = "TEXT", nullable = false)
     private String text;
 
+    @Column(name = "STATUS", nullable = false)
+    private SurveyState status;
+    
     public JpaQuestionAnswer addJpaQuestionAnswer(JpaQuestionAnswer jpaQuestionAnswer) {
         getJpaQuestionAnswers().add(jpaQuestionAnswer);
-        jpaQuestionAnswer.setJpaQuestion(this);
+        jpaQuestionAnswer.getId().setJpaQuestion(this);
         return jpaQuestionAnswer;
     }
 
     public JpaSurveyQuestion addJpaSurveyQuestion(JpaSurveyQuestion jpaSurveyQuestion) {
-        getJpaSurveyQuestions().add(jpaSurveyQuestion);
-        jpaSurveyQuestion.setJpaQuestion(this);
+        jpaSurveyQuestion.getId().setJpaQuestion(this);
         return jpaSurveyQuestion;
     }
 
@@ -82,23 +83,18 @@ class JpaQuestion implements Serializable {
         return jpaQuestionAnswers;
     }
 
-    public Set<JpaSurveyQuestion> getJpaSurveyQuestions() {
-        return jpaSurveyQuestions;
-    }
-
     public String getText() {
         return text;
     }
 
     public JpaQuestionAnswer removeJpaQuestionAnswer(JpaQuestionAnswer jpaQuestionAnswer) {
         getJpaQuestionAnswers().remove(jpaQuestionAnswer);
-        jpaQuestionAnswer.setJpaQuestion(null);
+        jpaQuestionAnswer.getId().setJpaQuestion(null);
         return jpaQuestionAnswer;
     }
 
     public JpaSurveyQuestion removeJpaSurveyQuestion(JpaSurveyQuestion jpaSurveyQuestion) {
-        getJpaSurveyQuestions().remove(jpaSurveyQuestion);
-        jpaSurveyQuestion.setJpaQuestion(null);
+        jpaSurveyQuestion.getId().setJpaQuestion(null);
         return jpaSurveyQuestion;
     }
 
@@ -114,11 +110,15 @@ class JpaQuestion implements Serializable {
         this.jpaQuestionAnswers = jpaQuestionAnswers;
     }
 
-    public void setJpaSurveyQuestions(Set<JpaSurveyQuestion> jpaSurveyQuestions) {
-        this.jpaSurveyQuestions = jpaSurveyQuestions;
-    }
-
     public void setText(String text) {
         this.text = text;
+    }
+
+    public SurveyState getStatus() {
+        return status;
+    }
+
+    public void setStatus(SurveyState status) {
+        this.status = status;
     }
 }

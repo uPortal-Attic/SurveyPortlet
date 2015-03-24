@@ -25,15 +25,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import org.jasig.portlet.survey.service.dto.QuestionDTO;
+import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping(value = SurveyRestController.REQUEST_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
 public class SurveyRestController {
     private final Logger log = LoggerFactory.getLogger( getClass());
-    static final String REQUEST_ROOT = "/v1/survey";
+    static final String REQUEST_ROOT = "/v1/surveys";
     
     @Autowired
     private ISurveyDataService dataService;
@@ -45,12 +49,12 @@ public class SurveyRestController {
      * @param survey
      * @return 
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/{survey}/questions")
-    @ResponseBody SurveyDTO getSurveyQuestions( @PathVariable Long survey) {
+    @RequestMapping(method = RequestMethod.GET, value = "/{survey}")
+    public ResponseEntity<SurveyDTO> getSurvey( @PathVariable Long survey) {
         log.debug( "Get survey: " + survey);
         
         SurveyDTO surveyDTO = dataService.getSurvey( survey);
-        return surveyDTO;
+        return new ResponseEntity( surveyDTO, HttpStatus.OK);
     }
     
     /**
@@ -58,12 +62,80 @@ public class SurveyRestController {
      * 
      * @return 
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/all")
-    @ResponseBody List<SurveyDTO> getAllSurveyQuestions() {
+    @RequestMapping(method = RequestMethod.GET, value = "/")
+    public ResponseEntity<List<SurveyDTO>> getAllSurveyQuestions() {
         log.debug( "Get all surveys");
         
         List<SurveyDTO> surveyDTOList = dataService.getAllSurveys();
-        return surveyDTOList;
+        return new ResponseEntity<>( surveyDTOList, HttpStatus.OK);
+    }
+    
+    /**
+     * Create a survey
+     * 
+     * @param survey
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/")
+    public ResponseEntity<SurveyDTO> addSurvey( @RequestBody SurveyDTO survey) {
+        SurveyDTO newSurvey = dataService.createSurvey( survey);
+        return new ResponseEntity<>( newSurvey, HttpStatus.CREATED);
+    }
+    
+    /**
+     * Create a new question that is not associated with a survey.
+     * 
+     * @param question
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/questions")
+    public ResponseEntity<QuestionDTO> addQuestion( @RequestBody QuestionDTO question) {
+        QuestionDTO newQuestion = dataService.createQuestion( question);
+        return new ResponseEntity<>( newQuestion, HttpStatus.CREATED);
+    }
+    
+    /**
+     * Search for questions/answers that are associated with the specified survey.
+     * 
+     * @param survey
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/{survey}/questions")
+    public ResponseEntity<SurveyDTO> getSurveyQuestions( @PathVariable Long survey) {
+        log.debug( "Get survey: " + survey);
+        
+        List<SurveyQuestionDTO> sqList = dataService.getSurveyQuestions( survey);
+        return new ResponseEntity( sqList, HttpStatus.OK);
+    }
+    
+    /**
+     * 
+     * @param survey
+     * @param question
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions")
+    public ResponseEntity<QuestionDTO> addQuestionForSurvey( @PathVariable Long survey, @RequestBody QuestionDTO question) {
+        QuestionDTO newQuestion = dataService.createQuestionForSurvey( survey, question);
+        return new ResponseEntity<>( newQuestion, HttpStatus.CREATED);
+    }
+    
+    /**
+     * 
+     * @param questionId
+     * @param question
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
+    public ResponseEntity<QuestionDTO> updateQuestion( @PathVariable Long questionId, @RequestBody QuestionDTO question) {
+        QuestionDTO updatedQuestion = dataService.updateQuestion( question);
+        HttpStatus status = HttpStatus.CREATED;
+        
+        if( updatedQuestion == null) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        
+        return new ResponseEntity<>( updatedQuestion, status);
     }
 }
     

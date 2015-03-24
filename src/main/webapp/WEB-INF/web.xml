@@ -75,6 +75,6 @@
 
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/v1/survey/*</url-pattern>
+        <url-pattern>/v1/surveys/*</url-pattern>
     </servlet-mapping>
 </web-app>

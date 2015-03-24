@@ -19,14 +19,12 @@
 package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -48,17 +46,8 @@ class JpaAnswer implements Serializable {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @OneToMany(mappedBy = "jpaAnswer")
-    private List<JpaQuestionAnswer> jpaQuestionAnswers;
-
     @Column(name = "TEXT", nullable = false)
     private String text;
-
-    public JpaQuestionAnswer addJpaQuestionAnswer(JpaQuestionAnswer jpaQuestionAnswer) {
-        getJpaQuestionAnswers().add(jpaQuestionAnswer);
-        jpaQuestionAnswer.setJpaAnswer(this);
-        return jpaQuestionAnswer;
-    }
 
     public String getAltText() {
         return this.altText;
@@ -68,18 +57,8 @@ class JpaAnswer implements Serializable {
         return this.id;
     }
 
-    public List<JpaQuestionAnswer> getJpaQuestionAnswers() {
-        return this.jpaQuestionAnswers;
-    }
-
     public String getText() {
         return this.text;
-    }
-
-    public JpaQuestionAnswer removeJpaQuestionAnswer(JpaQuestionAnswer jpaQuestionAnswer) {
-        getJpaQuestionAnswers().remove(jpaQuestionAnswer);
-        jpaQuestionAnswer.setJpaAnswer(null);
-        return jpaQuestionAnswer;
     }
 
     public void setAltText(String altText) {
@@ -88,10 +67,6 @@ class JpaAnswer implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setJpaQuestionAnswers(List<JpaQuestionAnswer> jpaQuestionAnswers) {
-        this.jpaQuestionAnswers = jpaQuestionAnswers;
     }
 
     public void setText(String text) {

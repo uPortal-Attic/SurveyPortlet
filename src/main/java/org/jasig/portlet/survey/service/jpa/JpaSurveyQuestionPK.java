@@ -20,7 +20,6 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 /**
  * The primary key class for the survey_survey_question database table.
  * 
@@ -30,13 +29,22 @@ import javax.persistence.*;
 @Embeddable
 class JpaSurveyQuestionPK implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Column(name = "QUESTION_ID", insertable = false, updatable = false, nullable = false)
-    private long questionId;
-
-    @Column(name = "SURVEY_ID", insertable = false, updatable = false, nullable = false)
-    private long surveyId;
-
+    
+    @OneToOne(cascade = {CascadeType.ALL}) 
+    @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false )
+    private JpaQuestion jpaQuestion;
+    
+    @ManyToOne(cascade = {CascadeType.ALL}) 
+    @JoinColumn(name = "SURVEY_ID", nullable = false, insertable = false, updatable = false)
+    private JpaSurvey jpaSurvey;
+    
+    public JpaSurveyQuestionPK() {}
+    
+    public JpaSurveyQuestionPK(JpaQuestion jpaQuestion, JpaSurvey jpaSurvey) {
+        this.jpaQuestion = jpaQuestion;
+        this.jpaSurvey = jpaSurvey;
+    }
+    
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -46,32 +54,41 @@ class JpaSurveyQuestionPK implements Serializable {
             return false;
         }
         JpaSurveyQuestionPK castOther = (JpaSurveyQuestionPK) other;
-        return (this.surveyId == castOther.surveyId) && (this.questionId == castOther.questionId);
+        return (this.jpaSurvey.getId() == castOther.jpaSurvey.getId()) && (this.jpaQuestion.getId() == castOther.jpaQuestion.getId());
     }
 
     public long getQuestionId() {
-        return this.questionId;
+        return this.jpaQuestion.getId();
     }
 
     public long getSurveyId() {
-        return this.surveyId;
+        return this.jpaSurvey.getId();
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int hash = 17;
-        hash = hash * prime + ((int) (this.surveyId ^ (this.surveyId >>> 32)));
-        hash = hash * prime + ((int) (this.questionId ^ (this.questionId >>> 32)));
+        hash = hash * prime + ((int) (this.jpaSurvey.getId() ^ (this.jpaSurvey.getId() >>> 32)));
+        hash = hash * prime + ((int) (this.jpaQuestion.getId() ^ (this.jpaQuestion.getId() >>> 32)));
 
         return hash;
     }
 
-    public void setQuestionId(long questionId) {
-        this.questionId = questionId;
+    public JpaSurvey getJpaSurvey() {
+        return jpaSurvey;
     }
 
-    public void setSurveyId(long surveyId) {
-        this.surveyId = surveyId;
+    public void setJpaSurvey(JpaSurvey jpaSurvey) {
+        this.jpaSurvey = jpaSurvey;
     }
+
+    public JpaQuestion getJpaQuestion() {
+        return jpaQuestion;
+    }
+
+    public void setJpaQuestion(JpaQuestion jpaQuestion) {
+        this.jpaQuestion = jpaQuestion;
+    }
+    
 }

@@ -19,9 +19,12 @@
 package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * The primary key class for the survey_question_answer database table.
@@ -33,12 +36,21 @@ import javax.persistence.Embeddable;
 class JpaQuestionAnswerPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "ANSWER_ID", insertable = false, updatable = false, nullable = false)
-    private long answerId;
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinColumn(name = "ANSWER_ID", nullable = false, insertable = false, updatable = false)
+    private JpaAnswer jpaAnswer;
 
-    @Column(name = "QUESTION_ID", insertable = false, updatable = false, nullable = false)
-    private long questionId;
-
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}) // bi-directional many-to-one association to JpaQuestion
+    @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false)
+    private JpaQuestion jpaQuestion;
+    
+    public JpaQuestionAnswerPK() {}
+    
+    public JpaQuestionAnswerPK(JpaAnswer answer, JpaQuestion question) {
+        jpaAnswer = answer;
+        jpaQuestion = question;
+    }
+    
     public boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -47,31 +59,41 @@ class JpaQuestionAnswerPK implements Serializable {
             return false;
         }
         JpaQuestionAnswerPK castOther = (JpaQuestionAnswerPK) other;
-        return (this.questionId == castOther.questionId) && (this.answerId == castOther.answerId);
+        return (this.getQuestionId() == castOther.getQuestionId()) && (this.getAnswerId() == castOther.getAnswerId());
     }
 
     public long getAnswerId() {
-        return this.answerId;
+        return this.jpaAnswer.getId();
     }
 
     public long getQuestionId() {
-        return this.questionId;
+        return this.jpaQuestion.getId();
     }
 
     public int hashCode() {
         final int prime = 31;
         int hash = 17;
-        hash = hash * prime + ((int) (this.questionId ^ (this.questionId >>> 32)));
-        hash = hash * prime + ((int) (this.answerId ^ (this.answerId >>> 32)));
+        hash = hash * prime + ((int) (this.getQuestionId() ^ (this.getQuestionId() >>> 32)));
+        hash = hash * prime + ((int) (this.getAnswerId() ^ (this.getAnswerId() >>> 32)));
 
         return hash;
     }
 
-    public void setAnswerId(long answerId) {
-        this.answerId = answerId;
+    public JpaAnswer getJpaAnswer() {
+        return jpaAnswer;
     }
 
-    public void setQuestionId(long questionId) {
-        this.questionId = questionId;
+    public void setJpaAnswer(JpaAnswer jpaAnswer) {
+        this.jpaAnswer = jpaAnswer;
     }
+
+    public JpaQuestion getJpaQuestion() {
+        return jpaQuestion;
+    }
+
+    public void setJpaQuestion(JpaQuestion jpaQuestion) {
+        this.jpaQuestion = jpaQuestion;
+    }
+
+    
 }

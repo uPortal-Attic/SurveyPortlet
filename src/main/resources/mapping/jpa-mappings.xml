@@ -26,7 +26,7 @@
         <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaSurveyQuestion</class-a>
         <class-b>org.jasig.portlet.survey.service.dto.SurveyQuestionDTO</class-b>
         <field>
-            <a>jpaQuestion</a>
+            <a>id.jpaQuestion</a>
             <b>question</b>
         </field>
     </mapping>
@@ -44,7 +44,7 @@
         <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaQuestionAnswer</class-a>
         <class-b>org.jasig.portlet.survey.service.dto.QuestionAnswerDTO</class-b>
         <field>
-            <a>jpaAnswer</a>
+            <a>id.jpaAnswer</a>
             <b>answer</b>
         </field>
     </mapping>

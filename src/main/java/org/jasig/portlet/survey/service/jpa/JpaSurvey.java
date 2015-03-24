@@ -21,6 +21,7 @@ package org.jasig.portlet.survey.service.jpa;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,7 +65,7 @@ class JpaSurvey implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private SurveyState status;
 
-    @OneToMany(mappedBy = "jpaSurvey", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER)
     private List<JpaSurveyQuestion> jpaSurveyQuestions;
 
     @Column(name = "TITLE", nullable = false)
@@ -72,7 +73,7 @@ class JpaSurvey implements Serializable {
 
     public JpaSurveyQuestion addJpaSurveyQuestion(JpaSurveyQuestion jpaSurveyQuestion) {
         getJpaSurveyQuestions().add(jpaSurveyQuestion);
-        jpaSurveyQuestion.setJpaSurvey(this);
+        jpaSurveyQuestion.getId().setJpaSurvey(this);
         return jpaSurveyQuestion;
     }
 
@@ -110,7 +111,7 @@ class JpaSurvey implements Serializable {
 
     public JpaSurveyQuestion removeJpaSurveyQuestion(JpaSurveyQuestion jpaSurveyQuestion) {
         getJpaSurveyQuestions().remove(jpaSurveyQuestion);
-        jpaSurveyQuestion.setJpaSurvey(null);
+        jpaSurveyQuestion.getId().setJpaSurvey(null);
         return jpaSurveyQuestion;
     }
 

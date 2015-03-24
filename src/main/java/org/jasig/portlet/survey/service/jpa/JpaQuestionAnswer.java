@@ -23,8 +23,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -41,30 +39,24 @@ class JpaQuestionAnswer implements Serializable {
     @EmbeddedId
     private JpaQuestionAnswerPK id;
 
-    @ManyToOne // bi-directional many-to-one association to JpaAnswer
-    @JoinColumn(name = "ANSWER_ID", nullable = false, insertable = false, updatable = false)
-    private JpaAnswer jpaAnswer;
-
-    @ManyToOne // bi-directional many-to-one association to JpaQuestion
-    @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false)
-    private JpaQuestion jpaQuestion;
-
     @Column(name = "SEQUENCE", nullable = true)
     private int sequence;
 
-    public JpaAnswer getJpaAnswer() {
-        return this.jpaAnswer;
+    public JpaQuestionAnswerPK getId() {
+        return id;
     }
 
-    public JpaQuestion getJpaQuestion() {
-        return this.jpaQuestion;
+    public void setId(JpaQuestionAnswerPK id) {
+        this.id = id;
     }
 
-    public void setJpaAnswer(JpaAnswer jpaAnswer) {
-        this.jpaAnswer = jpaAnswer;
+    public int getSequence() {
+        return sequence;
     }
 
-    public void setJpaQuestion(JpaQuestion jpaQuestion) {
-        this.jpaQuestion = jpaQuestion;
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
     }
+
+    
 }
