@@ -53,7 +53,6 @@ public class SurveyDataService implements ISurveyDataService {
     public SurveyDTO createSurvey(SurveyDTO survey) {
         // remove questions/answers if they are present
         // only create the survey
-        // survey.setSurveyQuestions( null);
         JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
         jpaSurvey = surveyDao.createSurvey( jpaSurvey);
         return surveyMapper.toSurvey( jpaSurvey);
@@ -64,16 +63,8 @@ public class SurveyDataService implements ISurveyDataService {
     public QuestionDTO createQuestion(QuestionDTO question) {
         JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion( question);
         jpaQuestion = surveyDao.createQuestion( jpaQuestion);
-        // TODO validate response
         
         QuestionDTO newQuestion = surveyMapper.toQuestion( jpaQuestion);
-        
-        List<QuestionAnswerDTO> qaList = question.getQuestionAnswers();
-        if( qaList != null && !qaList.isEmpty()) {
-            List qaArrayList = Lists.newArrayList( qaList.iterator());
-            qaArrayList = createQuestionAnswer( jpaQuestion, qaArrayList);
-            newQuestion.setQuestionAnswers( qaArrayList);
-        }
         
         return newQuestion;
     }
@@ -86,12 +77,7 @@ public class SurveyDataService implements ISurveyDataService {
     
         if( jpaQuestion != null) {
             // attach it to the survey
-            JpaSurveyQuestion sq = new JpaSurveyQuestion();
-            
             JpaSurvey survey = surveyDao.getSurvey( surveyId);
-            JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK( jpaQuestion, survey);
-            sq.setId( pk);
-            
             surveyDao.attachQuestionToSurvey(survey, jpaQuestion);
         }
         

@@ -56,7 +56,7 @@ class JpaAnswer implements Serializable {
     public long getId() {
         return this.id;
     }
-
+    
     public String getText() {
         return this.text;
     }

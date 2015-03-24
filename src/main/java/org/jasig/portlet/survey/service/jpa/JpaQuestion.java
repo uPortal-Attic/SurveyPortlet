@@ -51,7 +51,7 @@ class JpaQuestion implements Serializable {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @OneToMany(mappedBy = "id.jpaQuestion", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id.jpaQuestion", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     private Set<JpaQuestionAnswer> jpaQuestionAnswers;
 
     @Column(name = "TEXT", nullable = false)

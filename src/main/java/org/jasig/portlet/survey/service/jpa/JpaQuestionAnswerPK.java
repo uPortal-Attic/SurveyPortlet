@@ -36,12 +36,12 @@ import javax.persistence.OneToOne;
 class JpaQuestionAnswerPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinColumn(name = "ANSWER_ID", nullable = false, insertable = false, updatable = false)
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.ALL})
+    @JoinColumn(name = "ANSWER_ID")
     private JpaAnswer jpaAnswer;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}) // bi-directional many-to-one association to JpaQuestion
-    @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.ALL}) // bi-directional many-to-one association to JpaQuestion
+    @JoinColumn(name = "QUESTION_ID")
     private JpaQuestion jpaQuestion;
     
     public JpaQuestionAnswerPK() {}

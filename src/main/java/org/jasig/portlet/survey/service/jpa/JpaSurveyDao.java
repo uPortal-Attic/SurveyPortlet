@@ -56,21 +56,21 @@ class JpaSurveyDao implements IJpaSurveyDao {
      */
     @Override
     public JpaSurvey createSurvey(JpaSurvey survey) {
-        JpaSurvey s = surveyRepository.save( survey);
-        
         List<JpaSurveyQuestion> sqList = survey.getJpaSurveyQuestions();
         if( sqList != null && !sqList.isEmpty()) {
             for( JpaSurveyQuestion sq: sqList) {
-                sq.getId().setJpaSurvey(s);
+                sq.getId().setJpaSurvey( survey);
 
                 JpaQuestion q = sq.getId().getJpaQuestion();
-
+                setupQuestionForSave(q);
                 q = createQuestion( q);
                 sq.getId().setJpaQuestion( q);
 
-                surveyQuestionRepository.save( sq);
+                //surveyQuestionRepository.save( sq);
             }
         }
+        
+        JpaSurvey s = surveyRepository.save( survey);
         return s;
     }
 
@@ -91,23 +91,26 @@ class JpaSurveyDao implements IJpaSurveyDao {
      */
     @Override
     public JpaQuestion createQuestion(JpaQuestion question) {
+        setupQuestionForSave( question);
         JpaQuestion q = questionRepository.save( question);
-        Set<JpaQuestionAnswer> qaList = q.getJpaQuestionAnswers();
-        
-        if( qaList != null && !qaList.isEmpty()) {
-            for( JpaQuestionAnswer qa: qaList) {
-                JpaAnswer ans = qa.getId().getJpaAnswer();
-                ans = createAnswer( ans);
-                
-                qa.getId().setJpaAnswer( ans);
-                qa.getId().setJpaQuestion( q);
-
-                qaRepository.save( qa);
-            }
-        }
         return q;
     }
 
+    private void setupQuestionForSave( JpaQuestion jpaQuestion) {
+        Set<JpaQuestionAnswer> qaList = jpaQuestion.getJpaQuestionAnswers();
+        if( qaList != null && !qaList.isEmpty()) {
+            for( JpaQuestionAnswer qa: qaList) {
+                JpaAnswer answer = qa.getId().getJpaAnswer();
+                
+                // This is not cascading... no idea why not
+                // so save it here first
+                createAnswer(answer);
+                qa.getId().setJpaQuestion(jpaQuestion);
+                qa.getId().setJpaAnswer(answer);
+            }
+        }
+    }
+    
     @Override
     public JpaQuestionAnswer createQuestionAnswer(JpaQuestion question, JpaAnswer answer, Integer sequence) {
         JpaQuestionAnswer newQa = new JpaQuestionAnswer();
