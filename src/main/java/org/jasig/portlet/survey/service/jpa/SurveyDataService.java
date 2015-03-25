@@ -1,12 +1,10 @@
 package org.jasig.portlet.survey.service.jpa;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.List;
 import org.jasig.portlet.survey.SurveyState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 import org.jasig.portlet.survey.service.dto.AnswerDTO;
-import org.jasig.portlet.survey.service.dto.QuestionAnswerDTO;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
 import org.jasig.portlet.survey.service.dto.SurveyDTO;
 import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
@@ -27,6 +25,11 @@ public class SurveyDataService implements ISurveyDataService {
     @Autowired
     private ISurveyMapper surveyMapper;
     
+    /**
+     * Search for {@link JpaSurvey} specified by id.
+     * @param id
+     * @return 
+     */
     @Override
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public SurveyDTO getSurvey( long id) {
@@ -38,6 +41,10 @@ public class SurveyDataService implements ISurveyDataService {
         return surveyMapper.toSurvey( survey);
     }
 
+    /**
+     * Return all surveys
+     * @return 
+     */
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<SurveyDTO> getAllSurveys() {
@@ -49,6 +56,11 @@ public class SurveyDataService implements ISurveyDataService {
         return surveyMapper.toSurveyList( surveyList);
     }
 
+    /**
+     * Create a {@link JpaSurvey} from the data in survey
+     * @param survey
+     * @return 
+     */
     @Override
     public SurveyDTO createSurvey(SurveyDTO survey) {
         // remove questions/answers if they are present
@@ -58,6 +70,11 @@ public class SurveyDataService implements ISurveyDataService {
         return surveyMapper.toSurvey( jpaSurvey);
     }
 
+    /**
+     * Create a {@link JpaQuestion} from the data in question
+     * @param question
+     * @return 
+     */
     @Transactional
     @Override
     public QuestionDTO createQuestion(QuestionDTO question) {
@@ -69,6 +86,13 @@ public class SurveyDataService implements ISurveyDataService {
         return newQuestion;
     }
 
+    /**
+     * Create a {@link JpaQuestion} from the data in question
+     * and associate it to the survey specified by id
+     * @param surveyId
+     * @param question
+     * @return 
+     */
     @Transactional
     @Override
     public QuestionDTO createQuestionForSurvey(Long surveyId, QuestionDTO question) {
@@ -84,40 +108,35 @@ public class SurveyDataService implements ISurveyDataService {
         return surveyMapper.toQuestion( jpaQuestion);
     }
     
-    private List<QuestionAnswerDTO> createQuestionAnswer(JpaQuestion question, List<QuestionAnswerDTO> qaList) {
-        List<JpaQuestionAnswer> newJpaQaList = new ArrayList<>();
-        
-        for( QuestionAnswerDTO qaDTO: qaList) {
-            AnswerDTO answer = qaDTO.getAnswer();
-            JpaAnswer jpaAnswer = createAnswer( answer);
-            
-            // now can build the qa object with both ids
-            JpaQuestionAnswer jpaQa = surveyDao.createQuestionAnswer( question, jpaAnswer, qaDTO.getSequence());
-            newJpaQaList.add( jpaQa);
-        }
-        
-        List<QuestionAnswerDTO> newQaList = surveyMapper.toQuestionAnswerList( newJpaQaList);
-        
-        return newQaList;
-    }
-    
-    private JpaAnswer createAnswer(AnswerDTO answer) {
-        JpaAnswer jpaAnswer = surveyMapper.toJpaAnswer( answer);
-        jpaAnswer = surveyDao.createAnswer( jpaAnswer);
-        
-        return jpaAnswer;
-    }
-    
+    /**
+     * 
+     * @param questionId
+     * @param answer
+     * @return 
+     */
+    @Transactional
     @Override
     public AnswerDTO createAnswerForQuestion(Long questionId, AnswerDTO answer) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    /**
+     * 
+     * @param surveyId
+     * @param questionId
+     * @return 
+     */
+    @Transactional
     @Override
     public SurveyDTO addQuestionToSurvey(Long surveyId, Long questionId) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    /**
+     * Update question details including embedded answer data
+     * @param question
+     * @return {@link QuestionDTO} or null on error
+     */
     @Transactional
     @Override
     public QuestionDTO updateQuestion(QuestionDTO question) {
@@ -133,6 +152,12 @@ public class SurveyDataService implements ISurveyDataService {
         return surveyMapper.toQuestion( jpaQuestion);
     }
 
+    /**
+     * Search for survey questions for the specified survey.
+     * Return only the question data.
+     * @param surveyId
+     * @return 
+     */
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<SurveyQuestionDTO> getSurveyQuestions(Long surveyId) {
