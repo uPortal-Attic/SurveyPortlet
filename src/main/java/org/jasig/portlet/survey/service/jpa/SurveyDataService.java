@@ -142,7 +142,7 @@ public class SurveyDataService implements ISurveyDataService {
     public QuestionDTO updateQuestion(QuestionDTO question) {
         JpaQuestion existingQuestion = surveyDao.getQuestion( question.getId());
         if( existingQuestion.getStatus() == SurveyState.PUBLISHED) {
-            log.info( "Cannot update question in PUBLISHED state");
+            log.warn( "Cannot update question in PUBLISHED state");
             return null;
         }
         
@@ -169,6 +169,28 @@ public class SurveyDataService implements ISurveyDataService {
         SurveyDTO surveyDTO = surveyMapper.toSurvey( survey); 
         
         return Lists.newArrayList( surveyDTO.getSurveyQuestions());
+    }
+
+    /**
+     * Update base survey data.  Questions/answer relationships will not be included in the update.
+     * @param survey
+     * @return 
+     */
+    @Transactional
+    @Override
+    public SurveyDTO updateSurvey(SurveyDTO survey) {
+        JpaSurvey jpaExistingSurvey = surveyDao.getSurvey( survey.getId());
+        if( jpaExistingSurvey.getStatus() == SurveyState.PUBLISHED) {
+            log.warn( "Cannot update survey in PUBLISHED state");
+            return null;
+        }
+        
+        // remove questions/answers if they are there
+        survey.setSurveyQuestions( null);
+        JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
+        jpaSurvey = surveyDao.updateSurvey( jpaSurvey);
+        
+        return surveyMapper.toSurvey( jpaSurvey);
     }
 
 }

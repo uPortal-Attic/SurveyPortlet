@@ -137,5 +137,23 @@ public class SurveyRestController {
         
         return new ResponseEntity<>( updatedQuestion, status);
     }
+    
+    /**
+     * Update survey 
+     * @param surveyId
+     * @param survey {@link SurveyDTO} containing data to update
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
+    public ResponseEntity<SurveyDTO> updateSurvey( @PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
+        SurveyDTO updatedSurvey = dataService.updateSurvey( survey);
+        HttpStatus status = HttpStatus.CREATED;
+        
+        if( updatedSurvey == null) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        
+        return new ResponseEntity<>( survey, status);
+    }
 }
     
