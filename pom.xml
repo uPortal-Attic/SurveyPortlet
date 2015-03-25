@@ -19,6 +19,8 @@
 
     <!-- Dependency Version Properties -->
     <properties>
+        <env>local</env>
+        <filters.file>../../filters/${env}.properties</filters.file>
         <commons-lang.version>2.6</commons-lang.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <java.version>1.7</java.version>
@@ -364,6 +366,30 @@
     </dependencies>
 
     <build>
+        <filters>
+            <filter>${filters.file}</filter>
+        </filters>
+        <resources>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <!-- This list needs to be identical to the one below...  -->
+                    <exclude>*.properties</exclude>
+                    <exclude>logback.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <!-- List files or patterns to be filtered here. Restrict the list to avoid accidentally
+                         substituting maven or other environmental tokens in other files.-->
+                    <include>*.properties</include>
+                    <include>logback.xml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
