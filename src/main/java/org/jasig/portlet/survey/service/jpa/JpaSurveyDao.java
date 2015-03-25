@@ -35,7 +35,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 class JpaSurveyDao implements IJpaSurveyDao {
-
     @Autowired
     private JpaAnswerRepository answerRepository;
 
@@ -58,12 +57,16 @@ class JpaSurveyDao implements IJpaSurveyDao {
     public JpaSurveyQuestion attachQuestionToSurvey(Long surveyId, Long questionId, JpaSurveyQuestion surveyQuestion) {
         JpaSurvey survey = getSurvey(surveyId);
         JpaQuestion question = getQuestion(questionId);
-
+        
+        survey.setLastUpdateDate( new Timestamp( new Date().getTime()));
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
         surveyQuestion.setId(pk);
 
-        JpaSurveyQuestion sq = surveyQuestionRepository.save(surveyQuestion);
-        return sq;
+        survey.addJpaSurveyQuestion(surveyQuestion);
+        
+        surveyRepository.save( survey);
+        
+        return surveyQuestion;
     }
 
     @Override
@@ -93,11 +96,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return newQa;
     }
 
-    /**
-     * 
-     * @param survey
-     * @return
-     */
     @Override
     public JpaSurvey createSurvey(JpaSurvey survey) {
         List<JpaSurveyQuestion> sqList = survey.getJpaSurveyQuestions();
@@ -109,8 +107,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
                 setupQuestionForSave(q);
                 q = createQuestion(q);
                 sq.getId().setJpaQuestion(q);
-
-                //surveyQuestionRepository.save( sq);
+                // surveyQuestionRepository.save( sq);
             }
         }
 
@@ -175,7 +172,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return surveyTextRepository.findByKeyAndVariant(key, StringUtils.trimToEmpty(variant));
     }
 
-    private void setupQuestionForSave( JpaQuestion jpaQuestion) {
+    private void setupQuestionForSave(JpaQuestion jpaQuestion) {
         Set<JpaQuestionAnswer> qaList = jpaQuestion.getJpaQuestionAnswers();
         if (qaList != null && !qaList.isEmpty()) {
             for (JpaQuestionAnswer qa : qaList) {

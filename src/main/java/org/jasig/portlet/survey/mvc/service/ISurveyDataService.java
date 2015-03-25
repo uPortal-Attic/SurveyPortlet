@@ -30,24 +30,16 @@ public interface ISurveyDataService {
     public boolean addQuestionToSurvey(Long surveyId, Long questionId, SurveyQuestionDTO surveyQuestion);
     
     public AnswerDTO createAnswerForQuestion(Long questionId, AnswerDTO answer);
-    
-    public QuestionDTO createQuestion(QuestionDTO question);
-    
     public SurveyDTO createSurvey(SurveyDTO survey);
-    
+    public QuestionDTO createQuestion(QuestionDTO question);
     public ITextGroup createTextGroup(ITextGroup textGroup);
     
     public List<SurveyDTO> getAllSurveys();
-    
     public SurveyDTO getSurvey(long id);
-    
     public SurveyDTO getSurveyByName(String surveyName);
-    
     public List<SurveyQuestionDTO> getSurveyQuestions(Long surveyId);
-    
     public ITextGroup getTextGroup(String textKey);
     
-    public SurveyDTO updateSurvey( SurveyDTO survey);
-
+    public SurveyDTO updateSurvey(SurveyDTO survey);
     public QuestionDTO updateQuestion(QuestionDTO question);
 }

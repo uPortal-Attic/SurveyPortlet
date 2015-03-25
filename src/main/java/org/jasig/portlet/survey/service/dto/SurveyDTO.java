@@ -106,7 +106,7 @@ public class SurveyDTO implements ILookupTextable, Serializable {
         this.helpText = textGroup.getHelpText();
         this.definitionText = textGroup.getDefinitionText();
         this.text = textGroup.getText();
-        // TODO - enhancement: call the retrieveText for set of questions
+        // TODO - enhancement: call the retrieveText for set of questions 
     }
 
     public void setAltText(String altText) {
