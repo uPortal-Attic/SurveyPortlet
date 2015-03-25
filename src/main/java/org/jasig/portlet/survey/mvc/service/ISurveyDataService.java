@@ -19,5 +19,6 @@ public interface ISurveyDataService {
     
     public SurveyDTO addQuestionToSurvey( Long surveyId, Long questionId);
     
+    public SurveyDTO updateSurvey( SurveyDTO survey);
     public QuestionDTO updateQuestion( QuestionDTO question);
 }
