@@ -47,7 +47,7 @@ public interface ISurveyDataService {
     
     public ITextGroup getTextGroup(String textKey);
     
-    public SurveyDTO updateSurvey(SurveyDTO survey);
+    public SurveyDTO updateSurvey( SurveyDTO survey);
 
     public QuestionDTO updateQuestion(QuestionDTO question);
 }

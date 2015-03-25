@@ -109,6 +109,8 @@ class JpaSurveyDao implements IJpaSurveyDao {
                 setupQuestionForSave(q);
                 q = createQuestion(q);
                 sq.getId().setJpaQuestion(q);
+
+                //surveyQuestionRepository.save( sq);
             }
         }
 
@@ -173,7 +175,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return surveyTextRepository.findByKeyAndVariant(key, StringUtils.trimToEmpty(variant));
     }
 
-    private void setupQuestionForSave(JpaQuestion jpaQuestion) {
+    private void setupQuestionForSave( JpaQuestion jpaQuestion) {
         Set<JpaQuestionAnswer> qaList = jpaQuestion.getJpaQuestionAnswers();
         if (qaList != null && !qaList.isEmpty()) {
             for (JpaQuestionAnswer qa : qaList) {

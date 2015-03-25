@@ -40,7 +40,7 @@ public interface IJpaSurveyDao {
 
     public List<JpaSurvey> getAllSurveys();
 
-    public JpaQuestion getQuestion(Long id);
+    public JpaQuestion getQuestion( Long id);
 
     public JpaSurvey getSurvey(Long id);
 
