@@ -36,22 +36,37 @@ import javax.persistence.Table;
 class JpaQuestionAnswer implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * canonicalName is a unique reference name for this answer that allows an outside source to know what selection 
+     * was made for a question
+     */
+    @Column(name = "CANONICAL_NAME", nullable = true, unique = true)
+    private String canonicalName;
+
     @EmbeddedId
     private JpaQuestionAnswerPK id;
 
     @Column(name = "SEQUENCE", nullable = true)
     private int sequence;
+    
+    public String getCanonicalName() {
+        return canonicalName;
+    }
 
     public JpaQuestionAnswerPK getId() {
         return id;
     }
 
-    public void setId(JpaQuestionAnswerPK id) {
-        this.id = id;
-    }
-
     public int getSequence() {
         return sequence;
+    }
+
+    public void setCanonicalName(String canonicalName) {
+        this.canonicalName = canonicalName;
+    }
+
+    public void setId(JpaQuestionAnswerPK id) {
+        this.id = id;
     }
 
     public void setSequence(int sequence) {
