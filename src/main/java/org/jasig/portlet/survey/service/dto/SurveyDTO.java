@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jasig.portlet.survey.SurveyState;
+import org.jasig.portlet.survey.PublishedState;
 
 public class SurveyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class SurveyDTO implements Serializable {
     private String instructions;
     private Date lastUpdateDate;
     private String lastUpdateUser;
-    private SurveyState status;
+    private PublishedState status;
     private Set<SurveyQuestionDTO> surveyQuestions = new HashSet<SurveyQuestionDTO>();
 
     private String title;
@@ -63,7 +63,7 @@ public class SurveyDTO implements Serializable {
         return lastUpdateUser;
     }
 
-    public SurveyState getStatus() {
+    public PublishedState getStatus() {
         return status;
     }
 
@@ -99,7 +99,7 @@ public class SurveyDTO implements Serializable {
         this.lastUpdateUser = lastUpdateUser;
     }
 
-    public void setStatus(SurveyState status) {
+    public void setStatus(PublishedState status) {
         this.status = status;
     }
 

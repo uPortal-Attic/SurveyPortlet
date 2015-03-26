@@ -20,7 +20,8 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.util.List;
 
-import org.jasig.portlet.survey.SurveyState;
+import org.apache.commons.lang.Validate;
+import org.jasig.portlet.survey.PublishedState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 import org.jasig.portlet.survey.service.dto.AnswerDTO;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
@@ -34,7 +35,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.Validate;
 
 @Service
 public class SurveyDataService implements ISurveyDataService {

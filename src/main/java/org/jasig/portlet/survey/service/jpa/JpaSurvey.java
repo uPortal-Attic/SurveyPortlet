@@ -32,7 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.jasig.portlet.survey.SurveyState;
+import org.jasig.portlet.survey.PublishedState;
 
 /**
  * The persistent class for the survey_survey database table.
@@ -72,7 +72,7 @@ public class JpaSurvey implements Serializable {
     private String lastUpdateUser;
 
     @Column(name = "STATUS", nullable = false)
-    private SurveyState status;
+    private PublishedState status;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
@@ -111,7 +111,7 @@ public class JpaSurvey implements Serializable {
         return lastUpdateUser;
     }
 
-    public SurveyState getStatus() {
+    public PublishedState getStatus() {
         return status;
     }
 
@@ -153,7 +153,7 @@ public class JpaSurvey implements Serializable {
         this.lastUpdateUser = lastUpdateUser;
     }
 
-    public void setStatus(SurveyState status) {
+    public void setStatus(PublishedState status) {
         this.status = status;
     }
 
