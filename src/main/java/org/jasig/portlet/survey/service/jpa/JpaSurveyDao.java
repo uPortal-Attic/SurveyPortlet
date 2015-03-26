@@ -46,12 +46,14 @@ class JpaSurveyDao implements IJpaSurveyDao {
     private JpaSurveyRepository surveyRepository;
 
     @Override
-    public JpaSurveyQuestion attachQuestionToSurvey(JpaSurvey survey, JpaQuestion question) {
-        JpaSurveyQuestion sq = new JpaSurveyQuestion();
+    public JpaSurveyQuestion attachQuestionToSurvey(Long surveyId, Long questionId, JpaSurveyQuestion surveyQuestion) {
+        JpaSurvey survey = getSurvey(surveyId);
+        JpaQuestion question = getQuestion(questionId);
+        
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
-        sq.setId(pk);
+        surveyQuestion.setId(pk);
 
-        sq = surveyQuestionRepository.save(sq);
+        JpaSurveyQuestion sq = surveyQuestionRepository.save(surveyQuestion);
         return sq;
     }
 
@@ -98,8 +100,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
                 setupQuestionForSave(q);
                 q = createQuestion(q);
                 sq.getId().setJpaQuestion(q);
-
-                // surveyQuestionRepository.save( sq);
             }
         }
 

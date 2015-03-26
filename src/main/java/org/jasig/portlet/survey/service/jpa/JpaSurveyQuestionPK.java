@@ -30,11 +30,11 @@ import javax.persistence.*;
 class JpaSurveyQuestionPK implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @OneToOne(cascade = {CascadeType.ALL}) 
+    @OneToOne(cascade = {CascadeType.PERSIST}) 
     @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false )
     private JpaQuestion jpaQuestion;
     
-    @ManyToOne(cascade = {CascadeType.ALL}) 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST}) 
     @JoinColumn(name = "SURVEY_ID", nullable = false, insertable = false, updatable = false)
     private JpaSurvey jpaSurvey;
     

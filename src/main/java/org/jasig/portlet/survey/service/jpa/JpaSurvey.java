@@ -21,6 +21,7 @@ package org.jasig.portlet.survey.service.jpa;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,7 +62,7 @@ public class JpaSurvey implements Serializable {
     @Column(name = "INSTRUCTIONS", nullable = true)
     private String instructions;
 
-    @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<JpaSurveyQuestion> jpaSurveyQuestions;
 
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
