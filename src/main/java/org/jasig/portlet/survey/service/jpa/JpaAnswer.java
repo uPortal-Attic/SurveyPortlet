@@ -41,22 +41,50 @@ class JpaAnswer implements Serializable {
     @Column(name = "ALT_TEXT", nullable = true)
     private String altText;
 
+    @Column(name = "HELP_TEXT", nullable = true)
+    private String helpText;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @Column(name = "TEXT", nullable = false)
+    @Column(name = "IMG_HEIGHT", nullable = true)
+    private String imgHeight;
+    
+    @Column(name = "IMG_URL", nullable = true)
+    private String imgUrl;
+    
+    @Column(name = "IMG_WIDTH", nullable = true)
+    private String imgWidth;
+    
+    @Column(name = "TEXT", nullable = true)
     private String text;
 
     public String getAltText() {
         return this.altText;
     }
 
+    public String getHelpText() {
+        return helpText;
+    }
+    
     public long getId() {
         return this.id;
     }
-    
+
+    public String getImgHeight() {
+        return imgHeight;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public String getImgWidth() {
+        return imgWidth;
+    }
+
     public String getText() {
         return this.text;
     }
@@ -65,8 +93,24 @@ class JpaAnswer implements Serializable {
         this.altText = altText;
     }
 
+    public void setHelpText(String helpText) {
+        this.helpText = helpText;
+    }
+
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setImgHeight(String imgHeight) {
+        this.imgHeight = imgHeight;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setImgWidth(String imgWidth) {
+        this.imgWidth = imgWidth;
     }
 
     public void setText(String text) {
