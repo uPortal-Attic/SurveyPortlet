@@ -26,7 +26,7 @@ import java.util.Set;
 import org.jasig.portlet.survey.PublishedState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 
-public class SurveyDTO implements ILookupTextable, Serializable {
+public class SurveyDTO implements ILookupTextable, Serializable { 
     private static final long serialVersionUID = 1L;
 
     private String altText;

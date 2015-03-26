@@ -42,7 +42,7 @@ import org.jasig.portlet.survey.PublishedState;
  */
 @Entity
 @Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "survey")
-public class JpaSurvey implements Serializable {
+public class JpaSurvey implements Serializable { 
     private static final long serialVersionUID = 1L;
 
     /**
