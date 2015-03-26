@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.Validate;
 
 @Service
 public class SurveyDataService implements ISurveyDataService {
@@ -49,12 +50,19 @@ public class SurveyDataService implements ISurveyDataService {
      * 
      * @param surveyId
      * @param questionId
+     * @param surveyQuestion
      * @return
      */
     @Transactional
     @Override
-    public SurveyDTO addQuestionToSurvey(Long surveyId, Long questionId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean addQuestionToSurvey(Long surveyId, Long questionId, SurveyQuestionDTO surveyQuestion) {
+        Validate.isTrue( surveyId != null && questionId != null, "Survey and question cannot be null");
+        JpaSurveyQuestion sq = new JpaSurveyQuestion();
+        sq.setNumAllowedAnswers( surveyQuestion.getNumAllowedAnswers());
+        sq.setSequence( surveyQuestion.getSequence());
+        
+        JpaSurveyQuestion newSurveyQuestion = surveyDao.attachQuestionToSurvey(surveyId, questionId, sq);
+        return newSurveyQuestion != null;
     }
 
     /**
@@ -158,6 +166,17 @@ public class SurveyDataService implements ISurveyDataService {
         SurveyDTO surveyDTO = surveyMapper.toSurvey(survey);
 
         return Lists.newArrayList(surveyDTO.getSurveyQuestions());
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public SurveyDTO getSurveyByName(String surveyName) {
+        JpaSurvey survey = surveyDao.getSurveyByCanonicalName(surveyName);
+        if (survey == null) {
+            return null;
+        }
+
+        return surveyMapper.toSurvey(survey);
     }
 
     /**

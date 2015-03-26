@@ -25,7 +25,7 @@ import org.jasig.portlet.survey.service.dto.SurveyDTO;
 import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
 
 public interface ISurveyDataService {
-    public SurveyDTO addQuestionToSurvey(Long surveyId, Long questionId);
+    public boolean addQuestionToSurvey(Long surveyId, Long questionId, SurveyQuestionDTO surveyQuestion);
     
     public AnswerDTO createAnswerForQuestion(Long questionId, AnswerDTO answer);
     public QuestionDTO createQuestion(QuestionDTO question);
