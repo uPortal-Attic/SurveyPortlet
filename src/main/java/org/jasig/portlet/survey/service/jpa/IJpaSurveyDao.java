@@ -39,7 +39,7 @@ interface IJpaSurveyDao {
 
     public JpaQuestion updateQuestion(JpaQuestion question);
 
-    public JpaSurveyQuestion attachQuestionToSurvey(JpaSurvey survey, JpaQuestion question);
+    public JpaSurveyQuestion attachQuestionToSurvey(Long survey, Long question, JpaSurveyQuestion surveyQuestion);
 
     public JpaSurvey getSurveyByCanonicalName(String canonicalName);
 }

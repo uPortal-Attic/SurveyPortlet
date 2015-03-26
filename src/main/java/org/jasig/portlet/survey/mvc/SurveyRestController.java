@@ -57,17 +57,19 @@ public class SurveyRestController {
     }
 
     /**
+     * Associate and existing question to and existing survey
      * 
      * @param survey
      * @param question
-     * @return
+     * @param surveyQuestion
+     * @return 
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions")
-    public ResponseEntity<QuestionDTO> addQuestionForSurvey(@PathVariable Long survey, @RequestBody QuestionDTO question) {
-        QuestionDTO newQuestion = dataService.createQuestionForSurvey(survey, question);
-        return new ResponseEntity<>(newQuestion, HttpStatus.CREATED);
+    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
+    public ResponseEntity<Boolean> linkQuestionToSurvey( @PathVariable Long survey, @PathVariable Long question, @RequestBody SurveyQuestionDTO surveyQuestion) {
+        Boolean ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
+        return new ResponseEntity<>(ret, HttpStatus.CREATED);
     }
-
+    
     /**
      * Create a survey
      * 

@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.Validate;
 
 @Service
 public class SurveyDataService implements ISurveyDataService {
@@ -49,12 +50,19 @@ public class SurveyDataService implements ISurveyDataService {
      * 
      * @param surveyId
      * @param questionId
+     * @param surveyQuestion
      * @return
      */
     @Transactional
     @Override
-    public SurveyDTO addQuestionToSurvey(Long surveyId, Long questionId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean addQuestionToSurvey(Long surveyId, Long questionId, SurveyQuestionDTO surveyQuestion) {
+        Validate.isTrue( surveyId != null && questionId != null, "Survey and question cannot be null");
+        JpaSurveyQuestion sq = new JpaSurveyQuestion();
+        sq.setNumAllowedAnswers( surveyQuestion.getNumAllowedAnswers());
+        sq.setSequence( surveyQuestion.getSequence());
+        
+        JpaSurveyQuestion newSurveyQuestion = surveyDao.attachQuestionToSurvey(surveyId, questionId, sq);
+        return newSurveyQuestion != null;
     }
 
     /**
@@ -84,29 +92,6 @@ public class SurveyDataService implements ISurveyDataService {
         QuestionDTO newQuestion = surveyMapper.toQuestion(jpaQuestion);
 
         return newQuestion;
-    }
-
-    /**
-     * Create a {@link JpaQuestion} from the data in question
-     * and associate it to the survey specified by id
-     * 
-     * @param surveyId
-     * @param question
-     * @return
-     */
-    @Transactional
-    @Override
-    public QuestionDTO createQuestionForSurvey(Long surveyId, QuestionDTO question) {
-        JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion(question);
-        jpaQuestion = surveyDao.createQuestion(jpaQuestion);
-
-        if (jpaQuestion != null) {
-            // attach it to the survey
-            JpaSurvey survey = surveyDao.getSurvey(surveyId);
-            surveyDao.attachQuestionToSurvey(survey, jpaQuestion);
-        }
-
-        return surveyMapper.toQuestion(jpaQuestion);
     }
 
     /**
@@ -158,6 +143,7 @@ public class SurveyDataService implements ISurveyDataService {
         return surveyMapper.toSurvey(survey);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public SurveyDTO getSurveyByName(String surveyName) {
         JpaSurvey survey = surveyDao.getSurveyByCanonicalName(surveyName);
@@ -215,6 +201,7 @@ public class SurveyDataService implements ISurveyDataService {
      * @param survey
      * @return 
      */
+    @Transactional
     @Override
     public SurveyDTO updateSurvey(SurveyDTO survey) {
         JpaSurvey existingSurvey = surveyDao.getSurvey( survey.getId());
