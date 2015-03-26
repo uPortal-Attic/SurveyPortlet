@@ -162,7 +162,6 @@ public class SurveyDataService implements ISurveyDataService {
 
     /**
      * Update question details including embedded answer data
-     * 
      * @param question
      * @return {@link QuestionDTO} or null on error
      */
@@ -176,7 +175,7 @@ public class SurveyDataService implements ISurveyDataService {
         }
 
         JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion(question);
-        surveyDao.updateQuestion(jpaQuestion);
+        jpaQuestion = surveyDao.updateQuestion(jpaQuestion);
 
         return surveyMapper.toQuestion(jpaQuestion);
     }

@@ -107,7 +107,7 @@ public class SurveyRestController {
         SurveyDTO surveyDTO = dataService.getSurvey(survey);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
-    
+
     /**
      * Search for survey specified by surveyname.
      * 
@@ -146,31 +146,36 @@ public class SurveyRestController {
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
     public ResponseEntity<QuestionDTO> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDTO question) {
-        QuestionDTO updatedQuestion = dataService.updateQuestion(question);
         HttpStatus status = HttpStatus.CREATED;
 
+        question.setId(questionId);
+        QuestionDTO updatedQuestion = dataService.updateQuestion(question);
         if (updatedQuestion == null) {
             status = HttpStatus.BAD_REQUEST;
         }
 
         return new ResponseEntity<>(updatedQuestion, status);
     }
-    
+
     /**
-     * Update survey 
+     * Update survey
+     * 
      * @param surveyId
-     * @param survey {@link SurveyDTO} containing data to update
-     * @return 
+     * @param survey
+     *            {@link SurveyDTO} containing data to update
+     * @return
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
-    public ResponseEntity<SurveyDTO> updateSurvey( @PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
-        SurveyDTO updatedSurvey = dataService.updateSurvey( survey);
+    public ResponseEntity<SurveyDTO> updateSurvey(@PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
         HttpStatus status = HttpStatus.CREATED;
-        
-        if( updatedSurvey == null) {
+
+        survey.setId(surveyId);
+        SurveyDTO updatedSurvey = dataService.updateSurvey(survey);
+
+        if (updatedSurvey == null) {
             status = HttpStatus.BAD_REQUEST;
         }
-        
-        return new ResponseEntity<>( survey, status);
+
+        return new ResponseEntity<>(updatedSurvey, status);
     }
 }
