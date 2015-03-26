@@ -49,7 +49,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaSurveyQuestion sq = new JpaSurveyQuestion();
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
         sq.setId(pk);
-
         sq = surveyQuestionRepository.save(sq);
         return sq;
     }
