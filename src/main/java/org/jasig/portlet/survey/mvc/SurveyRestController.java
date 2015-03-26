@@ -128,14 +128,35 @@ public class SurveyRestController {
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
     public ResponseEntity<QuestionDTO> updateQuestion( @PathVariable Long questionId, @RequestBody QuestionDTO question) {
-        QuestionDTO updatedQuestion = dataService.updateQuestion( question);
         HttpStatus status = HttpStatus.CREATED;
         
-        if( updatedQuestion == null) {
+        question.setId( questionId);
+        QuestionDTO updatedQuestion = dataService.updateQuestion(question);
+        if (updatedQuestion == null) {
             status = HttpStatus.BAD_REQUEST;
         }
         
         return new ResponseEntity<>( updatedQuestion, status);
+    }
+    
+    /**
+     * Update survey 
+     * @param surveyId
+     * @param survey {@link SurveyDTO} containing data to update
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
+    public ResponseEntity<SurveyDTO> updateSurvey( @PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
+        HttpStatus status = HttpStatus.CREATED;       
+        
+        survey.setId( surveyId);
+        SurveyDTO updatedSurvey = dataService.updateSurvey( survey);
+
+        if( updatedSurvey == null) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        
+        return new ResponseEntity<>( updatedSurvey, status);
     }
 }
     

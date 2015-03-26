@@ -13,6 +13,8 @@ public interface ISurveyDataService {
     public List<SurveyQuestionDTO> getSurveyQuestions( Long surveyId);
     
     public SurveyDTO createSurvey( SurveyDTO survey);
+    public SurveyDTO updateSurvey( SurveyDTO survey);
+    
     public QuestionDTO createQuestion( QuestionDTO question);
     public QuestionDTO createQuestionForSurvey( Long surveyId, QuestionDTO question);
     public AnswerDTO createAnswerForQuestion( Long questionId, AnswerDTO answer);

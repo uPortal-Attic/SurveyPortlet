@@ -137,5 +137,11 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaQuestion question = questionRepository.findOne( id);
         return question;
     }
+
+    @Override
+    public JpaSurvey updateSurvey(JpaSurvey survey) {
+        JpaSurvey newSurvey = surveyRepository.save( survey);  
+        return newSurvey;
+    }
     
 }

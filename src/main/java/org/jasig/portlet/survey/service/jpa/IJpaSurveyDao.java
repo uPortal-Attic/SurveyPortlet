@@ -10,6 +10,8 @@ interface IJpaSurveyDao {
     public List<JpaSurvey> getAllSurveys();
     
     public JpaSurvey createSurvey(JpaSurvey survey);
+    public JpaSurvey updateSurvey(JpaSurvey survey);
+    
     public JpaQuestion createQuestion(JpaQuestion question);
     public JpaQuestionAnswer createQuestionAnswer(JpaQuestion question, JpaAnswer answer, Integer sequence);
     public JpaAnswer createAnswer(JpaAnswer answer);

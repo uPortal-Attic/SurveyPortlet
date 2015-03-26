@@ -147,7 +147,7 @@ public class SurveyDataService implements ISurveyDataService {
         }
         
         JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion( question);
-        surveyDao.updateQuestion( jpaQuestion);
+        jpaQuestion = surveyDao.updateQuestion( jpaQuestion);
         
         return surveyMapper.toQuestion( jpaQuestion);
     }
@@ -169,6 +169,28 @@ public class SurveyDataService implements ISurveyDataService {
         SurveyDTO surveyDTO = surveyMapper.toSurvey( survey); 
         
         return Lists.newArrayList( surveyDTO.getSurveyQuestions());
+    }
+
+    /**
+     * 
+     * @param survey
+     * @return 
+     */
+    @Override
+    public SurveyDTO updateSurvey(SurveyDTO survey) {
+        JpaSurvey existingSurvey = surveyDao.getSurvey( survey.getId());
+        if( existingSurvey == null || existingSurvey.getStatus() == SurveyState.PUBLISHED) {
+            log.warn( "Cannot update survey");
+            return null;
+        }
+        
+        // remove question/answer elements
+        survey.setSurveyQuestions( null);
+        
+        JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
+        jpaSurvey = surveyDao.updateSurvey( jpaSurvey);
+        
+        return surveyMapper.toSurvey(jpaSurvey);
     }
 
 }
