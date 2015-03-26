@@ -21,7 +21,7 @@ package org.jasig.portlet.survey.service.jpa;
 import java.util.List;
 
 interface IJpaSurveyDao {
-    public JpaSurveyQuestion attachQuestionToSurvey(JpaSurvey survey, JpaQuestion question);
+    public JpaSurveyQuestion attachQuestionToSurvey(Long survey, Long question, JpaSurveyQuestion surveyQuestion);
 
     public JpaAnswer createAnswer(JpaAnswer answer);
     public JpaQuestion createQuestion(JpaQuestion question);
