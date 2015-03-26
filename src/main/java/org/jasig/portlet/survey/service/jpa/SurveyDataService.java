@@ -20,7 +20,8 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.util.List;
 
-import org.jasig.portlet.survey.SurveyState;
+import org.apache.commons.lang.Validate;
+import org.jasig.portlet.survey.PublishedState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 import org.jasig.portlet.survey.service.dto.AnswerDTO;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
@@ -34,7 +35,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.Validate;
 
 @Service
 public class SurveyDataService implements ISurveyDataService {
@@ -184,9 +184,8 @@ public class SurveyDataService implements ISurveyDataService {
     @Override
     public QuestionDTO updateQuestion(QuestionDTO question) {
         JpaQuestion existingQuestion = surveyDao.getQuestion( question.getId());
-        if( existingQuestion.getStatus() == SurveyState.PUBLISHED) {
+        if( existingQuestion.getStatus() == PublishedState.PUBLISHED) {
             log.warn( "Cannot update question in PUBLISHED state");
-
             return null;
         }
 
@@ -205,7 +204,7 @@ public class SurveyDataService implements ISurveyDataService {
     @Override
     public SurveyDTO updateSurvey(SurveyDTO survey) {
         JpaSurvey existingSurvey = surveyDao.getSurvey( survey.getId());
-        if( existingSurvey == null || existingSurvey.getStatus() == SurveyState.PUBLISHED) {
+        if( existingSurvey == null || existingSurvey.getStatus() == PublishedState.PUBLISHED) {
             log.warn( "Cannot update survey");
             return null;
         }
