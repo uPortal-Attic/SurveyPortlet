@@ -143,7 +143,7 @@ public class JpaSurvey implements Serializable {
 
     public void setLastUpdateDate(Timestamp lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
-    } 
+    }
 
     public void setLastUpdateUser(String lastUpdateUser) {
         this.lastUpdateUser = lastUpdateUser;

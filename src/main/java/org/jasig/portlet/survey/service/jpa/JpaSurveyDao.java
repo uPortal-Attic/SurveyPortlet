@@ -75,11 +75,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return newAnswer;
     }
 
-    /**
-     * 
-     * @param question
-     * @return
-     */
     @Override
     public JpaQuestion createQuestion(JpaQuestion question) {
         setupQuestionForSave(question);
@@ -121,9 +116,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return newSurveyText;
     }
 
-    /**
-     * @return All surveys
-     */
     @Override
     @SuppressWarnings("unchecked")
     public List<JpaSurvey> getAllSurveys() {
