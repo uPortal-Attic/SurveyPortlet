@@ -3,7 +3,7 @@ package org.jasig.portlet.survey.service.dto;
 
 import java.io.Serializable;
 import java.util.List;
-import org.jasig.portlet.survey.SurveyState;
+import org.jasig.portlet.survey.PublishedState;
 
 public class QuestionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,7 +12,7 @@ public class QuestionDTO implements Serializable {
     private long id;
     private List<QuestionAnswerDTO> questionAnswers;
     private String text;
-    private SurveyState status;
+    private PublishedState status;
     
     public String getAltText() {
         return altText;
@@ -46,11 +46,11 @@ public class QuestionDTO implements Serializable {
         this.text = text;
     }
 
-    public SurveyState getStatus() {
+    public PublishedState getStatus() {
         return status;
     }
 
-    public void setStatus(SurveyState status) {
+    public void setStatus(PublishedState status) {
         this.status = status;
     }
 }
