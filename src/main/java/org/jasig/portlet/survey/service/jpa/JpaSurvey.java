@@ -21,7 +21,6 @@ package org.jasig.portlet.survey.service.jpa;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,9 +41,15 @@ import org.jasig.portlet.survey.SurveyState;
  */
 @Entity
 @Table(name = JpaSurveyService.TABLENAME_PREFIX + "survey")
-class JpaSurvey implements Serializable {
+public class JpaSurvey implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * canonicalName is a unique reference name for a survey that allows an outside source to reference/lookup a survey.
+     */
+    @Column(name = "CANONICAL_NAME", nullable = true, unique = true)
+    private String canonicalName;
+    
     @Column(name = "DESCRIPTION", nullable = true)
     private String description;
 
@@ -56,6 +61,9 @@ class JpaSurvey implements Serializable {
     @Column(name = "INSTRUCTIONS", nullable = true)
     private String instructions;
 
+    @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER)
+    private List<JpaSurveyQuestion> jpaSurveyQuestions;
+
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
     private Timestamp lastUpdateDate;
 
@@ -65,9 +73,6 @@ class JpaSurvey implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private SurveyState status;
 
-    @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER)
-    private List<JpaSurveyQuestion> jpaSurveyQuestions;
-
     @Column(name = "TITLE", nullable = false)
     private String title;
 
@@ -75,6 +80,10 @@ class JpaSurvey implements Serializable {
         getJpaSurveyQuestions().add(jpaSurveyQuestion);
         jpaSurveyQuestion.getId().setJpaSurvey(this);
         return jpaSurveyQuestion;
+    }
+
+    public String getCanonicalName() {
+        return canonicalName;
     }
 
     public String getDescription() {
@@ -89,6 +98,10 @@ class JpaSurvey implements Serializable {
         return instructions;
     }
 
+    public List<JpaSurveyQuestion> getJpaSurveyQuestions() {
+        return jpaSurveyQuestions;
+    }
+
     public Timestamp getLastUpdateDate() {
         return lastUpdateDate;
     }
@@ -101,10 +114,6 @@ class JpaSurvey implements Serializable {
         return status;
     }
 
-    public List<JpaSurveyQuestion> getJpaSurveyQuestions() {
-        return jpaSurveyQuestions;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -113,6 +122,10 @@ class JpaSurvey implements Serializable {
         getJpaSurveyQuestions().remove(jpaSurveyQuestion);
         jpaSurveyQuestion.getId().setJpaSurvey(null);
         return jpaSurveyQuestion;
+    }
+
+    public void setCanonicalName(String canonicalName) {
+        this.canonicalName = canonicalName;
     }
 
     public void setDescription(String description) {
@@ -127,6 +140,10 @@ class JpaSurvey implements Serializable {
         this.instructions = instructions;
     }
 
+    public void setJpaSurveyQuestions(List<JpaSurveyQuestion> jpaSurveyQuestions) {
+        this.jpaSurveyQuestions = jpaSurveyQuestions;
+    }
+
     public void setLastUpdateDate(Timestamp lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
@@ -137,10 +154,6 @@ class JpaSurvey implements Serializable {
 
     public void setStatus(SurveyState status) {
         this.status = status;
-    }
-
-    public void setJpaSurveyQuestions(List<JpaSurveyQuestion> jpaSurveyQuestions) {
-        this.jpaSurveyQuestions = jpaSurveyQuestions;
     }
 
     public void setTitle(String title) {
