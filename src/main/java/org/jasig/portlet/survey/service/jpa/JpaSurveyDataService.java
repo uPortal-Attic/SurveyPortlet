@@ -21,18 +21,21 @@ package org.jasig.portlet.survey.service.jpa;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.jasig.portlet.survey.IVariantStrategy;
 import org.jasig.portlet.survey.PublishedState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 import org.jasig.portlet.survey.service.dto.AnswerDTO;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
 import org.jasig.portlet.survey.service.dto.SurveyDTO;
 import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
+import org.jasig.portlet.survey.service.dto.ITextGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.collect.Lists;
 
 /**

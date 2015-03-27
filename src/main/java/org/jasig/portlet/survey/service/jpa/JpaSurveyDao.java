@@ -58,7 +58,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaSurvey survey = getSurvey(surveyId);
         JpaQuestion question = getQuestion(questionId);
         
-        survey.setLastUpdateDate( new Timestamp( new Date().getTime()));
+        survey.setLastUpdateDate(new Timestamp( new Date().getTime()));
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
         surveyQuestion.setId(pk);
 
