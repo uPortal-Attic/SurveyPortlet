@@ -91,4 +91,8 @@
             </list>
         </property>
     </bean>
+    
+    <!-- Override/replace this by declaring an instance of type IVariantStrategy to provide a custom solution
+         for determining variant text. The default (null) strategy always reads the default text for anything -->
+    <bean class="org.jasig.portlet.survey.NullVariantStrategy"/>
 </beans>

@@ -35,6 +35,8 @@
 		<class>org.jasig.portlet.survey.service.jpa.JpaSurvey</class>
 		<class>org.jasig.portlet.survey.service.jpa.JpaSurveyQuestion</class>
 		<class>org.jasig.portlet.survey.service.jpa.JpaSurveyQuestionPK</class>
+		<class>org.jasig.portlet.survey.service.jpa.JpaSurveyText</class>
+        <class>org.jasig.portlet.survey.service.jpa.JpaSurveyTextPK</class>
 		
         <properties>
             <property name="hibernate.session_factory_name_is_jndi" value="false" />
