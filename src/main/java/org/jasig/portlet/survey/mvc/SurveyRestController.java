@@ -65,7 +65,7 @@ public class SurveyRestController {
      * @return 
      */
     @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
-    public ResponseEntity<Boolean> linkQuestionToSurvey( @PathVariable Long survey, @PathVariable Long question, @RequestBody SurveyQuestionDTO surveyQuestion) {
+    public ResponseEntity<Boolean> linkQuestionToSurvey(@PathVariable Long survey, @PathVariable Long question, @RequestBody SurveyQuestionDTO surveyQuestion) {
         Boolean ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
         return new ResponseEntity<>(ret, HttpStatus.CREATED);
     }
@@ -90,7 +90,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ResponseEntity<List<SurveyDTO>> getAllSurveyQuestions() {
         log.debug("Get all surveys");
-
         List<SurveyDTO> surveyDTOList = dataService.getAllSurveys();
         return new ResponseEntity<>(surveyDTOList, HttpStatus.OK);
     }
@@ -105,7 +104,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/{survey}")
     public ResponseEntity<SurveyDTO> getSurvey(@PathVariable Long survey) {
         log.debug("Get survey: " + survey);
-
         SurveyDTO surveyDTO = dataService.getSurvey(survey);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
@@ -120,7 +118,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/surveyByName/{surveyName}")
     public ResponseEntity<SurveyDTO> getSurvey(@PathVariable String surveyName) {
         log.debug("Get survey: " + surveyName);
-
         SurveyDTO surveyDTO = dataService.getSurveyByName(surveyName);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
@@ -152,6 +149,7 @@ public class SurveyRestController {
 
         question.setId(questionId);
         QuestionDTO updatedQuestion = dataService.updateQuestion(question);
+        
         if (updatedQuestion == null) {
             status = HttpStatus.BAD_REQUEST;
         }

@@ -16,8 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.jasig.portlet.survey.service.jpa;
+package org.jasig.portlet.survey.service.jpa.repo;
 
+import org.jasig.portlet.survey.service.jpa.JpaSurvey;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -41,7 +41,7 @@ import org.jasig.portlet.survey.PublishedState;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyService.TABLENAME_PREFIX + "survey")
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "survey")
 public class JpaSurvey implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -59,9 +59,6 @@ public class JpaSurvey implements Serializable {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @Column(name = "INSTRUCTIONS", nullable = true)
-    private String instructions;
-
     @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<JpaSurveyQuestion> jpaSurveyQuestions;
 
@@ -73,6 +70,9 @@ public class JpaSurvey implements Serializable {
 
     @Column(name = "STATUS", nullable = false)
     private PublishedState status;
+
+    @Column(name = "TEXT_KEY", nullable = true)
+    private String textKey;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
@@ -95,10 +95,6 @@ public class JpaSurvey implements Serializable {
         return id;
     }
 
-    public String getInstructions() {
-        return instructions;
-    }
-
     public List<JpaSurveyQuestion> getJpaSurveyQuestions() {
         return jpaSurveyQuestions;
     }
@@ -113,6 +109,10 @@ public class JpaSurvey implements Serializable {
 
     public PublishedState getStatus() {
         return status;
+    }
+
+    public String getTextKey() {
+        return textKey;
     }
 
     public String getTitle() {
@@ -137,10 +137,6 @@ public class JpaSurvey implements Serializable {
         this.id = id;
     }
 
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
-    }
-
     public void setJpaSurveyQuestions(List<JpaSurveyQuestion> jpaSurveyQuestions) {
         this.jpaSurveyQuestions = jpaSurveyQuestions;
     }
@@ -155,6 +151,10 @@ public class JpaSurvey implements Serializable {
 
     public void setStatus(PublishedState status) {
         this.status = status;
+    }
+
+    public void setTextKey(String textKey) {
+        this.textKey = textKey;
     }
 
     public void setTitle(String title) {

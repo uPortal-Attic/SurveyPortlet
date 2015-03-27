@@ -24,6 +24,12 @@ import java.util.Set;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.jasig.portlet.survey.service.jpa.repo.JpaAnswerRepository;
+import org.jasig.portlet.survey.service.jpa.repo.JpaQuestionAnswerRepository;
+import org.jasig.portlet.survey.service.jpa.repo.JpaQuestionRepository;
+import org.jasig.portlet.survey.service.jpa.repo.JpaSurveyQuestionRepository;
+import org.jasig.portlet.survey.service.jpa.repo.JpaSurveyRepository;
+import org.jasig.portlet.survey.service.jpa.repo.JpaSurveyTextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,11 +51,14 @@ class JpaSurveyDao implements IJpaSurveyDao {
     @Autowired
     private JpaSurveyRepository surveyRepository;
 
+    @Autowired
+    private JpaSurveyTextRepository surveyTextRepository;
+    
     @Override
     public JpaSurveyQuestion attachQuestionToSurvey(Long surveyId, Long questionId, JpaSurveyQuestion surveyQuestion) {
         JpaSurvey survey = getSurvey(surveyId);
         JpaQuestion question = getQuestion(questionId);
-        
+
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
         surveyQuestion.setId(pk);
 
@@ -87,7 +96,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
     /**
      * 
      * @param survey
-     * @return 
+     * @return
      */
     @Override
     public JpaSurvey createSurvey(JpaSurvey survey) {
@@ -136,12 +145,26 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaSurvey survey = surveyRepository.findOne(id);
         return survey;
     }
-    
-    
+
     @Override
     public JpaSurvey getSurveyByCanonicalName(String canonicalName) {
-        if (StringUtils.isEmpty(canonicalName)) {return null;}
+        if (StringUtils.isEmpty(canonicalName)) {
+            return null;
+        }
         return surveyRepository.findByCanonicalName(canonicalName);
+    }
+
+    /**
+     * @param key: may not be null
+     * @param variant: may be null. Whitespace trimmed.
+     * @see org.jasig.portlet.survey.service.jpa.IJpaSurveyDao#getText(java.lang.String, java.lang.String)
+     */
+    @Override
+    public JpaSurveyText getText(String key, String variant) {
+        if (StringUtils.isEmpty(key)) {
+            return null;
+        }
+        return surveyTextRepository.findByKeyAndVariant(key, StringUtils.trimToEmpty(variant));
     }
 
     private void setupQuestionForSave(JpaQuestion jpaQuestion) {
@@ -166,15 +189,9 @@ class JpaSurveyDao implements IJpaSurveyDao {
     }
 
     @Override
-    public JpaQuestion getQuestion(Long id) {
-        JpaQuestion question = questionRepository.findOne( id);
-        return question;
-    }
-
-    @Override
     public JpaSurvey updateSurvey(JpaSurvey survey) {
-        JpaSurvey newSurvey = surveyRepository.save( survey);
+        JpaSurvey newSurvey = surveyRepository.save(survey);
         return newSurvey;
     }
-    
+
 }

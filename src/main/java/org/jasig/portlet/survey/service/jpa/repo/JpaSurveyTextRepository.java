@@ -16,14 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.jasig.portlet.survey.service.jpa;
+package org.jasig.portlet.survey.service.jpa.repo;
 
-/**
- * Implementation of the SurveyService backed by a Spring-/JPA-managed relational database schema.
- * 
- * @since 1.0
- * @author chasegawa
- */
-public class JpaSurveyService {
-	public static final String TABLENAME_PREFIX = "SURVEY_";
+import org.jasig.portlet.survey.service.jpa.JpaSurveyText;
+import org.jasig.portlet.survey.service.jpa.JpaSurveyTextPK;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface JpaSurveyTextRepository extends CrudRepository<JpaSurveyText, JpaSurveyTextPK> {
+    @Query("SELECT st FROM JpaSurveyText st WHERE st.id.key = :key AND st.id.variant = :variant")
+    public JpaSurveyText findByKeyAndVariant(@Param("key") String key, @Param("variant") String variant);
 }

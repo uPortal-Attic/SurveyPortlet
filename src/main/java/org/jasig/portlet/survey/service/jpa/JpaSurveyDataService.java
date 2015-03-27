@@ -36,16 +36,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
+/**
+ * Service class for CRUD operations and moving to and from the business object models and the JPA impl for a survey.
+ * @since 1.0
+ */
 @Service
-public class SurveyDataService implements ISurveyDataService {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+public class JpaSurveyDataService implements ISurveyDataService {
+    public static final String TABLENAME_PREFIX = "SURVEY_";
 
     @Autowired
-    private IJpaSurveyDao surveyDao;
+    private IJpaSurveyDao jpaSurveyDao;
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ISurveyMapper surveyMapper;
 
+    @Autowired
+    private IVariantStrategy variantStrategy;
+    
     /**
      * 
      * @param surveyId
@@ -61,7 +70,7 @@ public class SurveyDataService implements ISurveyDataService {
         sq.setNumAllowedAnswers( surveyQuestion.getNumAllowedAnswers());
         sq.setSequence( surveyQuestion.getSequence());
         
-        JpaSurveyQuestion newSurveyQuestion = surveyDao.attachQuestionToSurvey(surveyId, questionId, sq);
+        JpaSurveyQuestion newSurveyQuestion = jpaSurveyDao.attachQuestionToSurvey(surveyId, questionId, sq);
         return newSurveyQuestion != null;
     }
 
@@ -87,34 +96,11 @@ public class SurveyDataService implements ISurveyDataService {
     @Override
     public QuestionDTO createQuestion(QuestionDTO question) {
         JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion(question);
-        jpaQuestion = surveyDao.createQuestion(jpaQuestion);
+        jpaQuestion = jpaSurveyDao.createQuestion(jpaQuestion);
 
         QuestionDTO newQuestion = surveyMapper.toQuestion(jpaQuestion);
 
         return newQuestion;
-    }
-
-    /**
-     * Create a {@link JpaQuestion} from the data in question
-     * and associate it to the survey specified by id
-     * 
-     * @param surveyId
-     * @param question
-     * @return
-     */
-    @Transactional
-    @Override
-    public QuestionDTO createQuestionForSurvey(Long surveyId, QuestionDTO question) {
-        JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion(question);
-        jpaQuestion = surveyDao.createQuestion(jpaQuestion);
-
-        if (jpaQuestion != null) {
-            // attach it to the survey
-            JpaSurvey survey = surveyDao.getSurvey(surveyId);
-            surveyDao.attachQuestionToSurvey(survey, jpaQuestion);
-        }
-
-        return surveyMapper.toQuestion(jpaQuestion);
     }
 
     /**
@@ -123,12 +109,12 @@ public class SurveyDataService implements ISurveyDataService {
      * @param survey
      * @return
      */
+    @Transactional
     @Override
     public SurveyDTO createSurvey(SurveyDTO survey) {
-        // remove questions/answers if they are present
-        // only create the survey
+        // remove questions/answers if they are present - only create the survey
         JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey(survey);
-        jpaSurvey = surveyDao.createSurvey(jpaSurvey);
+        jpaSurvey = jpaSurveyDao.createSurvey(jpaSurvey);
         return surveyMapper.toSurvey(jpaSurvey);
     }
 
@@ -140,12 +126,45 @@ public class SurveyDataService implements ISurveyDataService {
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<SurveyDTO> getAllSurveys() {
-        List<JpaSurvey> surveyList = surveyDao.getAllSurveys();
+        List<JpaSurvey> surveyList = jpaSurveyDao.getAllSurveys();
         if (surveyList == null) {
             return null;
         }
+        List<SurveyDTO> results = surveyMapper.toSurveyList(surveyList);
+        for (SurveyDTO surveyDTO : results) {
+            surveyDTO.retrieveText(this);
+        }
+        return results;
+    }
 
-        return surveyMapper.toSurveyList(surveyList);
+    /**
+     * Search for {@link JpaSurvey} specified by id.
+     * 
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public SurveyDTO getSurvey(long id) {
+        JpaSurvey jpaSurvey = jpaSurveyDao.getSurvey(id);
+        if (jpaSurvey == null) {
+            return null;
+        }
+        SurveyDTO result = surveyMapper.toSurvey(jpaSurvey);
+        result.retrieveText(this);
+        return result;
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public SurveyDTO getSurveyByName(String surveyName) {
+        JpaSurvey jpaSurvey = jpaSurveyDao.getSurveyByCanonicalName(surveyName);
+        if (jpaSurvey == null) {
+            return null;
+        }
+        SurveyDTO result = surveyMapper.toSurvey(jpaSurvey);
+        result.retrieveText(this);
+        return result;
     }
 
     /**
@@ -158,7 +177,7 @@ public class SurveyDataService implements ISurveyDataService {
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<SurveyQuestionDTO> getSurveyQuestions(Long surveyId) {
-        JpaSurvey survey = surveyDao.getSurvey(surveyId);
+        JpaSurvey survey = jpaSurveyDao.getSurvey(surveyId);
         if (survey == null) {
             return null;
         }
@@ -168,33 +187,33 @@ public class SurveyDataService implements ISurveyDataService {
         return Lists.newArrayList(surveyDTO.getSurveyQuestions());
     }
 
+    /**
+     * Retrieve the text group object based on the supplied key.
+     * @see org.jasig.portlet.survey.mvc.service.ISurveyDataService#getTextGroup(java.lang.String)
+     */
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
-    public SurveyDTO getSurveyByName(String surveyName) {
-        JpaSurvey survey = surveyDao.getSurveyByCanonicalName(surveyName);
-        if (survey == null) {
-            return null;
-        }
-
-        return surveyMapper.toSurvey(survey);
+    public ITextGroup getTextGroup(String textKey) {
+        return jpaSurveyDao.getText(textKey, variantStrategy.getVariantName());
     }
 
     /**
      * Update question details including embedded answer data
+     * 
      * @param question
      * @return {@link QuestionDTO} or null on error
      */
     @Transactional
     @Override
     public QuestionDTO updateQuestion(QuestionDTO question) {
-        JpaQuestion existingQuestion = surveyDao.getQuestion(question.getId());
-        if (existingQuestion.getStatus() == SurveyState.PUBLISHED) {
-            log.info("Cannot update question in PUBLISHED state");
+        JpaQuestion existingQuestion = jpaSurveyDao.getQuestion( question.getId());
+        if( existingQuestion.getStatus() == PublishedState.PUBLISHED) {
+            log.warn( "Cannot update question in PUBLISHED state");
             return null;
         }
 
         JpaQuestion jpaQuestion = surveyMapper.toJpaQuestion(question);
-        jpaQuestion = surveyDao.updateQuestion(jpaQuestion);
+        jpaSurveyDao.updateQuestion(jpaQuestion);
 
         return surveyMapper.toQuestion(jpaQuestion);
     }
@@ -207,18 +226,19 @@ public class SurveyDataService implements ISurveyDataService {
     @Transactional
     @Override
     public SurveyDTO updateSurvey(SurveyDTO survey) {
-        JpaSurvey jpaExistingSurvey = surveyDao.getSurvey( survey.getId());
-        if( jpaExistingSurvey.getStatus() == SurveyState.PUBLISHED) {
-            log.warn( "Cannot update survey in PUBLISHED state");
+        JpaSurvey existingSurvey = jpaSurveyDao.getSurvey( survey.getId());
+        if( existingSurvey == null || existingSurvey.getStatus() == PublishedState.PUBLISHED) {
+            log.warn( "Cannot update survey");
             return null;
         }
         
-        // remove questions/answers if they are there
+        // remove question/answer elements
         survey.setSurveyQuestions( null);
-        JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
-        jpaSurvey = surveyDao.updateSurvey( jpaSurvey);
         
-        return surveyMapper.toSurvey( jpaSurvey);
+        JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
+        jpaSurvey = jpaSurveyDao.updateSurvey( jpaSurvey);
+        
+        return surveyMapper.toSurvey(jpaSurvey);
     }
 
 }
