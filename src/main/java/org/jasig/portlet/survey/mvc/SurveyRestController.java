@@ -21,6 +21,7 @@ package org.jasig.portlet.survey.mvc;
 import java.util.List;
 
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
+import org.jasig.portlet.survey.service.dto.ITextGroup;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
 import org.jasig.portlet.survey.service.dto.SurveyDTO;
 import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
@@ -138,6 +139,19 @@ public class SurveyRestController {
         return new ResponseEntity(sqList, HttpStatus.OK);
     }
 
+    /**
+     * Fetch method for getting text detail by key.
+     * @param textKey
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @RequestMapping(method = RequestMethod.GET, value = "/textGroup/{textKey}")
+    public ResponseEntity<SurveyDTO> getTextGroup(@PathVariable String textKey) {
+        log.debug("Get text group by key: " + textKey);
+        ITextGroup textGroup = dataService.getTextGroup(textKey);
+        return new ResponseEntity(textGroup, HttpStatus.OK);
+    }
+    
     /**
      * 
      * @param questionId
