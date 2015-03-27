@@ -21,99 +21,81 @@ package org.jasig.portlet.survey.service.jpa;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.jasig.portlet.survey.service.dto.ITextGroup;
+
 /**
- * The persistent class for the survey_answer database table.
+ * The persistent class for the survey_text database table.
+ * The combination of Key+Variant allows for describing text that can be referenced by any part of survey. The key nominally
+ * names the grouping of text (text + alt + help) and the variant allows for discerning which of the combinations should be used.
  * 
  * @author chasegawa
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "answer")
-public class JpaAnswer implements Serializable {
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "text")
+public class JpaSurveyText implements ITextGroup, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "ALT_TEXT", nullable = true)
+    @Column(name = "ALT_TEXT", nullable = true, unique = false)
     private String altText;
-
-    @Column(name = "HELP_TEXT", nullable = true)
+    
+    @Column(name = "DEFINITION_TEXT", nullable = true, unique = false)
+    private String definitionText;
+    
+    @Column(name = "HELP_TEXT", nullable = true, unique = false)
     private String helpText;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
-    private long id;
-
-    @Column(name = "IMG_HEIGHT", nullable = true)
-    private String imgHeight;
+    @EmbeddedId
+    private JpaSurveyTextPK id;
     
-    @Column(name = "IMG_URL", nullable = true)
-    private String imgUrl;
-    
-    @Column(name = "IMG_WIDTH", nullable = true)
-    private String imgWidth;
-    
-    @Column(name = "TEXT", nullable = true)
+    @Column(name = "TEXT", nullable = true, unique = false)
     private String text;
 
+    @Override
     public String getAltText() {
-        return this.altText;
+        return altText;
     }
 
+    @Override
+    public String getDefinitionText() {
+        return definitionText;
+    }
+
+    @Override
     public String getHelpText() {
         return helpText;
     }
-    
-    public long getId() {
-        return this.id;
+
+    public JpaSurveyTextPK getId() {
+        return id;
     }
 
-    public String getImgHeight() {
-        return imgHeight;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public String getImgWidth() {
-        return imgWidth;
-    }
-
+    @Override
     public String getText() {
-        return this.text;
+        return text;
     }
 
     public void setAltText(String altText) {
         this.altText = altText;
     }
 
+    public void setDefinitionText(String definitionText) {
+        this.definitionText = definitionText;
+    }
+
     public void setHelpText(String helpText) {
         this.helpText = helpText;
     }
 
-    public void setId(long id) {
+    public void setId(JpaSurveyTextPK id) {
         this.id = id;
-    }
-
-    public void setImgHeight(String imgHeight) {
-        this.imgHeight = imgHeight;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public void setImgWidth(String imgWidth) {
-        this.imgWidth = imgWidth;
     }
 
     public void setText(String text) {
         this.text = text;
-    }
+    } 
 }

@@ -40,8 +40,8 @@ import org.jasig.portlet.survey.PublishedState;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyService.TABLENAME_PREFIX + "question")
-class JpaQuestion implements Serializable {
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "question")
+public class JpaQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "ALT_TEXT", nullable = true)

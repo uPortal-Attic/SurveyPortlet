@@ -62,14 +62,15 @@ public class SurveyRestController {
      * @param survey
      * @param question
      * @param surveyQuestion
-     * @return 
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
-    public ResponseEntity<Boolean> linkQuestionToSurvey( @PathVariable Long survey, @PathVariable Long question, @RequestBody SurveyQuestionDTO surveyQuestion) {
+    public ResponseEntity<Boolean> linkQuestionToSurvey(@PathVariable Long survey, @PathVariable Long question,
+                    @RequestBody SurveyQuestionDTO surveyQuestion) {
         Boolean ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
         return new ResponseEntity<>(ret, HttpStatus.CREATED);
     }
-    
+
     /**
      * Create a survey
      * 
@@ -90,7 +91,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ResponseEntity<List<SurveyDTO>> getAllSurveyQuestions() {
         log.debug("Get all surveys");
-
         List<SurveyDTO> surveyDTOList = dataService.getAllSurveys();
         return new ResponseEntity<>(surveyDTOList, HttpStatus.OK);
     }
@@ -105,11 +105,10 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/{survey}")
     public ResponseEntity<SurveyDTO> getSurvey(@PathVariable Long survey) {
         log.debug("Get survey: " + survey);
-
         SurveyDTO surveyDTO = dataService.getSurvey(survey);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
-    
+
     /**
      * Search for survey specified by surveyname.
      * 
@@ -120,7 +119,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/surveyByName/{surveyName}")
     public ResponseEntity<SurveyDTO> getSurvey(@PathVariable String surveyName) {
         log.debug("Get survey: " + surveyName);
-
         SurveyDTO surveyDTO = dataService.getSurveyByName(surveyName);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
@@ -147,10 +145,10 @@ public class SurveyRestController {
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
-    public ResponseEntity<QuestionDTO> updateQuestion( @PathVariable Long questionId, @RequestBody QuestionDTO question) {
+    public ResponseEntity<QuestionDTO> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDTO question) {
         HttpStatus status = HttpStatus.CREATED;
-        
-        question.setId( questionId);
+
+        question.setId(questionId);
         QuestionDTO updatedQuestion = dataService.updateQuestion(question);
 
         if (updatedQuestion == null) {
@@ -159,24 +157,26 @@ public class SurveyRestController {
 
         return new ResponseEntity<>(updatedQuestion, status);
     }
-    
+
     /**
-     * Update survey 
+     * Update survey
+     * 
      * @param surveyId
-     * @param survey {@link SurveyDTO} containing data to update
-     * @return 
+     * @param survey
+     *            {@link SurveyDTO} containing data to update
+     * @return
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
-    public ResponseEntity<SurveyDTO> updateSurvey( @PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
-        HttpStatus status = HttpStatus.CREATED;       
-        
-        survey.setId( surveyId);
-        SurveyDTO updatedSurvey = dataService.updateSurvey( survey);
+    public ResponseEntity<SurveyDTO> updateSurvey(@PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
+        HttpStatus status = HttpStatus.CREATED;
 
-        if( updatedSurvey == null) {
+        survey.setId(surveyId);
+        SurveyDTO updatedSurvey = dataService.updateSurvey(survey);
+
+        if (updatedSurvey == null) {
             status = HttpStatus.BAD_REQUEST;
         }
-        
-        return new ResponseEntity<>( updatedSurvey, status);
+
+        return new ResponseEntity<>(updatedSurvey, status);
     }
 }

@@ -21,52 +21,41 @@ package org.jasig.portlet.survey.service.jpa;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
 /**
- * The persistent class for the survey_survey_question database table.
+ * The primary key class for the survey_text database table.
  * 
  * @author chasegawa
  * @since 1.0
  */
-@Entity
-@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "survey_question")
-public class JpaSurveyQuestion implements Serializable {
+@Embeddable
+public class JpaSurveyTextPK implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    @Column(name = "KEY", nullable = false, unique = false)
+    private String key;
+    
+    /**
+     * variant will not always be set (the default would have nothing here).
+     */
+    @Column(name = "VARIANT", nullable = false,  unique = false)
+    private String variant = "";
 
-    @EmbeddedId
-    private JpaSurveyQuestionPK id;
-
-    @Column(name = "NUM_ALLOWED_ANSWERS", nullable = false)
-    private int numAllowedAnswers;
-
-    @Column(name = "SEQUENCE", nullable = true)
-    private int sequence;
-
-    public JpaSurveyQuestionPK getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
-    public int getNumAllowedAnswers() {
-        return numAllowedAnswers;
+    public String getVariant() {
+        return variant;
     }
 
-    public int getSequence() {
-        return sequence;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public void setId(JpaSurveyQuestionPK id) {
-        this.id = id;
-    }
-
-    public void setNumAllowedAnswers(int numAllowedAnswers) {
-        this.numAllowedAnswers = numAllowedAnswers;
-    }
-
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
+    public void setVariant(String variant) {
+        this.variant = variant;
     }
 
 }
