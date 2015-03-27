@@ -18,6 +18,8 @@
  */
 package org.jasig.portlet.survey.service.jpa;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -50,11 +52,15 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaSurvey survey = getSurvey(surveyId);
         JpaQuestion question = getQuestion(questionId);
         
+        survey.setLastUpdateDate( new Timestamp( new Date().getTime()));
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
         surveyQuestion.setId(pk);
 
-        JpaSurveyQuestion sq = surveyQuestionRepository.save(surveyQuestion);
-        return sq;
+        survey.addJpaSurveyQuestion(surveyQuestion);
+        
+        surveyRepository.save( survey);
+        
+        return surveyQuestion;
     }
 
     @Override

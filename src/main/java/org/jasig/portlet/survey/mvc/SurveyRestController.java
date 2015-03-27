@@ -66,8 +66,19 @@ public class SurveyRestController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
     public ResponseEntity<Boolean> linkQuestionToSurvey( @PathVariable Long survey, @PathVariable Long question, @RequestBody SurveyQuestionDTO surveyQuestion) {
-        Boolean ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
-        return new ResponseEntity<>(ret, HttpStatus.CREATED);
+        Boolean ret;
+        HttpStatus status = HttpStatus.CREATED;
+        
+        try {
+            ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
+        }
+        catch( Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            ret = false;
+            log.error( "Error linking question to survey", e);
+        }
+        
+        return new ResponseEntity<>(ret, status);
     }
     
     /**
@@ -78,7 +89,17 @@ public class SurveyRestController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/")
     public ResponseEntity<SurveyDTO> addSurvey(@RequestBody SurveyDTO survey) {
-        SurveyDTO newSurvey = dataService.createSurvey(survey);
+        SurveyDTO newSurvey = null;
+        HttpStatus status = HttpStatus.CREATED;
+        
+        try {
+            newSurvey = dataService.createSurvey(survey);
+        }
+        catch( Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error( "Error linking question to survey", e);
+        }
+        
         return new ResponseEntity<>(newSurvey, HttpStatus.CREATED);
     }
 
@@ -149,14 +170,21 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
     public ResponseEntity<QuestionDTO> updateQuestion( @PathVariable Long questionId, @RequestBody QuestionDTO question) {
         HttpStatus status = HttpStatus.CREATED;
+        QuestionDTO updatedQuestion = null;
         
-        question.setId( questionId);
-        QuestionDTO updatedQuestion = dataService.updateQuestion(question);
+        try {
+            question.setId( questionId);
+            updatedQuestion = dataService.updateQuestion(question);
 
-        if (updatedQuestion == null) {
-            status = HttpStatus.BAD_REQUEST;
+            if (updatedQuestion == null) {
+                status = HttpStatus.BAD_REQUEST;
+            }
         }
-
+        catch( Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error( "Error linking question to survey", e);
+        }
+        
         return new ResponseEntity<>(updatedQuestion, status);
     }
     
@@ -169,12 +197,19 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
     public ResponseEntity<SurveyDTO> updateSurvey( @PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
         HttpStatus status = HttpStatus.CREATED;       
+        SurveyDTO updatedSurvey = null;
         
-        survey.setId( surveyId);
-        SurveyDTO updatedSurvey = dataService.updateSurvey( survey);
+        try {
+            survey.setId( surveyId);
+            updatedSurvey = dataService.updateSurvey( survey);
 
-        if( updatedSurvey == null) {
+            if( updatedSurvey == null) {
+                status = HttpStatus.BAD_REQUEST;
+            }
+        }
+        catch( Exception e) {
             status = HttpStatus.BAD_REQUEST;
+            log.error( "Error linking question to survey", e);
         }
         
         return new ResponseEntity<>( updatedSurvey, status);

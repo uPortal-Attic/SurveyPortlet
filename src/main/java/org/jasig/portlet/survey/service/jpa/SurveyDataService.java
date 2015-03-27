@@ -34,6 +34,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import java.sql.Timestamp;
+import java.util.Date;
 import org.apache.commons.lang.Validate;
 
 @Service
@@ -106,6 +108,7 @@ public class SurveyDataService implements ISurveyDataService {
         // remove questions/answers if they are present
         // only create the survey
         JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey(survey);
+        jpaSurvey.setLastUpdateDate( new Timestamp( new Date().getTime()));
         jpaSurvey = surveyDao.createSurvey(jpaSurvey);
         return surveyMapper.toSurvey(jpaSurvey);
     }
@@ -214,6 +217,7 @@ public class SurveyDataService implements ISurveyDataService {
         survey.setSurveyQuestions( null);
         
         JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
+        jpaSurvey.setLastUpdateDate( new Timestamp( new Date().getTime()));
         jpaSurvey = surveyDao.updateSurvey( jpaSurvey);
         
         return surveyMapper.toSurvey(jpaSurvey);
