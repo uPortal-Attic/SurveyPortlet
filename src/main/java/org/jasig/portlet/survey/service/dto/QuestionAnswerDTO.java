@@ -25,6 +25,7 @@ public class QuestionAnswerDTO implements Serializable {
 
     private AnswerDTO answer;
     private String canonicalName;
+    private String logic;
     private Integer sequence;
 
     public AnswerDTO getAnswer() {
@@ -33,6 +34,10 @@ public class QuestionAnswerDTO implements Serializable {
 
     public String getCanonicalName() {
         return canonicalName;
+    }
+
+    public String getLogic() {
+        return logic;
     }
 
     public Integer getSequence() {
@@ -45,6 +50,10 @@ public class QuestionAnswerDTO implements Serializable {
 
     public void setCanonicalName(String canonicalName) {
         this.canonicalName = canonicalName;
+    }
+
+    public void setLogic(String logic) {
+        this.logic = logic;
     }
 
     public void setSequence(Integer sequence) {
