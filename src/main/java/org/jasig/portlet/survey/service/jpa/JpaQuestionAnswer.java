@@ -45,6 +45,9 @@ public class JpaQuestionAnswer implements Serializable {
 
     @EmbeddedId
     private JpaQuestionAnswerPK id;
+    
+    @Column(name = "LOGIC", nullable = true)
+    private String logic; 
 
     @Column(name = "SEQUENCE", nullable = true)
     private int sequence;
@@ -57,6 +60,10 @@ public class JpaQuestionAnswer implements Serializable {
         return id;
     }
 
+    public String getLogic() {
+        return logic;
+    }
+
     public int getSequence() {
         return sequence;
     }
@@ -67,6 +74,10 @@ public class JpaQuestionAnswer implements Serializable {
 
     public void setId(JpaQuestionAnswerPK id) {
         this.id = id;
+    }
+
+    public void setLogic(String logic) {
+        this.logic = logic;
     }
 
     public void setSequence(int sequence) {

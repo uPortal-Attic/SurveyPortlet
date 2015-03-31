@@ -117,6 +117,21 @@ public class JpaSurveyDataService implements ISurveyDataService {
         jpaSurvey = jpaSurveyDao.createSurvey(jpaSurvey);
         return surveyMapper.toSurvey(jpaSurvey);
     }
+    
+    @Transactional
+    @Override
+    public ITextGroup createTextGroup(ITextGroup textGroup) {
+        JpaSurveyText jpaSurveyText = new JpaSurveyText();
+        JpaSurveyTextPK newId = new JpaSurveyTextPK();
+        newId.setKey(textGroup.getKey());
+        newId.setVariant(textGroup.getVariant());
+        jpaSurveyText.setId(newId);
+        jpaSurveyText.setAltText(textGroup.getAltText());
+        jpaSurveyText.setDefinitionText(textGroup.getDefinitionText());
+        jpaSurveyText.setHelpText(textGroup.getHelpText());
+        jpaSurveyText.setText(textGroup.getText());
+        return jpaSurveyDao.createSurveyText(jpaSurveyText);
+    }
 
     /**
      * Return all surveys
