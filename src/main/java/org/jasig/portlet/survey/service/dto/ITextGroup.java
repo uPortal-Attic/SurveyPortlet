@@ -13,5 +13,9 @@ public interface ITextGroup {
 
     public String getHelpText();
 
+    public String getKey();
+    
     public String getText();
+    
+    public String getVariant();
 }

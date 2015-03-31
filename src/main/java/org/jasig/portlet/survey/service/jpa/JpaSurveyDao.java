@@ -115,6 +115,12 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaSurvey s = surveyRepository.save(survey);
         return s;
     }
+    
+    @Override
+    public JpaSurveyText createSurveyText(JpaSurveyText text) {
+        JpaSurveyText newSurveyText = surveyTextRepository.save(text);
+        return newSurveyText;
+    }
 
     /**
      * @return All surveys

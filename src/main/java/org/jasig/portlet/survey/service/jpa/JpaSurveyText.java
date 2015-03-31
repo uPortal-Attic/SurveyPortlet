@@ -75,8 +75,18 @@ public class JpaSurveyText implements ITextGroup, Serializable {
     }
 
     @Override
+    public String getKey() {
+        return id.getKey();
+    }
+
+    @Override
     public String getText() {
         return text;
+    }
+
+    @Override
+    public String getVariant() {
+        return id.getVariant();
     }
 
     public void setAltText(String altText) {

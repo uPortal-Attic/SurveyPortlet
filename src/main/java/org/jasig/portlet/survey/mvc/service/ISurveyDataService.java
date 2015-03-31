@@ -34,6 +34,8 @@ public interface ISurveyDataService {
     public QuestionDTO createQuestion(QuestionDTO question);
 
     public SurveyDTO createSurvey(SurveyDTO survey);
+    
+    public ITextGroup createTextGroup(ITextGroup textGroup);
 
     public List<SurveyDTO> getAllSurveys();
 

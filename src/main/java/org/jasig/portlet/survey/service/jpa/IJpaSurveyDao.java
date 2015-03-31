@@ -35,6 +35,8 @@ public interface IJpaSurveyDao {
     public JpaQuestionAnswer createQuestionAnswer(JpaQuestion question, JpaAnswer answer, Integer sequence);
 
     public JpaSurvey createSurvey(JpaSurvey survey);
+    
+    public JpaSurveyText createSurveyText(JpaSurveyText text);
 
     public List<JpaSurvey> getAllSurveys();
 
@@ -49,5 +51,4 @@ public interface IJpaSurveyDao {
     public JpaSurvey updateSurvey(JpaSurvey survey);
 
     public JpaQuestion updateQuestion(JpaQuestion question);
-
 }
