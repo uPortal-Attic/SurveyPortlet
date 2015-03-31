@@ -164,7 +164,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
         if (qaList != null && !qaList.isEmpty()) {
             for (JpaQuestionAnswer qa : qaList) {
                 JpaAnswer answer = qa.getId().getJpaAnswer();
-
                 // This is not cascading... no idea why not
                 // so save it here first
                 createAnswer(answer);
