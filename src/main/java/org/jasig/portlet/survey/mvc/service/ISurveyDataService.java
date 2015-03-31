@@ -33,6 +33,7 @@ public interface ISurveyDataService {
     public SurveyDTO createSurvey(SurveyDTO survey);
     public QuestionDTO createQuestion(QuestionDTO question);
     public QuestionDTO createQuestionForSurvey(Long surveyId, QuestionDTO question);
+    public ITextGroup createTextGroup(ITextGroup textGroup);
 
     public List<SurveyDTO> getAllSurveys();
     public SurveyDTO getSurvey(long id);

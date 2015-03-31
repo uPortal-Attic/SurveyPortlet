@@ -32,11 +32,13 @@ public interface IJpaSurveyDao {
     public JpaQuestion createQuestion(JpaQuestion question);
     public JpaQuestionAnswer createQuestionAnswer(JpaQuestion question, JpaAnswer answer, Integer sequence);
     public JpaSurvey createSurvey(JpaSurvey survey);
+    public JpaSurveyText createSurveyText(JpaSurveyText text);
 
     public JpaQuestion getQuestion(Long id);
     public List<JpaSurvey> getAllSurveys();
     public JpaSurvey getSurvey(Long id);
     public JpaSurvey getSurveyByCanonicalName(String canonicalName);
+    public JpaSurveyText getText(String key, String variant);
 
     public JpaQuestion updateQuestion(JpaQuestion question);
     public JpaSurvey updateSurvey(JpaSurvey survey);
