@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.jasig.portlet.survey.PublishedState;
 
-public class QuestionDTO implements Serializable { 
+public class QuestionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String altText;

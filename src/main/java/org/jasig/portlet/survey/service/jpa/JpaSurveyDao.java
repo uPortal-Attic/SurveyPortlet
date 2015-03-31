@@ -52,20 +52,20 @@ class JpaSurveyDao implements IJpaSurveyDao {
 
     @Autowired
     private JpaSurveyTextRepository surveyTextRepository;
-    
+
     @Override
     public JpaSurveyQuestion attachQuestionToSurvey(Long surveyId, Long questionId, JpaSurveyQuestion surveyQuestion) {
         JpaSurvey survey = getSurvey(surveyId);
         JpaQuestion question = getQuestion(questionId);
-        
-        survey.setLastUpdateDate(new Timestamp( new Date().getTime()));
+
+        survey.setLastUpdateDate(new Timestamp(new Date().getTime()));
         JpaSurveyQuestionPK pk = new JpaSurveyQuestionPK(question, survey);
         surveyQuestion.setId(pk);
 
         survey.addJpaSurveyQuestion(surveyQuestion);
-        
-        surveyRepository.save( survey);
-        
+
+        surveyRepository.save(survey);
+
         return surveyQuestion;
     }
 
@@ -108,7 +108,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
         JpaSurvey s = surveyRepository.save(survey);
         return s;
     }
-    
+
     @Override
     public JpaSurveyText createSurveyText(JpaSurveyText text) {
         JpaSurveyText newSurveyText = surveyTextRepository.save(text);
@@ -151,8 +151,10 @@ class JpaSurveyDao implements IJpaSurveyDao {
     }
 
     /**
-     * @param key: may not be null
-     * @param variant: may be null. Whitespace trimmed.
+     * @param key
+     *            : may not be null
+     * @param variant
+     *            : may be null. Whitespace trimmed.
      * @see org.jasig.portlet.survey.service.jpa.IJpaSurveyDao#getText(java.lang.String, java.lang.String)
      */
     @Override
@@ -168,7 +170,6 @@ class JpaSurveyDao implements IJpaSurveyDao {
         if (qaList != null && !qaList.isEmpty()) {
             for (JpaQuestionAnswer qa : qaList) {
                 JpaAnswer answer = qa.getId().getJpaAnswer();
-
                 // This is not cascading... no idea why not
                 // so save it here first
                 createAnswer(answer);
