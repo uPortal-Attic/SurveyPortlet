@@ -16,18 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.jasig.portlet.survey.service.jpa;
+package org.jasig.portlet.survey.service.jpa.repo;
 
+import org.jasig.portlet.survey.service.jpa.JpaAnswer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaSurveyRepository extends CrudRepository<JpaSurvey, Long> {
-    /**
-     * Find a survey by name
-     * @param canonicalName
-     * @return
-     */
-    public JpaSurvey findByCanonicalName(String canonicalName);
+public interface JpaAnswerRepository extends CrudRepository<JpaAnswer, Long> {
     
 }

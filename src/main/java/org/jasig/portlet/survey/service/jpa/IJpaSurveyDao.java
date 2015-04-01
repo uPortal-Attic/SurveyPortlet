@@ -20,26 +20,26 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.util.List;
 
-interface IJpaSurveyDao {
-    public JpaSurvey getSurvey(Long id);
-
-    public List<JpaSurvey> getAllSurveys();
-
-    public JpaSurvey createSurvey(JpaSurvey survey);
-    
-    public JpaSurvey updateSurvey(JpaSurvey survey);
-    
-    public JpaQuestion createQuestion(JpaQuestion question);
-
-    public JpaQuestionAnswer createQuestionAnswer(JpaQuestion question, JpaAnswer answer, Integer sequence);
-
-    public JpaAnswer createAnswer(JpaAnswer answer);
-
-    public JpaQuestion getQuestion(Long id);
-
-    public JpaQuestion updateQuestion(JpaQuestion question);
-
+/**
+ * DAO Interface for all survey related database operations.
+ * 
+ * @since 1.0
+ */
+public interface IJpaSurveyDao {
     public JpaSurveyQuestion attachQuestionToSurvey(Long survey, Long question, JpaSurveyQuestion surveyQuestion);
 
+    public JpaAnswer createAnswer(JpaAnswer answer);
+    public JpaQuestion createQuestion(JpaQuestion question);
+    public JpaQuestionAnswer createQuestionAnswer(JpaQuestion question, JpaAnswer answer, Integer sequence);
+    public JpaSurvey createSurvey(JpaSurvey survey);
+    public JpaSurveyText createSurveyText(JpaSurveyText text);
+
+    public JpaQuestion getQuestion(Long id);
+    public List<JpaSurvey> getAllSurveys();
+    public JpaSurvey getSurvey(Long id);
     public JpaSurvey getSurveyByCanonicalName(String canonicalName);
+    public JpaSurveyText getText(String key, String variant);
+
+    public JpaQuestion updateQuestion(JpaQuestion question);
+    public JpaSurvey updateSurvey(JpaSurvey survey);
 }

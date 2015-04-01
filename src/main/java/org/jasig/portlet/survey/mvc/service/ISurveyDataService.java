@@ -19,29 +19,27 @@
 package org.jasig.portlet.survey.mvc.service;
 
 import java.util.List;
+
 import org.jasig.portlet.survey.service.dto.AnswerDTO;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
 import org.jasig.portlet.survey.service.dto.SurveyDTO;
 import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
+import org.jasig.portlet.survey.service.dto.ITextGroup;
 
 public interface ISurveyDataService {
     public boolean addQuestionToSurvey(Long surveyId, Long questionId, SurveyQuestionDTO surveyQuestion);
-    
+
     public AnswerDTO createAnswerForQuestion(Long questionId, AnswerDTO answer);
-    
-    public QuestionDTO createQuestion(QuestionDTO question);
-
     public SurveyDTO createSurvey(SurveyDTO survey);
-    
-    public SurveyDTO updateSurvey( SurveyDTO survey);
-    
-    public SurveyDTO getSurvey(long id);
-    
+    public QuestionDTO createQuestion(QuestionDTO question);
+    public ITextGroup createTextGroup(ITextGroup textGroup);
+
     public List<SurveyDTO> getAllSurveys();
-    
+    public SurveyDTO getSurvey(long id);
     public SurveyDTO getSurveyByName(String surveyName);
-
     public List<SurveyQuestionDTO> getSurveyQuestions(Long surveyId);
+    public ITextGroup getTextGroup(String textKey);
 
+    public SurveyDTO updateSurvey(SurveyDTO survey);
     public QuestionDTO updateQuestion(QuestionDTO question);
 }

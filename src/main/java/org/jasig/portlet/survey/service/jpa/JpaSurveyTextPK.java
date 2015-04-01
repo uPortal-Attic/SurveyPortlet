@@ -16,48 +16,46 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.jasig.portlet.survey.service.dto;
+package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
 
-public class QuestionAnswerDTO implements Serializable {
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+/**
+ * The primary key class for the survey_text database table.
+ * 
+ * @author chasegawa
+ * @since 1.0
+ */
+@Embeddable
+public class JpaSurveyTextPK implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    @Column(name = "KEY", nullable = false, unique = false)
+    private String key;
+    
+    /**
+     * variant will not always be set (the default would have nothing here).
+     */
+    @Column(name = "VARIANT", nullable = false,  unique = false)
+    private String variant = "";
 
-    private AnswerDTO answer;
-    private String canonicalName;
-    private String logic;
-    private Integer sequence;
-
-    public AnswerDTO getAnswer() {
-        return answer;
+    public String getKey() {
+        return key;
     }
 
-    public String getCanonicalName() {
-        return canonicalName;
+    public String getVariant() {
+        return variant;
     }
 
-    public String getLogic() {
-        return logic;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public Integer getSequence() {
-        return sequence;
-    }
-
-    public void setAnswer(AnswerDTO answer) {
-        this.answer = answer;
-    }
-
-    public void setCanonicalName(String canonicalName) {
-        this.canonicalName = canonicalName;
-    }
-
-    public void setLogic(String logic) {
-        this.logic = logic;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
+    public void setVariant(String variant) {
+        this.variant = variant;
     }
 
 }

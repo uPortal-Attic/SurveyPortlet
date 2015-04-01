@@ -18,37 +18,17 @@
  */
 package org.jasig.portlet.survey.service.dto;
 
-import java.io.Serializable;
+import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 
-public class SurveyQuestionDTO implements Serializable {
-    private static final long serialVersionUID = 1l;
-
-    private int numAllowedAnswers;
-    private QuestionDTO question;
-    private int sequence;
-
-    public int getNumAllowedAnswers() {
-        return numAllowedAnswers;
-    }
-
-    public QuestionDTO getQuestion() {
-        return question;
-    }
-
-    public int getSequence() {
-        return sequence;
-    }
-
-    public void setNumAllowedAnswers(int numAllowedAnswers) {
-        this.numAllowedAnswers = numAllowedAnswers;
-    }
-
-    public void setQuestion(QuestionDTO question) {
-        this.question = question;
-    }
-
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
-    }
-
+/**
+ * Defines a type that carries a key and will need to be able to lookup a grouping of text.
+ * @author chasegawa
+ * @since 1.0
+ */
+public interface ILookupTextable {
+    /**
+     * Method which tells the object to use the provided service to lookup the needed text.
+     * @param dataService
+     */
+    public void retrieveText(ISurveyDataService dataService);
 }
