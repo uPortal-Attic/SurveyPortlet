@@ -18,6 +18,8 @@
  */
 package org.jasig.portlet.survey.service.jpa;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -151,10 +153,8 @@ class JpaSurveyDao implements IJpaSurveyDao {
     }
 
     /**
-     * @param key
-     *            : may not be null
-     * @param variant
-     *            : may be null. Whitespace trimmed.
+     * @param key: may not be null
+     * @param variant: may be null. Whitespace trimmed.
      * @see org.jasig.portlet.survey.service.jpa.IJpaSurveyDao#getText(java.lang.String, java.lang.String)
      */
     @Override
