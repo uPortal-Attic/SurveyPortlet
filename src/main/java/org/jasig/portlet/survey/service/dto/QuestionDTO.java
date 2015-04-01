@@ -23,15 +23,26 @@ import java.util.List;
 
 import org.jasig.portlet.survey.PublishedState;
 
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
+
+@ApiObject(name = "QuestionDTO")
 public class QuestionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ApiObjectField
     private String altText;
+    @ApiObjectField
     private String canonicalName;
+    @ApiObjectField
     private String helpText;
+    @ApiObjectField
     private long id;
+    @ApiObjectField
     private List<QuestionAnswerDTO> questionAnswers;
+    @ApiObjectField
     private PublishedState status;
+    @ApiObjectField
     private String text;
 
     public String getAltText() {
