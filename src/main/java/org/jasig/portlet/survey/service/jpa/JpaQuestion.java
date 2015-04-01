@@ -20,8 +20,8 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.CascadeType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +30,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.jasig.portlet.survey.SurveyState;
+
+import org.jasig.portlet.survey.PublishedState;
 
 /**
  * The persistent class for the survey_question database table.
@@ -39,12 +40,21 @@ import org.jasig.portlet.survey.SurveyState;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyService.TABLENAME_PREFIX + "question")
-class JpaQuestion implements Serializable {
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "question")
+public class JpaQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "ALT_TEXT", nullable = true)
     private String altText;
+
+    /**
+     * canonicalName is a unique reference name for a question that allows an outside source to reference a question.
+     */
+    @Column(name = "CANONICAL_NAME", nullable = true, unique = true)
+    private String canonicalName;
+    
+    @Column(name = "HELP_TEXT", nullable = true)
+    private String helpText;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,12 +63,12 @@ class JpaQuestion implements Serializable {
 
     @OneToMany(mappedBy = "id.jpaQuestion", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     private Set<JpaQuestionAnswer> jpaQuestionAnswers;
+    
+    @Column(name = "STATUS", nullable = false)
+    private PublishedState status;
 
     @Column(name = "TEXT", nullable = false)
     private String text;
-
-    @Column(name = "STATUS", nullable = false)
-    private SurveyState status;
     
     public JpaQuestionAnswer addJpaQuestionAnswer(JpaQuestionAnswer jpaQuestionAnswer) {
         getJpaQuestionAnswers().add(jpaQuestionAnswer);
@@ -75,12 +85,24 @@ class JpaQuestion implements Serializable {
         return altText;
     }
 
+    public String getCanonicalName() {
+        return canonicalName;
+    }
+
+    public String getHelpText() {
+        return helpText;
+    }
+
     public long getId() {
         return id;
     }
 
     public Set<JpaQuestionAnswer> getJpaQuestionAnswers() {
         return jpaQuestionAnswers;
+    }
+
+    public PublishedState getStatus() {
+        return status;
     }
 
     public String getText() {
@@ -102,6 +124,14 @@ class JpaQuestion implements Serializable {
         this.altText = altText;
     }
 
+    public void setCanonicalName(String canonicalName) {
+        this.canonicalName = canonicalName;
+    }
+
+    public void setHelpText(String helpText) {
+        this.helpText = helpText;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -110,15 +140,11 @@ class JpaQuestion implements Serializable {
         this.jpaQuestionAnswers = jpaQuestionAnswers;
     }
 
+    public void setStatus(PublishedState status) {
+        this.status = status;
+    }
+
     public void setText(String text) {
         this.text = text;
-    }
-
-    public SurveyState getStatus() {
-        return status;
-    }
-
-    public void setStatus(SurveyState status) {
-        this.status = status;
     }
 }

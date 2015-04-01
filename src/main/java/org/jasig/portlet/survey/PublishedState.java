@@ -19,7 +19,7 @@
 package org.jasig.portlet.survey;
 
 /**
- * Represents a state that a survey is currently in, such as <em>published</em> or <em>unplublished</em>
+ * Represents a state that a survey or part of a survey is currently in, such as <em>published</em> or <em>unpublished</em>
  * This list is intended to be comprehensive, but new states may be added in the future as needed.  
  * Survey data sources are afforded reasonable latitude as to when and how a surveyn enters into a state.  
  * View implementations vary as to how they represent a state to a user, or whether they represent it.
@@ -27,7 +27,7 @@ package org.jasig.portlet.survey;
  * @since 1.0
  * @author chasegawa
  */
-public enum SurveyState {
+public enum PublishedState {
 	/**
 	 * Default state of any new survey.
 	 */

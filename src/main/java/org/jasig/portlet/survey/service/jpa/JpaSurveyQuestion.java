@@ -32,8 +32,8 @@ import javax.persistence.Table;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyService.TABLENAME_PREFIX + "survey_question")
-class JpaSurveyQuestion implements Serializable {
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "survey_question")
+public class JpaSurveyQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId

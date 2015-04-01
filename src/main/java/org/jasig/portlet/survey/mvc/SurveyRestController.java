@@ -21,6 +21,7 @@ package org.jasig.portlet.survey.mvc;
 import java.util.List;
 
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
+import org.jasig.portlet.survey.service.dto.ITextGroup;
 import org.jasig.portlet.survey.service.dto.QuestionDTO;
 import org.jasig.portlet.survey.service.dto.SurveyDTO;
 import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
@@ -57,31 +58,6 @@ public class SurveyRestController {
     }
 
     /**
-     * Associate and existing question to and existing survey
-     * 
-     * @param survey
-     * @param question
-     * @param surveyQuestion
-     * @return 
-     */
-    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
-    public ResponseEntity<Boolean> linkQuestionToSurvey( @PathVariable Long survey, @PathVariable Long question, @RequestBody SurveyQuestionDTO surveyQuestion) {
-        Boolean ret;
-        HttpStatus status = HttpStatus.CREATED;
-        
-        try {
-            ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
-        }
-        catch( Exception e) {
-            status = HttpStatus.BAD_REQUEST;
-            ret = false;
-            log.error( "Error linking question to survey", e);
-        }
-        
-        return new ResponseEntity<>(ret, status);
-    }
-    
-    /**
      * Create a survey
      * 
      * @param survey
@@ -91,16 +67,16 @@ public class SurveyRestController {
     public ResponseEntity<SurveyDTO> addSurvey(@RequestBody SurveyDTO survey) {
         SurveyDTO newSurvey = null;
         HttpStatus status = HttpStatus.CREATED;
-        
+
         try {
             newSurvey = dataService.createSurvey(survey);
         }
-        catch( Exception e) {
+        catch (Exception e) {
             status = HttpStatus.BAD_REQUEST;
-            log.error( "Error linking question to survey", e);
+            log.error("Error linking question to survey", e);
         }
-        
-        return new ResponseEntity<>(newSurvey, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(newSurvey, status);
     }
 
     /**
@@ -111,7 +87,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ResponseEntity<List<SurveyDTO>> getAllSurveyQuestions() {
         log.debug("Get all surveys");
-
         List<SurveyDTO> surveyDTOList = dataService.getAllSurveys();
         return new ResponseEntity<>(surveyDTOList, HttpStatus.OK);
     }
@@ -126,11 +101,10 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/{survey}")
     public ResponseEntity<SurveyDTO> getSurvey(@PathVariable Long survey) {
         log.debug("Get survey: " + survey);
-
         SurveyDTO surveyDTO = dataService.getSurvey(survey);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
-    
+
     /**
      * Search for survey specified by surveyname.
      * 
@@ -141,7 +115,6 @@ public class SurveyRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/surveyByName/{surveyName}")
     public ResponseEntity<SurveyDTO> getSurvey(@PathVariable String surveyName) {
         log.debug("Get survey: " + surveyName);
-
         SurveyDTO surveyDTO = dataService.getSurveyByName(surveyName);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
     }
@@ -162,56 +135,98 @@ public class SurveyRestController {
     }
 
     /**
+     * Fetch method for getting text detail by key.
+     * 
+     * @param textKey
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @RequestMapping(method = RequestMethod.GET, value = "/textGroup/{textKey}")
+    public ResponseEntity<SurveyDTO> getTextGroup(@PathVariable String textKey) {
+        log.debug("Get text group by key: " + textKey);
+        ITextGroup textGroup = dataService.getTextGroup(textKey);
+        return new ResponseEntity(textGroup, HttpStatus.OK);
+    }
+
+    /**
+     * Associate an existing question to an existing survey
+     * 
+     * @param survey
+     * @param question
+     * @param surveyQuestion
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
+    public ResponseEntity<Boolean> linkQuestionToSurvey(@PathVariable Long survey, @PathVariable Long question,
+                    @RequestBody SurveyQuestionDTO surveyQuestion) {
+        Boolean ret;
+        HttpStatus status = HttpStatus.CREATED;
+
+        try {
+            ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
+        }
+        catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            ret = false;
+            log.error("Error linking question to survey", e);
+        }
+
+        return new ResponseEntity<>(ret, status);
+    }
+
+    /**
      * 
      * @param questionId
      * @param question
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
-    public ResponseEntity<QuestionDTO> updateQuestion( @PathVariable Long questionId, @RequestBody QuestionDTO question) {
+    public ResponseEntity<QuestionDTO> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDTO question) {
         HttpStatus status = HttpStatus.CREATED;
         QuestionDTO updatedQuestion = null;
-        
+
         try {
-            question.setId( questionId);
+            question.setId(questionId);
             updatedQuestion = dataService.updateQuestion(question);
 
             if (updatedQuestion == null) {
                 status = HttpStatus.BAD_REQUEST;
             }
         }
-        catch( Exception e) {
+        catch (Exception e) {
             status = HttpStatus.BAD_REQUEST;
-            log.error( "Error linking question to survey", e);
+            log.error("Error linking question to survey", e);
         }
-        
+
         return new ResponseEntity<>(updatedQuestion, status);
     }
-    
+
     /**
-     * Update survey 
+     * Update survey
+     * 
      * @param surveyId
-     * @param survey {@link SurveyDTO} containing data to update
-     * @return 
+     * @param survey
+     *            {@link SurveyDTO} containing data to update
+     * @return
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
-    public ResponseEntity<SurveyDTO> updateSurvey( @PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
-        HttpStatus status = HttpStatus.CREATED;       
+    public ResponseEntity<SurveyDTO> updateSurvey(@PathVariable Long surveyId, @RequestBody SurveyDTO survey) {
+        HttpStatus status = HttpStatus.CREATED;
         SurveyDTO updatedSurvey = null;
-        
-        try {
-            survey.setId( surveyId);
-            updatedSurvey = dataService.updateSurvey( survey);
 
-            if( updatedSurvey == null) {
+        try {
+            survey.setId(surveyId);
+            updatedSurvey = dataService.updateSurvey(survey);
+
+            if (updatedSurvey == null) {
                 status = HttpStatus.BAD_REQUEST;
             }
         }
-        catch( Exception e) {
+        catch (Exception e) {
             status = HttpStatus.BAD_REQUEST;
-            log.error( "Error linking question to survey", e);
+            log.error("Error linking question to survey", e);
         }
-        
-        return new ResponseEntity<>( updatedSurvey, status);
+
+        return new ResponseEntity<>(updatedSurvey, status);
     }
 }
