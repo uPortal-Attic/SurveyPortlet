@@ -354,6 +354,22 @@
 	        <groupId>${jdbc.groupId}</groupId>
 	        <artifactId>${jdbc.artifactId}</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>org.jsondoc</groupId>
+            <artifactId>jsondoc-core</artifactId>
+            <version>1.1.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsondoc</groupId>
+            <artifactId>jsondoc-ui</artifactId>
+            <version>1.1.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsondoc</groupId>
+            <artifactId>jsondoc-springmvc</artifactId>
+            <version>1.1.13</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -378,6 +394,13 @@
                          substituting maven or other environmental tokens in other files.-->
                     <include>*.properties</include>
                     <include>logback.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>assembly</directory>
+                <includes>
+                    <include>jsondoc-assembly.xml</include>
                 </includes>
             </resource>
         </resources>
@@ -535,6 +558,103 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.2</version>
+                <configuration>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jsondoc</groupId>
+                <artifactId>jsondoc-maven-plugin</artifactId>
+                <version>1.1.13</version>
+                <executions>
+                    <execution>
+                        <id>generate-jsondoc</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <version>1.0</version>
+                            <basePath>http://localhost:8080/survey-portlet</basePath>
+                            <packages>
+                                <package>org.jasig.portlet.survey.mvc</package>
+                                <package>org.jasig.portlet.survey.service.dto</package>
+                            </packages>
+                            <outputFile>${project.build.directory}/jsondoc-ui/jsondoc.json</outputFile>
+                            <scanner>org.jsondoc.springmvc.scanner.SpringJSONDocScanner</scanner>
+                            <playgroundEnabled>false</playgroundEnabled>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jsondoc</groupId>
+                                    <artifactId>jsondoc-ui</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/jsondoc-ui</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>                
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>${project.build.directory}/jsondoc-ui/jsondoc-ui.html</include>
+                    </includes>
+                    <token>'_JSONDOC_OFFLINE_PLACEHOLDER_'</token> <!-- Do not change this value! -->
+                    <valueFile>${project.build.directory}/jsondoc-ui/jsondoc.json</valueFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-distribution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>jsondoc</finalName>
+                            <descriptors>
+                                <descriptor>assembly/jsondoc-assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
         </plugins>
     </build>
 </project>

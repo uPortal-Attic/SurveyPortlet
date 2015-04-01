@@ -19,16 +19,26 @@
 package org.jasig.portlet.survey.service.dto;
 
 import java.io.Serializable;
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
 
+@ApiObject(name = "AnswerDTO")
 public class AnswerDTO implements Serializable {
     private static final long serialVersionUID = 1l;
 
+    @ApiObjectField
     private String altText;
+    @ApiObjectField
     private String helpText;
+    @ApiObjectField
     private long id;
+    @ApiObjectField
     private String imgHeight;
+    @ApiObjectField
     private String imgUrl;
+    @ApiObjectField
     private String imgWidth;
+    @ApiObjectField
     private String text;
 
     public String getAltText() {

@@ -19,12 +19,18 @@
 package org.jasig.portlet.survey.service.dto;
 
 import java.io.Serializable;
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
 
+@ApiObject(name = "SurveyQuestionDTO")
 public class SurveyQuestionDTO implements Serializable {
     private static final long serialVersionUID = 1l;
 
+    @ApiObjectField
     private int numAllowedAnswers;
+    @ApiObjectField
     private QuestionDTO question;
+    @ApiObjectField
     private int sequence;
 
     public int getNumAllowedAnswers() {

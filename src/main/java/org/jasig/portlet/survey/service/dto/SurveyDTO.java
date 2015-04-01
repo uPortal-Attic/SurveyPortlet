@@ -25,22 +25,38 @@ import java.util.Set;
 
 import org.jasig.portlet.survey.PublishedState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
 
+@ApiObject(name = "SurveyDTO")
 public class SurveyDTO implements ILookupTextable, Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ApiObjectField
     private String altText;
+    @ApiObjectField
     private String canonicalName;
+    @ApiObjectField
     private String definitionText;
+    @ApiObjectField
     private String description;
+    @ApiObjectField
     private String helpText;
+    @ApiObjectField
     private long id;
+    @ApiObjectField(description = "Timestamp in millis",required = true)
     private Date lastUpdateDate;
+    @ApiObjectField(required = true)
     private String lastUpdateUser;
+    @ApiObjectField
     private PublishedState status;
+    @ApiObjectField
     private Set<SurveyQuestionDTO> surveyQuestions = new HashSet<SurveyQuestionDTO>();
+    @ApiObjectField
     private String text;
+    @ApiObjectField
     private String textKey;
+    @ApiObjectField
     private String title;
 
     public String getAltText() {
