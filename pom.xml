@@ -13,7 +13,7 @@
     <artifactId>survey-portlet</artifactId>
     <version>1.0-SNAPSHOT</version>
             
-    <name>${pom.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>Portlet for creating and administering survey/questionnaires</description>
     <packaging>war</packaging>
 
@@ -219,7 +219,6 @@
                 <artifactId>guava</artifactId>
                 <version>13.0</version>
             </dependency>
-        
             <!-- Database drivers -->
             <dependency>
                 <groupId>${jdbc.groupId}</groupId>
@@ -424,6 +423,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
                 <configuration>
                     <systemproperties>
                         <property>
@@ -476,8 +476,8 @@
                 <configuration>
                     <contextName>survey-portlet</contextName>
                     <artifactId>survey-portlet</artifactId>
-                    <artifactGroupId>${pom.groupId}</artifactGroupId>
-                    <artifactVersion>${pom.version}</artifactVersion>
+                    <artifactGroupId>${project.groupId}</artifactGroupId>
+                    <artifactVersion>${project.version}</artifactVersion>
                     <artifactClassifier>localdev</artifactClassifier>
                     <removeExistingDirectories>true</removeExistingDirectories>
                     <extractWars>true</extractWars>
@@ -557,7 +557,64 @@
                         <version>3.2.4.GA</version>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>            
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<phase>data-import</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>org.jasig.portlet.survey.data.JsonDataImporter</mainClass>
+							<arguments>
+								<argument>arg0</argument>
+								<argument>arg1</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+            </plugin> 
+			<plugin>
+			  <groupId>org.eclipse.jetty</groupId>
+			  <artifactId>jetty-maven-plugin</artifactId>
+			  <version>9.2.10.v20150310</version>
+			  <configuration>
+			    <stopKey>abc123</stopKey>
+			    <stopPort>9191</stopPort>
+			    <war>target/survey-portlet.war</war>
+			    <daemon>true</daemon>
+			  </configuration>
+			  <dependencies>
+			      <dependency>
+				      <groupId>javax.portlet</groupId>
+				      <artifactId>portlet-api</artifactId>
+				      <version>${portlet-api.version}</version>
+			      </dependency>
+			  </dependencies>
+			  <executions>
+			    <execution>
+			      <id>start-jetty</id>
+			      <phase>pre-integration-test</phase>
+			      <goals>
+			        <goal>start</goal>
+			      </goals>
+			      <configuration>
+			        <scanIntervalSeconds>0</scanIntervalSeconds>
+			      </configuration>
+			    </execution>
+			    <execution>
+			      <id>stop-jetty</id>
+			      <phase>post-integration-test</phase>
+			       <goals>
+			         <goal>stop</goal>
+			       </goals>
+			     </execution>
+			  </executions>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
