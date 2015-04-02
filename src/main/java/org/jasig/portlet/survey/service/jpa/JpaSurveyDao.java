@@ -155,14 +155,16 @@ class JpaSurveyDao implements IJpaSurveyDao {
     /**
      * @param key: may not be null
      * @param variant: may be null. Whitespace trimmed.
+     * @return a non-null object
      * @see org.jasig.portlet.survey.service.jpa.IJpaSurveyDao#getText(java.lang.String, java.lang.String)
      */
     @Override
     public JpaSurveyText getText(String key, String variant) {
         if (StringUtils.isEmpty(key)) {
-            return null;
+            return new JpaSurveyText();
         }
-        return surveyTextRepository.findByKeyAndVariant(key, StringUtils.trimToEmpty(variant));
+        JpaSurveyText result = surveyTextRepository.findByKeyAndVariant(key, StringUtils.trimToEmpty(variant));
+        return result == null ? new JpaSurveyText() : result;
     }
 
     private void setupQuestionForSave(JpaQuestion jpaQuestion) {
