@@ -66,7 +66,7 @@ public class SurveyRestController {
     }
 
     /**
-     * Associate and existing question to and existing survey
+     * Associate an existing question to an existing survey
      * 
      * @param survey
      * @param question
