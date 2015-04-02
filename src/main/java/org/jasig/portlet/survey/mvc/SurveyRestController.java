@@ -79,6 +79,12 @@ public class SurveyRestController {
         return new ResponseEntity<>(newSurvey, status);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/textGroup")
+    public ResponseEntity<ITextGroup> addTextGroup(@RequestBody TextGroupImpl textGroup) {
+        ITextGroup tg = dataService.createTextGroup(textGroup);
+        return new ResponseEntity<>(tg, HttpStatus.CREATED);
+    }
+
     /**
      * Search for all surveys
      * 
@@ -140,12 +146,11 @@ public class SurveyRestController {
      * @param textKey
      * @return
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @RequestMapping(method = RequestMethod.GET, value = "/textGroup/{textKey}")
-    public ResponseEntity<SurveyDTO> getTextGroup(@PathVariable String textKey) {
+    public ResponseEntity<ITextGroup> getTextGroup(@PathVariable String textKey) {
         log.debug("Get text group by key: " + textKey);
         ITextGroup textGroup = dataService.getTextGroup(textKey);
-        return new ResponseEntity(textGroup, HttpStatus.OK);
+        return new ResponseEntity<>(textGroup, HttpStatus.OK);
     }
 
     /**

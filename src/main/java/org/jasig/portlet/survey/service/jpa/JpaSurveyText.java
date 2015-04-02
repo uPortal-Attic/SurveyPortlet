@@ -23,8 +23,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.jasig.portlet.survey.service.dto.ITextGroup;
 
 /**
@@ -46,12 +48,16 @@ public class JpaSurveyText implements ITextGroup, Serializable {
     @Column(name = "DEFINITION_TEXT", nullable = true, unique = false)
     private String definitionText;
     
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "HELP_TEXT", nullable = true, unique = false)
     private String helpText;
     
     @EmbeddedId
     private JpaSurveyTextPK id;
     
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "TEXT", nullable = true, unique = false)
     private String text;
 
