@@ -28,9 +28,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.jasig.portlet.survey.PublishedState;
 
 /**
@@ -53,6 +55,8 @@ public class JpaQuestion implements Serializable {
     @Column(name = "CANONICAL_NAME", nullable = true, unique = true)
     private String canonicalName;
     
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "HELP_TEXT", nullable = true)
     private String helpText;
 
@@ -67,6 +71,8 @@ public class JpaQuestion implements Serializable {
     @Column(name = "STATUS", nullable = false)
     private PublishedState status;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "TEXT", nullable = false)
     private String text;
     

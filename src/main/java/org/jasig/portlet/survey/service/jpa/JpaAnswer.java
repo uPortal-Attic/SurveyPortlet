@@ -25,7 +25,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 /**
  * The persistent class for the survey_answer database table.
@@ -41,6 +44,8 @@ public class JpaAnswer implements Serializable {
     @Column(name = "ALT_TEXT", nullable = true)
     private String altText;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "HELP_TEXT", nullable = true)
     private String helpText;
     
@@ -58,6 +63,8 @@ public class JpaAnswer implements Serializable {
     @Column(name = "IMG_WIDTH", nullable = true)
     private String imgWidth;
     
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "TEXT", nullable = true)
     private String text;
 
