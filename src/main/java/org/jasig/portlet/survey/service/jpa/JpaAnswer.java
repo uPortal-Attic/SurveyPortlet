@@ -18,6 +18,7 @@
  */
 package org.jasig.portlet.survey.service.jpa;
 
+import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -37,7 +38,7 @@ import org.hibernate.annotations.Type;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "answer")
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER")
 public class JpaAnswer implements Serializable {
     private static final long serialVersionUID = 1L;
 
