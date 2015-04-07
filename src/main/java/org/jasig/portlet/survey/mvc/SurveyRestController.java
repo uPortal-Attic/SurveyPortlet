@@ -84,7 +84,7 @@ public class SurveyRestController {
             log.error("Error linking question to survey", e);
         }
 
-        return new ResponseEntity<>(newSurvey, HttpStatus.CREATED);
+        return new ResponseEntity<>(newSurvey, status);
     }
 
     @ApiMethod(description = "Create a text group", responsestatuscode = "201")
