@@ -228,7 +228,7 @@ public class SurveyRestController {
      * Update survey
      * 
      * @param surveyId
-     * @param survey
+     * @param survey 
      *            {@link SurveyDTO} containing data to update
      * @return
      */
