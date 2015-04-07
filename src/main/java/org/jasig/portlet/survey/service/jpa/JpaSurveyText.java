@@ -18,6 +18,7 @@
  */
 package org.jasig.portlet.survey.service.jpa;
 
+import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -38,7 +39,7 @@ import org.jasig.portlet.survey.service.dto.ITextGroup;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "text")
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "TEXT")
 public class JpaSurveyText implements ITextGroup, Serializable {
     private static final long serialVersionUID = 1L;
 

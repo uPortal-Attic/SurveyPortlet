@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.jasig.portlet.survey.service.jpa;
+package org.jasig.portlet.survey.mvc.service;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -39,6 +39,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import org.jasig.portlet.survey.service.jpa.IJpaSurveyDao;
+import org.jasig.portlet.survey.service.jpa.ISurveyMapper;
+import org.jasig.portlet.survey.service.jpa.JpaQuestion;
+import org.jasig.portlet.survey.service.jpa.JpaSurvey;
+import org.jasig.portlet.survey.service.jpa.JpaSurveyQuestion;
+import org.jasig.portlet.survey.service.jpa.JpaSurveyText;
+import org.jasig.portlet.survey.service.jpa.JpaSurveyTextPK;
 
 /**
  * Service class for CRUD operations and moving to and from the business object models and the JPA impl for a survey.

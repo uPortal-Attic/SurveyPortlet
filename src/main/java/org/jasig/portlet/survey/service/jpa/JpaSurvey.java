@@ -18,6 +18,7 @@
  */
 package org.jasig.portlet.survey.service.jpa;
 
+import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
@@ -41,7 +42,7 @@ import org.jasig.portlet.survey.PublishedState;
  * @since 1.0
  */
 @Entity
-@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "survey")
+@Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY")
 public class JpaSurvey implements Serializable {
     private static final long serialVersionUID = 1L;
 
