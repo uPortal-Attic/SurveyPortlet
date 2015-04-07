@@ -57,8 +57,7 @@ public class SurveyRestController {
      * @param question
      * @return
      */
-    @ApiMethod(description = "Create a new question that is not associated with a survey.",
-        responsestatuscode = "201 - Created")
+    @ApiMethod(description = "Create a new question that is not associated with a survey.", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.POST, value = "/questions")
     public @ApiResponseObject ResponseEntity<QuestionDTO> addQuestion(@ApiBodyObject @RequestBody QuestionDTO question) {
         QuestionDTO newQuestion = dataService.createQuestion(question);
@@ -66,60 +65,31 @@ public class SurveyRestController {
     }
 
     /**
-     * Associate and existing question to and existing survey
-     * 
-     * @param survey
-     * @param question
-     * @param surveyQuestion
-     * @return 
-     */
-    @ApiMethod(description = "Associate and existing question to and existing survey",
-        responsestatuscode = "201")
-    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
-    public @ApiResponseObject ResponseEntity<Boolean> linkQuestionToSurvey( 
-                @ApiPathParam(name="survey") @PathVariable Long survey, 
-                @ApiPathParam(name="question") @PathVariable Long question, 
-                @ApiBodyObject @RequestBody SurveyQuestionDTO surveyQuestion) {
-        Boolean ret;
-        HttpStatus status = HttpStatus.CREATED;
-        
-        try {
-            ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
-    }
-        catch( Exception e) {
-            status = HttpStatus.BAD_REQUEST;
-            ret = false;
-            log.error( "Error linking question to survey", e);
-        }
-        return new ResponseEntity<>(ret, status);
-    }
-    
-    /**
      * Create a survey
      * 
      * @param survey
      * @return
      */
-    @ApiMethod(description = "Create a survey",
-        responsestatuscode = "201")
+    @ApiMethod(description = "Create a survey", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.POST, value = "/")
     public @ApiResponseObject ResponseEntity<SurveyDTO> addSurvey(@ApiBodyObject @RequestBody SurveyDTO survey) {
         SurveyDTO newSurvey = null;
         HttpStatus status = HttpStatus.CREATED;
-        
+
         try {
             newSurvey = dataService.createSurvey(survey);
         }
-        catch( Exception e) {
+        catch (Exception e) {
             status = HttpStatus.BAD_REQUEST;
-            log.error( "Error linking question to survey", e);
+            log.error("Error linking question to survey", e);
         }
-        
-        return new ResponseEntity<>(newSurvey, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(newSurvey, status);
     }
 
+    @ApiMethod(description = "Create a text group", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.POST, value = "/textGroup")
-    public ResponseEntity<ITextGroup> addTextGroup(@RequestBody TextGroupImpl textGroup) {
+    public @ApiResponseObject ResponseEntity<ITextGroup> addTextGroup(@ApiBodyObject @RequestBody TextGroupImpl textGroup) {
         ITextGroup tg = dataService.createTextGroup(textGroup);
         return new ResponseEntity<>(tg, HttpStatus.CREATED);
     }
@@ -129,9 +99,9 @@ public class SurveyRestController {
      * 
      * @return
      */
-    @ApiMethod
+    @ApiMethod(description = "Fetch all surveys", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public @ApiResponseObject ResponseEntity<List<SurveyDTO>> getAllSurveyQuestions() {
+    public @ApiResponseObject ResponseEntity<List<SurveyDTO>> getAllSurveys() {
         log.debug("Get all surveys");
         List<SurveyDTO> surveyDTOList = dataService.getAllSurveys();
         return new ResponseEntity<>(surveyDTOList, HttpStatus.OK);
@@ -143,10 +113,10 @@ public class SurveyRestController {
      * @param survey
      * @return
      */
-    @ApiMethod
+    @ApiMethod(description = "Fetch a survey by id", responsestatuscode = "201")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @RequestMapping(method = RequestMethod.GET, value = "/{survey}")
-    public @ApiResponseObject ResponseEntity<SurveyDTO> getSurvey(@ApiPathParam(name="survey") @PathVariable Long survey) {
+    public @ApiResponseObject ResponseEntity<SurveyDTO> getSurvey(@ApiPathParam(name = "survey") @PathVariable Long survey) {
         log.debug("Get survey: " + survey);
         SurveyDTO surveyDTO = dataService.getSurvey(survey);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
@@ -158,10 +128,10 @@ public class SurveyRestController {
      * @param surveyName
      * @return
      */
-    @ApiMethod
+    @ApiMethod(description = "Fetch a survey by name", responsestatuscode = "201")
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @RequestMapping(method = RequestMethod.GET, value = "/surveyByName/{surveyName}")
-    public ResponseEntity<SurveyDTO> getSurvey(@ApiPathParam(name="surveyName")@PathVariable String surveyName) {
+    public ResponseEntity<SurveyDTO> getSurvey(@ApiPathParam(name = "surveyName") @PathVariable String surveyName) {
         log.debug("Get survey: " + surveyName);
         SurveyDTO surveyDTO = dataService.getSurveyByName(surveyName);
         return new ResponseEntity(surveyDTO, HttpStatus.OK);
@@ -176,7 +146,7 @@ public class SurveyRestController {
     @ApiMethod
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @RequestMapping(method = RequestMethod.GET, value = "/{survey}/questions")
-    public ResponseEntity<SurveyDTO> getSurveyQuestions(@ApiPathParam(name="survey")@PathVariable Long survey) {
+    public ResponseEntity<SurveyDTO> getSurveyQuestions(@ApiPathParam(name = "survey") @PathVariable Long survey) {
         log.debug("Get survey: " + survey);
 
         List<SurveyQuestionDTO> sqList = dataService.getSurveyQuestions(survey);
@@ -189,6 +159,7 @@ public class SurveyRestController {
      * @param textKey
      * @return
      */
+    @ApiMethod(description = "Fetch a text group by key", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.GET, value = "/textGroup/{textKey}")
     public ResponseEntity<ITextGroup> getTextGroup(@PathVariable String textKey) {
         log.debug("Get text group by key: " + textKey);
@@ -197,20 +168,48 @@ public class SurveyRestController {
     }
 
     /**
+     * Associate an existing question to an existing survey
+     * 
+     * @param survey
+     * @param question
+     * @param surveyQuestion
+     * @return
+     */
+    @ApiMethod(description = "Associate an existing question to an existing survey", responsestatuscode = "201")
+    @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
+    public @ApiResponseObject ResponseEntity<Boolean> linkQuestionToSurvey(
+                    @ApiPathParam(name = "survey") @PathVariable Long survey,
+                    @ApiPathParam(name = "question") @PathVariable Long question,
+                    @ApiBodyObject @RequestBody SurveyQuestionDTO surveyQuestion) {
+        Boolean ret;
+        HttpStatus status = HttpStatus.CREATED;
+
+        try {
+            ret = dataService.addQuestionToSurvey(survey, question, surveyQuestion);
+        }
+        catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            ret = false;
+            log.error("Error linking question to survey", e);
+        }
+        return new ResponseEntity<>(ret, status);
+    }
+
+    /**
      * 
      * @param questionId
      * @param question
      * @return
      */
-    @ApiMethod(description = "Update a question",
-        responsestatuscode = "201 - Created")
+    @ApiMethod(description = "Update a question", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
-    public ResponseEntity<QuestionDTO> updateQuestion( @ApiPathParam(name="questionId") @PathVariable Long questionId, @ApiBodyObject @RequestBody QuestionDTO question) {
+    public ResponseEntity<QuestionDTO> updateQuestion(@ApiPathParam(name = "questionId") @PathVariable Long questionId,
+                    @ApiBodyObject @RequestBody QuestionDTO question) {
         HttpStatus status = HttpStatus.CREATED;
         QuestionDTO updatedQuestion = null;
-        
+
         try {
-        question.setId( questionId);
+            question.setId(questionId);
             updatedQuestion = dataService.updateQuestion(question);
 
             if (updatedQuestion == null) {
@@ -229,17 +228,17 @@ public class SurveyRestController {
      * Update survey
      * 
      * @param surveyId
-     * @param survey
+     * @param survey 
      *            {@link SurveyDTO} containing data to update
      * @return
      */
-    @ApiMethod(description = "Update survey",
-        responsestatuscode = "201 - Created")
+    @ApiMethod(description = "Update survey", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
-    public ResponseEntity<SurveyDTO> updateSurvey( @ApiPathParam(name="surveyId") @PathVariable Long surveyId, @ApiBodyObject @RequestBody SurveyDTO survey) {
-        HttpStatus status = HttpStatus.CREATED;       
+    public ResponseEntity<SurveyDTO> updateSurvey(@ApiPathParam(name = "surveyId") @PathVariable Long surveyId,
+                    @ApiBodyObject @RequestBody SurveyDTO survey) {
+        HttpStatus status = HttpStatus.CREATED;
         SurveyDTO updatedSurvey = null;
-        
+
         try {
             survey.setId(surveyId);
             updatedSurvey = dataService.updateSurvey(survey);
