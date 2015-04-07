@@ -20,8 +20,7 @@
     <!-- Dependency Version Properties -->
     <properties>
         <env>local</env>
-        <!-- <filters.file>../../filters/${env}.properties</filters.file>  -->
-        <filters.file>ci.properties</filters.file>
+        <filters.file>../../filters/${env}.properties</filters.file>
         <commons-lang.version>2.6</commons-lang.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <java.version>1.7</java.version>
@@ -535,27 +534,45 @@
                         <version>3.2.4.GA</version>
                     </dependency>
                 </dependencies>
-            </plugin>            
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.4.0</version>
-				<executions>
-					<execution>
-						<phase>data-import</phase>
-						<goals>
-							<goal>java</goal>
-						</goals>
-						<configuration>
-							<mainClass>org.jasig.portlet.survey.data.JsonDataImporter</mainClass>
-							<arguments>
-								<argument>arg0</argument>
-								<argument>arg1</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-            </plugin> 
+            </plugin>
+           
+            <plugin>
+		        <artifactId>maven-antrun-plugin</artifactId>
+		        <version>1.8</version>
+		        <executions>
+		            <execution>
+		                <phase>data-import</phase>
+		                <configuration>
+		                    <target>	
+		                        <echo>Running SQL load for survey</echo>
+                                <property file="target/${project.build.finalName}/WEB-INF/classes/datasource.properties"/>
+                                                   
+		                        <sql driver="${hibernate.connection.driver_class}"
+                                     url="${hibernate.connection.url}"
+                                     userid="${hibernate.connection.username}"
+                                     password="${hibernate.connection.password}"
+                                     src="${basedir}/src/main/sql/ciData.sql"
+                                />
+	  	                    </target>
+		                </configuration>
+		                <goals>
+		                    <goal>run</goal>
+		                </goals>
+		            </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>${jdbc.groupId}</groupId>
+                        <artifactId>${jdbc.artifactId}</artifactId>
+                        <version>${jdbc.version}</version>
+                        <scope>compile</scope>
+                    </dependency>
+                </dependencies>
+		    </plugin>
+<!--  
+Left here as an example of how to use jetty to stand up the portlet in order to access the services.
+Run Jetty with: mvn -Djetty.port=9090 jetty:run-war >& mavenJetty.log &
+Stop Jetty with: mvn jetty:stop
 			<plugin>
 			  <groupId>org.eclipse.jetty</groupId>
 			  <artifactId>jetty-maven-plugin</artifactId>
@@ -573,8 +590,8 @@
 				      <version>${portlet-api.version}</version>
 			      </dependency>
 			  </dependencies>
-
 			</plugin>
+-->
         </plugins>
     </build>
 </project>
