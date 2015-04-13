@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,6 +58,7 @@ public class SurveyRestController {
      * @param question
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Create a new question that is not associated with a survey.", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.POST, value = "/questions")
     public @ApiResponseObject ResponseEntity<QuestionDTO> addQuestion(@ApiBodyObject @RequestBody QuestionDTO question) {
@@ -70,6 +72,7 @@ public class SurveyRestController {
      * @param survey
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Create a survey", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.POST, value = "/")
     public @ApiResponseObject ResponseEntity<SurveyDTO> addSurvey(@ApiBodyObject @RequestBody SurveyDTO survey) {
@@ -87,6 +90,7 @@ public class SurveyRestController {
         return new ResponseEntity<>(newSurvey, status);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Create a text group", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.POST, value = "/textGroup")
     public @ApiResponseObject ResponseEntity<ITextGroup> addTextGroup(@ApiBodyObject @RequestBody TextGroupImpl textGroup) {
@@ -175,6 +179,7 @@ public class SurveyRestController {
      * @param surveyQuestion
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Associate an existing question to an existing survey", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.POST, value = "/{survey}/questions/{question}")
     public @ApiResponseObject ResponseEntity<Boolean> linkQuestionToSurvey(
@@ -201,6 +206,7 @@ public class SurveyRestController {
      * @param question
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Update a question", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.PUT, value = "/questions/{questionId}")
     public ResponseEntity<QuestionDTO> updateQuestion(@ApiPathParam(name = "questionId") @PathVariable Long questionId,
@@ -232,6 +238,7 @@ public class SurveyRestController {
      *            {@link SurveyDTO} containing data to update
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Update survey", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
     public ResponseEntity<SurveyDTO> updateSurvey(@ApiPathParam(name = "surveyId") @PathVariable Long surveyId,
