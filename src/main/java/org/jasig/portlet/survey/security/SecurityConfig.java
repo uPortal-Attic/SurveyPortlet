@@ -46,10 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         preAuthenticatedProvider.setPreAuthenticatedUserDetailsService(detailsService);
-		auth.authenticationProvider(preAuthenticatedProvider);
-	}
+        auth.authenticationProvider(preAuthenticatedProvider);
+    }
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
