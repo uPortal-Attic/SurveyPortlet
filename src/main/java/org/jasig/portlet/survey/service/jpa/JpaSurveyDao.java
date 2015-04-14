@@ -79,7 +79,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
 
     @Override
     public JpaQuestion createQuestion(JpaQuestion question) {
-        setupQuestionForSave(question);
+        setupQuestionForSave(question, true);
         JpaQuestion q = questionRepository.save(question);
         return q;
     }
@@ -101,7 +101,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
                 sq.getId().setJpaSurvey(survey);
 
                 JpaQuestion q = sq.getId().getJpaQuestion();
-                setupQuestionForSave(q);
+                setupQuestionForSave(q, true);
                 q = createQuestion(q);
                 sq.getId().setJpaQuestion(q);
             }
@@ -167,14 +167,15 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return result == null ? new JpaSurveyText() : result;
     }
 
-    private void setupQuestionForSave(JpaQuestion jpaQuestion) {
+    private void setupQuestionForSave(JpaQuestion jpaQuestion, boolean createAnswer) {
         Set<JpaQuestionAnswer> qaList = jpaQuestion.getJpaQuestionAnswers();
         if (qaList != null && !qaList.isEmpty()) {
             for (JpaQuestionAnswer qa : qaList) {
                 JpaAnswer answer = qa.getId().getJpaAnswer();
                 // This is not cascading... no idea why not
                 // so save it here first
-                createAnswer(answer);
+                if( createAnswer)
+                    createAnswer(answer);
                 qa.getId().setJpaQuestion(jpaQuestion);
                 qa.getId().setJpaAnswer(answer);
             }
@@ -183,6 +184,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
 
     @Override
     public JpaQuestion updateQuestion(JpaQuestion question) {
+        setupQuestionForSave( question, false);
         JpaQuestion updatedQuestion = questionRepository.save(question);
         return updatedQuestion;
     }
