@@ -65,7 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .sessionManagement()
                 .sessionFixation().none()
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER);
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                .and()
+            .csrf()
+                .disable();
+                
     }
     
 }
