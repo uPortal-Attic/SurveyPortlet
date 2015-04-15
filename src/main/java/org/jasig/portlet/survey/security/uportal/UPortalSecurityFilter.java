@@ -43,11 +43,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  */
 public final class UPortalSecurityFilter implements RenderFilter {
 
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_USER = "ROLE_USER";
+    
     public static final String AUTHENTICATION_TOKEN_KEY
             = UPortalSecurityFilter.class.getName() + ".GRANTED_AUTHORITIES_KEY";
     public static final Object SSP_OWNER = "SSP";
 
-    private static final Logger LOGGER = LoggerFactory
+    private static final Logger logger = LoggerFactory
             .getLogger(UPortalSecurityFilter.class);
 
     @Override
@@ -78,15 +81,15 @@ public final class UPortalSecurityFilter implements RenderFilter {
 
         boolean isSurveyAdmin = req.isUserInRole("survey-admin");
         if (isSurveyAdmin) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authorities.add(new SimpleGrantedAuthority(ROLE_ADMIN));
         }
 
         boolean isSurveyUser = req.isUserInRole("survey-user");
         if (isSurveyUser) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            authorities.add(new SimpleGrantedAuthority(ROLE_USER));
         }
 
-        LOGGER.debug("Setting up GrantedAutorities for user '{}' -- {}",
+        logger.debug("Setting up GrantedAutorities for user '{}' -- {}",
                 principal, authorities.toString());
 
         final UPortalUserDetails userDetails = new UPortalUserDetails(principal, Collections.unmodifiableSet(authorities));

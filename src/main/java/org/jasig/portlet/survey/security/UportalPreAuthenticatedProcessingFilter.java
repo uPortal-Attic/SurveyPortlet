@@ -47,6 +47,6 @@ public class UportalPreAuthenticatedProcessingFilter extends J2eePreAuthenticate
 
     @Override
     protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
-        return "admin";
+        return "this-value-is-ignored";
     }
 }
