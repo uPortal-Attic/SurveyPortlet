@@ -57,6 +57,32 @@
             <role-link>Authenticated Users</role-link>
         </security-role-ref>
     </portlet>
+    
+    <portlet>
+        <portlet-name>survey-admin-portlet</portlet-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/survey-admin-portlet.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Survey Admin Portlet</title>
+        </portlet-info>
+        <security-role-ref>
+            <role-name>survey-admin</role-name>
+            <role-link>Portal Administrators</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>survey-user</role-name>
+            <role-link>Authenticated Users</role-link>
+        </security-role-ref>
+    </portlet>
+    
     <user-attribute>
         <description>User Display Name</description>
         <name>displayName</name>
