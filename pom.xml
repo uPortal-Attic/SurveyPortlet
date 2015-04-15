@@ -32,6 +32,7 @@
         <servlet-api.version>3.0.1</servlet-api.version>
         <spring.version>4.1.5.RELEASE</spring.version>        
         <spring-data.version>1.7.2.RELEASE</spring-data.version>
+        <spring-security.version>4.0.0.RELEASE</spring-security.version>
         <!-- The JDBC Driver used by db-init -->
         <jdbc.groupId>org.postgresql</jdbc.groupId>
         <jdbc.artifactId>postgresql</jdbc.artifactId>
@@ -123,6 +124,21 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-jpa</artifactId>
                 <version>${spring-data.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.extensions</groupId>
+                <artifactId>spring-security-saml2-core</artifactId>
+                <version>1.0.0.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>taglibs</groupId>
@@ -277,8 +293,20 @@
             <artifactId>spring-tx</artifactId>
         </dependency>
         <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.extensions</groupId>
+            <artifactId>spring-security-saml2-core</artifactId>
         </dependency>
         <dependency>
             <groupId>taglibs</groupId>

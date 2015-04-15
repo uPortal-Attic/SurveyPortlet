@@ -21,11 +21,11 @@
 -->
 
 
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
-                            http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
-    version="1.0">
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd
+                            http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+    version="2.0">
 
     <portlet>
         <portlet-name>survey-portlet</portlet-name>
@@ -48,14 +48,39 @@
         <portlet-info>
             <title>survey-portlet Portlet</title>
         </portlet-info>
+        <security-role-ref>
+            <role-name>survey-admin</role-name>
+            <role-link>Portal Administrators</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>survey-user</role-name>
+            <role-link>Authenticated Users</role-link>
+        </security-role-ref>
     </portlet>
     <user-attribute>
         <description>User Display Name</description>
         <name>displayName</name>
     </user-attribute>
     <user-attribute>
+        <name>user.login.id</name>
+    </user-attribute>
+    <user-attribute>
         <description>User Email Address</description>
         <name>mail</name>
     </user-attribute>
 
+    <filter>
+		<filter-name>SspSecurityFilter</filter-name>
+		<filter-class>org.jasig.portlet.survey.security.uportal.UPortalSecurityFilter</filter-class> 
+		<lifecycle>RENDER_PHASE</lifecycle>
+	</filter> 
+
+	<filter-mapping> 
+		<filter-name>SspSecurityFilter</filter-name>
+		<portlet-name>*</portlet-name> 
+	</filter-mapping>
+    <filter-mapping>
+		<filter-name>SspSecurityFilter</filter-name>
+		<portlet-name>*</portlet-name>
+	</filter-mapping>
 </portlet-app>
