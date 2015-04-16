@@ -48,6 +48,14 @@
         <portlet-info>
             <title>survey-portlet Portlet</title>
         </portlet-info>
+        
+        <portlet-preferences>
+            <preference>
+                <name>surveyName</name>
+                <value></value>
+            </preference>
+        </portlet-preferences>
+        
         <security-role-ref>
             <role-name>survey-admin</role-name>
             <role-link>Portal Administrators</role-link>
