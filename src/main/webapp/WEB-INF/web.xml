@@ -43,9 +43,7 @@
     </listener>
 
     <listener>
-        <listener-class>
-                org.springframework.web.util.Log4jConfigListener
-        </listener-class>
+        <listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
     </listener>
 
     <listener>
