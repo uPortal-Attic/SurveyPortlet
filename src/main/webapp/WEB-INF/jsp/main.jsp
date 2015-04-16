@@ -73,124 +73,55 @@
 
 
 <div id="${n}-survey-portlet" ng-cloak class="surveys" ng-controller="SurveyCtrl">
-  <section
-    class="survey"
-    ng-repeat="survey in surveys"
-    ng-show="survey.surveyQuestions.length"
-    ng-init="current = {q:0}; survey.editable = true">
-    <header>
-      <span class="title">{{survey.title}}:</span>
-      <span class="description">{{survey.description}}</span>
-      <a class="btn btn-md btn-warning" ng-click="edit = !edit">Edit Survey <span class="glyphicon glyphicon-pencil"></span></a>
-      <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
-    </header>
+    <section
+        class="survey"
+        ng-show="survey.surveyQuestions.length"
+        ng-init="current = {q:0}; survey.editable = true">
+        <header>
+            <span class="title">{{survey.title}}:</span>
+            <span class="description">{{survey.description}}</span>
+            <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </header>
 
-    <${n}-modal class="survey-modal modal-content clearfix" shown="survey.shown">
-    <header class="modal-header">
-      <span class="title">{{survey.title}}:</span>
-      <span class="description">{{survey.description}}</span>
-    </header>
-    <div class="modal-body">
-      <div class="question">
-        <div class="clearfix survey-nav">
-          Question {{current.q+1}} of {{survey.surveyQuestions.length}}
-          <div class="pull-right">
-            <a class="btn btn-success btn-lg" ng-disabled="current.q < 1" ng-click="current.q = current.q-1">
-              Prev
-              <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a
-              class="btn btn-success btn-lg"
-              ng-disabled="current.q >= survey.surveyQuestions.length-1"
-              ng-click="current.q = current.q+1">
-              Next <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-          </div>
-        </div>
-        <${n}-survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-primary btn-lg" ng-click="save(survey, surveyData)")>Save</a>
-        <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
-      </div>
-    </div>
-    </${n}-modal>
-
-    <!-- Edit Mode -->
-    <div class="edit-mode" ng-show="edit">
-      <div class="col-sm-12">
-        <a ng-click="save(survey)" class="col-sm-2 btn btn-success btn-lg">Save <span class="glyphicon glyphicon-save"></span></a>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-2 control-label" for="title-{{$index}}">Title</label>
-        <div class="col-sm-10">
-          <input class="form-control" ng-model="survey.title" type="text" id="title-{{$index}}" placeholder="Title">
-        </div>
-      </div>
-      <div class="form-group form-group-sm">
-        <label class="col-sm-2 control-label" for="title-{{$index}}">Desription</label>
-        <div class="col-sm-10">
-          <input class="form-control" ng-model="survey.description" type="text" id="description-{{$index}}" placeholder="Title">
-        </div>
-      </div>
-
-      <!-- Only can swap questions within survey -->
-      <div
-        class="col-sm-12 question"
-        ng-drag="uni/survey/{{::survey.id}}"
-        allow-drop="uni/survey/{{::survey.id}}"
-        ng-drop="swapSeq(q, $from.q)"
-        ng-repeat="q in survey.surveyQuestions | orderBy:'sequence'">
-
-        <h2 ng-click="collapsed = !collapsed" class="col-sm-12">
-          Question {{$index+1}} -- {{q.question.canonicalName}}
-          <span class="glyphicon glyphicon-chevron-down collapser" ng-class="{'flipped': collapsed}"></span>
-        </h2>
-        <div class="content clearfix" ng-show="!collapsed">
-
-          <div class="clearfix">
-            <div class="form-group form-group-sm">
-              <label class="col-sm-2 control-label" for="allowed-answers">Allowed Answers</label>
-              <div class="col-sm-10 col-lg-4">
-                <input class="form-control" ng-model="q.numAllowedAnswers" type="number" id="allowed-answers" placeholder="Small input">
-              </div>
+        <${n}-modal class="survey-modal modal-content clearfix" shown="survey.shown">
+        <header class="modal-header">
+            <span class="title">{{survey.title}}:</span>
+            <span class="description">{{survey.description}}</span>
+        </header>
+        <div class="modal-body">
+            <div class="question">
+                <div class="clearfix survey-nav">
+                    Question {{current.q+1}} of {{survey.surveyQuestions.length}}
+                    <div class="pull-right">
+                        <a class="btn btn-success btn-lg" ng-disabled="current.q < 1" ng-click="current.q = current.q-1">
+                            Prev
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a
+                            class="btn btn-success btn-lg"
+                            ng-disabled="current.q >= survey.surveyQuestions.length-1"
+                            ng-click="current.q = current.q+1">
+                            Next <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </div>
+                <${n}-survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></${n}-survey-question>
             </div>
-            <div class="form-group form-group-sm" ng-repeat="(k, v) in q.question" ng-show="k != 'questionAnswers'">
-              <label class="col-sm-2 control-label" for="{{k}}">{{k}}</label>
-              <div class="col-sm-10 col-lg-4">
-                <input class="form-control" type="text" ng-model="q.question[k]" id="{{k}}" placeholder="{{k}}">
-              </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary btn-lg" ng-click="save(surveyData)")>Save</a>
+                <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
             </div>
-          </div>
-
-          <div
-            class="answer"
-            ng-drag="uni/question/{{::q.question.id}}"
-            allow-drop="uni/question/{{::q.question.id}}"
-            ng-drop="swapSeq(a, $from.a)";
-            ng-repeat="a in q.question.questionAnswers | orderBy:'sequence'">
-            <!-- Only can swap answers within question -->
-            <h3 class="col-sm-12"> Answer {{$index+1}} -- {{a.answer.text}}</h3>
-            <div class="form-group form-group-sm" ng-repeat="(k, v) in a.answer">
-              <label class="col-sm-2 control-label" for="{{k}}">{{k}}</label>
-              <div class="col-sm-10 col-lg-4">
-                <input class="form-control" ng-model="a.answer[k]" type="text" id="{{k}}" placeholder="{{k}}">
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-      <a ng-click="save(survey)" class="btn btn-success btn-lg">Save <span class="glyphicon glyphicon-save"></span></a>
-
-    </div>
-  </section>
+        </${n}-modal>
+    </section>
 </div>
 
 
 <script type="text/javascript" charset="utf-8">
     (function(window, _) {
         var MODULE_NAME = '${n}-survey-portlet';
+        var PROFILE_ROOT = 'https://portal-mock-api-dev.herokuapp.com/api/';
+        var USER = 'admin';
 
         if (!window.angular) {
             var ANGULAR_SCRIPT_ID = 'angular-uportal-script';
@@ -231,11 +162,9 @@
 
                 var surveyName = "${portletPreferencesValues['surveyName'][0]}";
 
-                console.log(surveyName);
-
-                $http.get('/survey-portlet/v1/surveys/byName/' + surveyName)
-                .success(function(surveys) {
-                    $scope.surveys = surveys;
+                $http.get('/survey-portlet/v1/surveys/surveyByName/' + surveyName)
+                .success(function(survey) {
+                    $scope.survey = survey;
                 });
 
                 $scope.toggle = function(o) {
@@ -243,42 +172,56 @@
                     o.shown = !o.shown;
                 };
 
-                $scope.save = function(survey) {
-                    var method = survey.id ? 'PUT' : 'POST';
-                    var base = '/survey-portlet/v1/surveys/';
-                    var url = survey.id ? base + survey.id : base ;
+                $http.get(PROFILE_ROOT + 'surveyAnswers', {
+                    params: {
+                        user: USER,
+                    }
+                }).success(function(d) {
+                    if (d.length > 0) {
+                        $scope.surveyData = d[0];
+                    }
+                });
+
+                $scope.save = function(s) {
+                    var method = s.id ? 'PUT' : 'POST';
+                    var url = PROFILE_ROOT + 'surveyAnswers' + (s.id ? '/' + s.id : '');
+
+                    ['id', 'user'].forEach(function(k) {s[k] = undefined;});
+
+                    var data = {
+                        surveyName: surveyName,
+                        user: USER,
+                        answers: _.map(s, function(a, q) {
+                            var q = {
+                                question: q
+                            };
+
+                            if (_.isObject(a)) {
+                                //Map<answer>bool
+                                q.answer = _.reduce(a, function(m, v, k) {
+                                    if (v) { m.push(k); }
+                                    return m
+                                },[]);
+                            } else {
+                                //Primitive data type
+                                if(a) { q.answer = a; }
+                            }
+
+                            return q;
+                        })
+                    };
+
 
                     $http({
                         method: method,
                         url: url,
-                        data: survey,
+                        data: data
+                    }).success(function(d) {
+                        _.extend(s, d);
                     });
-
-                    survey = angular.copy(survey);
-
-                    _.each(survey.surveyQuestions, function(q, i) {
-                        q = survey.surveyQuestions[i] = q.question;
-
-                        // _.each(q.questionAnswers, function(a, j) {
-                        //   q.questionAnswers[j] = a.answer;
-                        // });
-
-                        $http({
-                            method: 'PUT',
-                            url: base + 'questions/' + q.id,
-                            data: q
-                        });
-                    });
-
                 };
 
-                $scope.swapSeq = function(ele1, ele2) {
-                    var tmp = ele1.sequence;
-                    ele1.sequence = ele2.sequence;
-                    ele2.sequence = tmp;
-                };
-
-                $scope.surveyData = [];
+                $scope.surveyData = {};
             })
             .directive('${n}SurveyQuestion', function () {
                 return {
@@ -287,9 +230,9 @@
                         '<div class="answer" ng-repeat="ans in def.question.questionAnswers | orderBy:\'sequence\'">' +
                             '<label title="{{ans.answer.altText}}" aria-label="{{ans.answer.altText}}" >' +
                                 '<img ng-if="ans.answer.imgUrl" ng-src="{{ans.answer.imgUrl}}" height="25px" width="25px"></img>' +
-                                '<input ng-if="def.numAllowedAnswers === 1" type="radio" ng-model="survey[def.sequence-1][def.question.id]" ng-value="ans.answer.id" />' +
+                                '<input ng-if="def.numAllowedAnswers === 1" type="radio" ng-model="survey[def.question.id]" ng-value="ans.answer.id" />' +
+                                '<input ng-if="def.numAllowedAnswers > 1" type="checkbox" ng-model="survey[def.question.id][ans.answer.id]"/>' +
                                 '{{ans.answer.text}}' +
-                                '<input ng-if="def.numAllowedAnswers > 1" type="checkbox" ng-model="survey[def.sequence-1][def.question.id][ans.answer.id]"/>' +
                             '</label>' +
                             '<span class="glyphicon glyphicon-info-sign" ng-if="ans.answer.helpText" title="{{ans.answer.helpText}}"></span>' +
                         '</div>' +
@@ -314,7 +257,6 @@
                             e.originalEvent.dataTransfer.setData('ngdrag/type', iAttrs.ngDrag || 'ngdrag/id');
                             e.originalEvent.dataTransfer.setData(iAttrs.ngDrag || 'ngdrag/id', scope.$id);
                             DragData.add(scope);
-                            console.log('originaltype', iAttrs.ngDrag);
                         });
                     }
                 };
