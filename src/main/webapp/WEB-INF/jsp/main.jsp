@@ -25,11 +25,40 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
 
 <c:set var="nc"><portlet:namespace/></c:set>
-<c:set var="n" value="${fn:toLowerCase(nc)}"/>
+<c:set var="lc" value="${fn:toLowerCase(nc)}" />
+<c:set var="n" value="${fn:replace(lc, '_', '')}"/>
 
 <style>
     [ng-cloak] {
         display: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .modal-hider {
+        display: block;
+        overflow: auto;
+        overflow-y: scroll;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1050;
+
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    #${n}-survey-portlet ${n}-modal {
+      background-color: white;
+      z-index: 1051;
+      position: fixed;
+      width: 50%;
+      top: 25%;
+      left: 25%;
+
     }
 
     #${n}-survey-portlet.surveys {
@@ -53,7 +82,7 @@
       <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
     </header>
 
-    <${n}-modal class="modal-content" shown="survey.shown">
+    <${n}-modal class="survey-modal modal-content clearfix" shown="survey.shown">
     <header class="modal-header">
       <span class="title">{{survey.title}}:</span>
       <span class="description">{{survey.description}}</span>
@@ -364,7 +393,6 @@
                         var hasBeenShown;
 
                         $scope.$watch('shown', function(shown) {
-
                             if(shown) {
                                 hasBeenShown = true;
 
