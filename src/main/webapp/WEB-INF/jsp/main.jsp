@@ -24,6 +24,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
 
+<portlet:defineObjects/>
+
 <c:set var="nc"><portlet:namespace/></c:set>
 <c:set var="lc" value="${fn:toLowerCase(nc)}" />
 <c:set var="n" value="${fn:replace(lc, '_', '')}"/>
@@ -35,6 +37,17 @@
 
     .hidden {
         display: none;
+    }
+
+
+    #${n}-survey-portlet ${n}-modal {
+      background-color: white;
+      color: black;
+      z-index: 1051;
+      position: fixed;
+      width: 50%;
+      top: 25%;
+      left: 25%;
     }
 
     .modal-hider {
@@ -49,16 +62,6 @@
         z-index: 1050;
 
         background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    #${n}-survey-portlet ${n}-modal {
-      background-color: white;
-      z-index: 1051;
-      position: fixed;
-      width: 50%;
-      top: 25%;
-      left: 25%;
-
     }
 
     #${n}-survey-portlet.surveys {
@@ -143,7 +146,7 @@
           Question {{$index+1}} -- {{q.question.canonicalName}}
           <span class="glyphicon glyphicon-chevron-down collapser" ng-class="{'flipped': collapsed}"></span>
         </h2>
-        <div class="content clearfix" ng-class="{'collapsed': collapsed}">
+        <div class="content clearfix" ng-show="!collapsed">
 
           <div class="clearfix">
             <div class="form-group form-group-sm">
@@ -182,7 +185,6 @@
 
     </div>
   </section>
-  {{surveyData}}
 </div>
 
 
@@ -226,7 +228,12 @@
              * Controller of the ngPortalApp
              */
             .controller('SurveyCtrl', function ($scope, $http, $filter) {
-                $http.get('/survey-portlet/v1/surveys/')
+
+                var surveyName = "${portletPreferencesValues['surveyName'][0]}";
+
+                console.log(surveyName);
+
+                $http.get('/survey-portlet/v1/surveys/byName/' + surveyName)
                 .success(function(surveys) {
                     $scope.surveys = surveys;
                 });
