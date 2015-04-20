@@ -101,6 +101,9 @@ html, html body, html div.view {
   z-index: 1050;
   background-color: rgba(0, 0, 0, 0.666667); }
 
+[ng-cloak] {
+  display: none; }
+
 /*# sourceMappingURL=../../.tmp/styles/main.css.map */
 </style>
 

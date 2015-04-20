@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+<!-- uportal-use-angular -->
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -100,9 +101,11 @@ html, html body, html div.view {
   z-index: 1050;
   background-color: rgba(0, 0, 0, 0.666667); }
 
+[ng-cloak] {
+  display: none; }
+
 /*# sourceMappingURL=../../.tmp/styles/main.css.map */
 </style>
-
 
 <div id="${n}-survey-portlet" ng-cloak class="surveys" ng-controller="SurveyCtrl">
     <section
