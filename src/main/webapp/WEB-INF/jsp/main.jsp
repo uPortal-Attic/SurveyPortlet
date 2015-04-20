@@ -57,6 +57,7 @@
     margin-top: 1.5em; }
   .surveys section.survey .survey-modal {
     background-color: white;
+    color: black;
     z-index: 1051;
     position: fixed;
     width: 40%;
