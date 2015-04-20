@@ -61,7 +61,7 @@
     position: fixed;
     width: 40%;
     left: 30%;
-    right: 30%; }
+    top: 10%; }
 .surveys .edit-mode .question {
   margin-bottom: 1em;
   padding: 1em; }
