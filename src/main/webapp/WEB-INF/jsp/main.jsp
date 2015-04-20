@@ -31,82 +31,76 @@
 <c:set var="n" value="${fn:replace(lc, '_', '')}"/>
 
 <style>
-    .surveys section.survey {
-        padding: 3em;
-        background-color: white;
-        position: relative;
-    margin: 0 auto; }
-    .surveys section.survey header {
+.surveys section.survey {
+  padding: 3em;
+  position: relative;
+  margin: 0 auto; }
+  .surveys section.survey header {
     margin-bottom: 1.5em; }
     .surveys section.survey header .title {
-        font-size: 1.3em;
-        font-weight: bold;
-    margin-right: 0.5em; }
-    .surveys section.survey .survey-nav {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-right: 0.5em; }
+  .surveys section.survey .survey-nav {
     margin-bottom: 1.5em; }
-    .surveys section.survey .question survey-question section {
-        background-color: #EEE;
+  .surveys section.survey .question survey-question section {
     padding: 0; }
     .surveys section.survey .question survey-question section > label {
-        padding: 0.75em 1.5em;
-        width: 100%;
-        background-color: #CCC;
-    vertical-align: top; }
+      padding: 0.75em 1.5em;
+      width: 100%;
+      vertical-align: top; }
     .surveys section.survey .question survey-question section .answer {
-    padding: 0 1.5em; }
-    .surveys section.survey .question survey-question section .answer label {
-        background-color: none;
-    font-weight: normal; }
-    .surveys section.survey .survey-glob {
+      padding: 0 1.5em; }
+      .surveys section.survey .question survey-question section .answer label {
+        font-weight: normal; }
+  .surveys section.survey .survey-glob {
     margin-top: 1.5em; }
-    .surveys section.survey modal {
-        position: relative;
-        float: left;
-        width: 100%;
-        min-height: 1px;
-        padding-left: 15px;
-        padding-right: 15px;
-        position: relative;
-        min-height: 1px;
-        padding-left: 15px;
-        padding-right: 15px;
-        background-color: white;
-        z-index: 1051;
-    position: absolute; }
-    @media (min-width: 992px) {
-        .surveys section.survey modal {
-            float: left;
-    width: 66.6666666667%; } }
-    @media (min-width: 992px) {
-        .surveys section.survey modal {
-    margin-left: 16.6666666667%; } }
-    .surveys .edit-mode .question {
-        margin-bottom: 1em;
-        padding: 1em;
-    background-color: #CCC; }
-    .surveys .edit-mode .answer {
-        margin-bottom: 1em;
-        padding: 1em;
-    background-color: #AAA; }
-    .surveys .edit-mode .content.collapsed {
-    display: none; }
+  .surveys section.survey .survey-modal {
+    background-color: white;
+    z-index: 1051;
+    position: fixed;
+    width: 40%;
+    left: 30%;
+    right: 30%; }
+.surveys .edit-mode .question {
+  margin-bottom: 1em;
+  padding: 1em; }
+.surveys .edit-mode .answer {
+  margin-bottom: 1em;
+  padding: 1em; }
+.surveys .edit-mode .content.collapsed {
+  display: none; }
 
-    .collapser {
-        transition: transform 0.25s ease;
-    transform: rotateZ(0); }
-    .collapser.flipped {
+.collapser {
+  transition: transform 0.25s ease;
+  transform: rotateZ(0); }
+  .collapser.flipped {
     transform: rotateZ(-180deg); }
 
-    .browsehappy {
-        margin: 0.2em 0;
-        background: #ccc;
-        color: #000;
-    padding: 0.2em 0; }
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
 
-    html, html body, html div.view {
-        display: block;
-        min-height: 100%;
-    height: 100%; }
+html, html body, html div.view {
+  display: block;
+  min-height: 100%;
+  height: 100%; }
+
+.modal-hider {
+  display: block;
+  overflow: auto;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  background-color: rgba(0, 0, 0, 0.666667); }
+
+/*# sourceMappingURL=../../.tmp/styles/main.css.map */
 </style>
 
 
