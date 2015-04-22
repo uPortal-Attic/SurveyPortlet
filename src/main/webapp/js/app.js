@@ -2,7 +2,7 @@ window.up = window.up || {};
 
 window.up.startSurveyPortlet = function(window, _, params) {
     'use strict';
-
+    
     var surveyName = params.surveyName || '';
     var n = params.n;
 
@@ -47,7 +47,7 @@ window.up.startSurveyPortlet = function(window, _, params) {
          * Controller of the ngPortalApp
          */
         .controller('SurveyCtrl', function ($scope, $http, $filter) {
-            console.log(surveyName);
+
             $http.get('/survey-portlet/v1/surveys/' + (surveyName ? 'surveyByName/' + surveyName : ''))
             .success(function(surveys) {
                 $scope.surveys = _.isArray(surveys) ? surveys : [surveys];
@@ -63,7 +63,6 @@ window.up.startSurveyPortlet = function(window, _, params) {
                     user: USER,
                 }
             }).success(function(d) {
-                //TODO FIXME
                 if (d.length > 0) {
                     $scope.surveyData = d[0];
                 }
@@ -111,13 +110,13 @@ window.up.startSurveyPortlet = function(window, _, params) {
                 template: '<section class="question">' +
                     '<label class="text">{{def.question.text}}</label>' +
                     '<div class="answer" ng-repeat="ans in def.question.questionAnswers | orderBy:\'sequence\'">' +
-                    '<label title="{{ans.answer.altText}}" aria-label="{{ans.answer.altText}}" >' +
-                    '<img ng-if="ans.answer.imgUrl" ng-src="{{ans.answer.imgUrl}}" height="25px" width="25px"></img>' +
-                    '<input ng-if="def.numAllowedAnswers === 1" type="radio" ng-model="survey[def.question.id]" ng-value="ans.answer.id" />' +
-                    '<input ng-if="def.numAllowedAnswers > 1" type="checkbox" ng-model="survey[def.question.id][ans.answer.id]"/>' +
-                    '{{ans.answer.text}}' +
-                    '</label>' +
-                    '<span class="glyphicon glyphicon-info-sign" ng-if="ans.answer.helpText" title="{{ans.answer.helpText}}"></span>' +
+                        '<label title="{{ans.answer.altText}}" aria-label="{{ans.answer.altText}}" >' +
+                            '<img ng-if="ans.answer.imgUrl" ng-src="{{ans.answer.imgUrl}}" height="25px" width="25px"></img>' +
+                            '<input ng-if="def.numAllowedAnswers === 1" type="radio" ng-model="survey[def.question.id]" ng-value="ans.answer.id" />' +
+                            '<input ng-if="def.numAllowedAnswers > 1" type="checkbox" ng-model="survey[def.question.id][ans.answer.id]"/>' +
+                            '{{ans.answer.text}}' +
+                        '</label>' +
+                        '<span class="glyphicon glyphicon-info-sign" ng-if="ans.answer.helpText" title="{{ans.answer.helpText}}"></span>' +
                     '</div>' +
                     '</section>',
                 restrict: 'E',
