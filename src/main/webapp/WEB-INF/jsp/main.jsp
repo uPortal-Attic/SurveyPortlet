@@ -77,9 +77,8 @@
     </section>
 </div>
 
-<script src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
+<script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-
     window.up.startSurveyPortlet(window, underscore, {
         n: '${n}',
         surveyName: "${portletPreferencesValues['surveyName'][0]}"

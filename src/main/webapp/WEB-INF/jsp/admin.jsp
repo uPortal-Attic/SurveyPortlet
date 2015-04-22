@@ -46,34 +46,34 @@
         </header>
 
         <modal class="survey-modal modal-content clearfix" shown="survey.shown">
-        <header class="modal-header">
-            <span class="title">{{survey.title}}:</span>
-            <span class="description">{{survey.description}}</span>
-        </header>
-        <div class="modal-body">
-            <div class="question">
-                <div class="clearfix survey-nav">
-                    Question {{current.q+1}} of {{survey.surveyQuestions.length}}
-                    <div class="pull-right">
-                        <a class="btn btn-success btn-lg" ng-disabled="current.q < 1" ng-click="current.q = current.q-1">
-                            Prev
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a
-                            class="btn btn-success btn-lg"
-                            ng-disabled="current.q >= survey.surveyQuestions.length-1"
-                            ng-click="current.q = current.q+1">
-                            Next <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
+            <header class="modal-header">
+                <span class="title">{{survey.title}}:</span>
+                <span class="description">{{survey.description}}</span>
+            </header>
+            <div class="modal-body">
+                <div class="question">
+                    <div class="clearfix survey-nav">
+                        Question {{current.q+1}} of {{survey.surveyQuestions.length}}
+                        <div class="pull-right">
+                            <a class="btn btn-success btn-lg" ng-disabled="current.q < 1" ng-click="current.q = current.q-1">
+                                Prev
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a
+                                class="btn btn-success btn-lg"
+                                ng-disabled="current.q >= survey.surveyQuestions.length-1"
+                                ng-click="current.q = current.q+1">
+                                Next <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
                     </div>
+                    <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
                 </div>
-                <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btn-lg" ng-click="save(survey, surveyData)")>Save</a>
+                    <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
+                </div>
             </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary btn-lg" ng-click="save(survey, surveyData)")>Save</a>
-                <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
-            </div>
-        </div>
         </modal>
 
         <!-- Edit Mode -->
@@ -144,7 +144,9 @@
     </section>
 </div>
 
-<script id="${n}-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
+<script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    window.up.startSurveyPortlet(window, underscore, {n: '${n}'});
+    window.up.startSurveyPortlet(window, underscore, {
+        n: '${n}'
+    });
 </script>
