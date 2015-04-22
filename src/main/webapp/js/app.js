@@ -63,10 +63,37 @@ window.up.startSurveyPortlet = function(window, _, params) {
                     user: USER,
                 }
             }).success(function(d) {
-                if (d.length > 0) {
-                    $scope.surveyData = d[0];
+                if (d && d.length && d[0].answers && d[0].answers.length) {
+                    _.each(d[0].answers, function(ans) {
+                        $scope.surveyData[ans.question] = ans.answer;
+                    });
+                    $scope.surveyData.id = d[0].id;
                 }
             });
+
+            $scope.saveAnswers = function(answers) {
+                var method = answers.id ? 'PUT' : 'POST';
+                var url = PROFILE_ROOT + 'surveyAnswers' + (answers.id ? '/' + answers.id : '');
+
+                delete answers.id;
+                delete answers.user;
+
+                var data = {
+                    answers: _.map(answers, function(a, q) {
+                        return {question: q, answer: a};
+                    }),
+                    user: USER
+                };
+
+                $http({
+                    method: method,
+                    url: url,
+                    data: data
+                }).success(function(savedAnswers) {
+                    answers.id = savedAnswers.id;
+                });
+
+            };
 
             $scope.save = function(survey) {
                 var method = survey.id ? 'PUT' : 'POST';
