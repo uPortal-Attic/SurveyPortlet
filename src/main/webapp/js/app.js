@@ -2,7 +2,7 @@ window.up = window.up || {};
 
 window.up.startSurveyPortlet = function(window, _, params) {
     'use strict';
-    
+
     var surveyName = params.surveyName || '';
     var n = params.n;
 
@@ -122,6 +122,12 @@ window.up.startSurveyPortlet = function(window, _, params) {
                     });
                 });
 
+            };
+
+            $scope.swapSeq = function(ele1, ele2) {
+                var tmp = ele1.sequence;
+                ele1.sequence = ele2.sequence;
+                ele2.sequence = tmp;
             };
 
             $scope.surveyData = {};
