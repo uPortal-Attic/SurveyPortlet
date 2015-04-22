@@ -1,7 +1,10 @@
 window.up = window.up || {};
 
-window.up.surveyPortlet = function(window, _, n) {
+window.up.startSurveyPortlet = function(window, _, params) {
     'use strict';
+
+    var surveyName = params.surveyName || '';
+    var n = params.n;
 
     var MODULE_NAME = n + '-survey-portlet';
     var PROFILE_ROOT = 'https://portal-mock-api-dev.herokuapp.com/api/';
@@ -14,14 +17,11 @@ window.up.surveyPortlet = function(window, _, n) {
 
         if (!scr) {
             scr = document.createElement('script');
-
-            _.extend(scr, {
-                id: ANGULAR_SCRIPT_ID,
-                type: 'text/javascript',
-                async: true,
-                charset: 'utf-8',
-                src: 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js'
-            });
+            scr.id =  ANGULAR_SCRIPT_ID;
+            scr.type =  'text/javascript';
+            scr.async =  true;
+            scr.charset =  'utf-8';
+            scr.src =  'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js';
 
             document.body.appendChild(scr);
         }
@@ -47,10 +47,10 @@ window.up.surveyPortlet = function(window, _, n) {
          * Controller of the ngPortalApp
          */
         .controller('SurveyCtrl', function ($scope, $http, $filter) {
-
-            $http.get('/survey-portlet/v1/surveys/')
+            console.log(surveyName);
+            $http.get('/survey-portlet/v1/surveys/' + (surveyName ? 'surveyByName/' + surveyName : ''))
             .success(function(surveys) {
-                $scope.surveys = surveys;
+                $scope.surveys = _.isArray(surveys) ? surveys : [surveys];
             });
 
             $scope.toggle = function(o) {
@@ -63,6 +63,7 @@ window.up.surveyPortlet = function(window, _, n) {
                     user: USER,
                 }
             }).success(function(d) {
+                //TODO FIXME
                 if (d.length > 0) {
                     $scope.surveyData = d[0];
                 }
@@ -99,7 +100,13 @@ window.up.surveyPortlet = function(window, _, n) {
 
             $scope.surveyData = {};
         })
-        .directive(n + 'SurveyQuestion', function () {
+        .directive('surveyQuestion', function () {
+            /**
+             * @ngdoc directive
+             * @name ngPortalApp.directive#SurveyQuestion
+             * @description A directive to display a survey question.
+             * @restrict E
+             */
             return {
                 template: '<section class="question">' +
                     '<label class="text">{{def.question.text}}</label>' +
@@ -201,7 +208,7 @@ window.up.surveyPortlet = function(window, _, n) {
                 }
             };
         })
-        .directive(n + 'Modal', function ($document) {
+        .directive('modal', function ($document) {
             return {
                 template: '<ng-transclude></ng-transclude>',
                 transclude: true,

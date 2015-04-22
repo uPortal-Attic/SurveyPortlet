@@ -32,13 +32,6 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/survey.css" type="text/css" charset="utf-8">
 
-<script id="${n}-script" src="${pageContext.request.contextPath}/js/admin.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-    document.getElementById("${n}-script").on('load', function() {
-        window.up.startSurveyPortlet(window, Underscore, '${n}');
-    });
-</script>
-
 <div id="${n}-survey-portlet" ng-cloak class="surveys" ng-controller="SurveyCtrl">
     <section
         class="survey"
@@ -52,7 +45,7 @@
             <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
         </header>
 
-        <${n}-modal class="survey-modal modal-content clearfix" shown="survey.shown">
+        <modal class="survey-modal modal-content clearfix" shown="survey.shown">
         <header class="modal-header">
             <span class="title">{{survey.title}}:</span>
             <span class="description">{{survey.description}}</span>
@@ -74,14 +67,14 @@
                         </a>
                     </div>
                 </div>
-                <${n}-survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></${n}-survey-question>
+                <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary btn-lg" ng-click="save(survey, surveyData)")>Save</a>
                 <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
             </div>
         </div>
-        </${n}-modal>
+        </modal>
 
         <!-- Edit Mode -->
         <div class="edit-mode" ng-show="edit">
@@ -150,3 +143,8 @@
         </div>
     </section>
 </div>
+
+<script id="${n}-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    window.up.startSurveyPortlet(window, underscore, {n: '${n}'});
+</script>
