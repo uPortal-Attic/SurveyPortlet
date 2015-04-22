@@ -31,9 +31,11 @@
     left: 30%;
     top: 10%; }
 .surveys .edit-mode .question {
+  background-color: rgba(50, 50, 50, 0.1);
   margin-bottom: 1em;
   padding: 1em; }
 .surveys .edit-mode .answer {
+  background-color: rgba(50, 50, 50, 0.1);
   margin-bottom: 1em;
   padding: 1em; }
 .surveys .edit-mode .content.collapsed {

@@ -124,7 +124,7 @@
                     </div>
 
                     <div
-                        class="answer"
+                        class="clearfix answer"
                         ng-drag="uni/question/{{::q.question.id}}"
                         allow-drop="uni/question/{{::q.question.id}}"
                         ng-drop="swapSeq(a, $from.a)";
