@@ -33,7 +33,7 @@ import javax.persistence.OneToOne;
  * @since 1.0
  */
 @Embeddable
-class JpaQuestionAnswerPK implements Serializable {
+public class JpaQuestionAnswerPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.ALL})
