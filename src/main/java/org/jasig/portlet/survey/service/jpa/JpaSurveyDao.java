@@ -176,11 +176,11 @@ class JpaSurveyDao implements IJpaSurveyDao {
                 JpaAnswer answer = qa.getId().getJpaAnswer();
                 // This is not cascading... no idea why not
                 // so save it here first
-                if( createAnswer || answer.getId() == 0) {
-                    createAnswer(answer);
+                if( answer.getId() == 0) {
                     qaRepository.save(qa);
                 }
                 
+                createAnswer(answer);
                 qa.getId().setJpaAnswer(answer);
             }
         }
