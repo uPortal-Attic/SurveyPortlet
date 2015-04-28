@@ -79,7 +79,6 @@
         <!-- Edit Mode -->
         <div class="edit-mode" ng-show="edit">
             <div class="col-sm-12">
-                <a ng-click="save(survey)" class="col-sm-2 btn btn-success btn-lg">Save <span class="glyphicon glyphicon-save"></span></a>
             </div>
             <div class="form-group form-group-sm">
                 <label class="col-sm-2 control-label" for="title-{{$index}}">Title</label>
@@ -131,6 +130,12 @@
                         ng-repeat="a in q.question.questionAnswers | orderBy:'sequence'">
                         <!-- Only can swap answers within question -->
                         <h3 class="col-sm-12"> Answer {{$index+1}} -- {{a.answer.text}}</h3>
+
+                        <div class="form-group form-group-sm">
+                          <label class="col-sm-2 control-label" for="canonicalName-{{$index}}">Canonical Name</label>
+                          <input class="form-control" ng-model="a.canonicalName" id="canonicalName-{{$index}}">
+                        </div>
+                        
                         <div class="form-group form-group-sm" ng-repeat="(k, v) in a.answer">
                             <label class="col-sm-2 control-label" for="{{k}}">{{k}}</label>
                             <div class="col-sm-10 col-lg-4">
@@ -138,7 +143,18 @@
                             </div>
                         </div>
                     </div>
+                    <a ng-click="addA(q.question)" class="btn btn-sm btn-success">Add Answer</a>
                 </div>
+            </div>
+            <div class="col-sm-12">
+                <a ng-click="save(survey)" class="pull-right btn btn-success btn-lg">
+                    Save Survey
+                    <span class="glyphicon glyphicon-save"></span>
+                </a>
+
+                <a ng-click="addQ(survey)" class="btn btn-success btn-lg">
+                    Add Question
+                </a>
             </div>
         </div>
     </section>

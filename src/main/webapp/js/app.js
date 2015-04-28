@@ -7,7 +7,6 @@ window.up.startSurveyPortlet = function(window, _, params) {
     var n = params.n;
 
     var MODULE_NAME = n + '-survey-portlet';
-    var PROFILE_ROOT = 'https://portal-mock-api-dev.herokuapp.com/api/';
     var USER = 'admin';
 
     if (!window.angular) {
@@ -39,30 +38,274 @@ window.up.startSurveyPortlet = function(window, _, params) {
 
     function register(app) {
         app
-        /**
-         * @ngdoc function
-         * @name ngPortalApp.controller:SurveyCtrl
-         * @description
-         * # SurveyCtrl
-         * Controller of the ngPortalApp
-         */
-        .controller('SurveyCtrl', function ($scope, $http, $filter) {
+        .service('StudentProfile', function($http, $q, $timeout) {
+            var sp = this;
 
-            $http.get('/survey-portlet/v1/surveys/' + (surveyName ? 'surveyByName/' + surveyName : ''))
-            .success(function(surveys) {
-                $scope.surveys = _.isArray(surveys) ? surveys : [surveys];
-            });
+            var PROFILE_ROOT = 'https://portal-mock-api-dev.herokuapp.com/api/';
+
+            /**
+             * @ngdoc
+             * @methodOf cccPortal.service:StudentProfile
+             * @name cccPortal.service:StudentProfile#get
+             * @param {String} endpoint The endpoint/data type to query.
+             * @param {Object} cfg Additional configuration for the request.
+             * Most useful for params.
+             * @description Get some data from the user profile.
+             * @returns {Promise} A promise that will be resolved with the
+             * value returned by the profile.
+             */
+            sp.get = function(endpoint, cfg) {
+                var deferred = $q.defer();
+                if (!endpoint) { 
+                    $timeout(function() {
+                        deferred.reject('Missing endpoint for StudentProfile.get');
+                    });
+                }
+                cfg = cfg || {};
+
+                $http(_.defaults({
+                    method: 'GET',
+                    url: PROFILE_ROOT + endpoint
+                }, cfg)).success(deferred.resolve).error(deferred.reject);
+
+                return deferred.promise;
+            };
+
+            sp.save = function(endpoint, data, cfg) {
+                var deferred = $q.defer();
+
+                if (!endpoint) {
+                    $timeout(function() {
+                        deferred.reject('Missing endpoint for StudentProfile.save');
+                    });
+                }
+                cfg = cfg || {};
+                data = data || {};
+
+                var verb = data.id ? 'POST' : 'PUT';
+                var url = PROFILE_ROOT + endpoint + (data.id ? '/' + data.id : '');
+
+                $http(_.defaults({
+                    method: verb,
+                    url: url,
+                    data: data
+                }, cfg))
+                    .success(deferred.resolve)
+                    .error(deferred.reject);
+
+
+                return deferred.promise;
+            };
+        })
+        .service('SurveyMeta', function($http, $filter, $q) {
+            var sm = this;
+
+            var root = '/survey-portlet/v1/surveys/';
+
+            function newQuestion (q) {
+                return $http({
+                    method: 'POST',
+                    data: q,
+                    url: root + 'questions/'
+                });
+            }
+
+            function newSurveyQuestion (s, sq) {
+                return newQuestion(sq.question).success(function(newQ) {
+                    _.extend(sq.question, newQ);
+
+                    return $http({
+                        method: 'POST',
+                        url: root + s.id + '/questions/' + q.id,
+                        data: sq
+                    });
+                });
+            }
+
+            /**
+             * @ngdoc
+             * @propertyOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#surveysById
+             * @description An index of surveys by their id
+             */
+            sm.surveysById = {};
+
+            /**
+             * @ngdoc
+             * @propertyOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#surveys
+             * @description An array of surveys
+             */
+            sm.surveys = [];
+
+            sm.surveys.clear = function() {
+                while (this.length) {
+                    this.pop();
+                }
+            };
+
+            /**
+             * @ngdoc
+             * @methodOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#getSurveys
+             * @description Retrieve the surveys from the metadata service and
+             * refresh the sm.surveys array.
+             * @returns {Promise} A promise that will be resolved when 
+             */
+            sm.getSurveys = function() {
+                return $http.get(root)
+                    .success(function(surveys) {
+                        _.each(surveys, function(s) {
+                            if (sm.surveysById[s.id]) {
+                                _.merge(sm.surveysById[s.id], s);
+                            } else {
+                                sm.surveys.push(s);
+                            }
+
+                            //TODO clean up deleted surveys? (any not returned by $http.get)
+                        });
+
+                        return surveys;
+                    });
+            };
+
+            /**
+             * @ngdoc
+             * @methodOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#saveSurvey
+             * @description Update the survey definition stored on the server.
+             */
+            sm.saveSurvey = function(survey) {
+                var method = survey.id ? 'PUT' : 'POST';
+                var url = survey.id ? root + survey.id : root ;
+
+                var requests = [];
+
+                requests.push($http({
+                    method: method,
+                    url: url,
+                    data: survey,
+                }));
+
+                survey = angular.copy(survey);
+
+                _.each(survey.surveyQuestions, function(q, i) {
+
+                    if ( q.question.id ){
+                        requests.push($http({
+                            method: 'PUT',
+                            url: root + 'questions/' + q.question.id,
+                            data: q.question
+                        }));
+                    } else {
+                        requests.push(newSurveyQuestion(survey, q));
+                    }
+                });
+
+                return $q.all(requests);
+            };
+
+            var qaDef = {
+                sequence: 0,
+                canonicalName: null,
+                answer: {
+                    text: null,
+                    imgUrl: null,
+                    helpText: null,
+                    altText: null,
+                    imgHeight: 0,
+                    imgWidth: 0,
+                }
+            };
+
+            /**
+             * @ngdoc
+             * @methodOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#addQa
+             * @param {Question} question A Question object that will have a
+             * new answer.
+             * @description Adds an empty answer to a given question
+             */
+            sm.addQa = function(question) {
+                question.questionAnswers = question.questionAnswers || [];
+
+                var newA = angular.copy(qaDef);
+                newA.sequence = question.questionAnswers.length;
+
+                question.questionAnswers.push(newA);
+            };
+
+
+            var sqDef = {
+                sequence: 1,
+                question: {
+                    canonicalName: '',
+                    text: '',
+                    altText: '',
+                    helpText: ''
+                },
+                numAllowedAnswers: 1
+            };
+
+            /**
+             * @ngdoc
+             * @methodOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#addSq
+             * @param {Object} survey The survey to add a question to.
+             * @description Addsa a new survey question to a survey
+             */
+            sm.addSq = function(survey) {
+                survey.surveyQuestions = survey.surveyQuestions || [];
+
+                var newSq = angular.copy(sqDef);
+                newSq.sequence = survey.surveyQuestions.length;
+
+                survey.surveyQuestions.push(newSq);
+            };
+
+            var surveyDef = {
+                surveyQuestions: [],
+                canonicalName: '',
+                text: '',
+                title: '',
+                description: '',
+                altText: '',
+                helpText: ''
+            };
+
+            /**
+             * @ngdoc
+             * @methodOf cccPortal.service:SurveyMeta
+             * @name cccPortal.service:SurveyMeta#newSurvey
+             * @description Returns a new survey object with appropriate keys.
+             */
+            sm.newSurvey = function() {
+                return angular.copy(surveyDef);
+            };
+        })
+        .controller('SurveyCtrl', function ($scope, $filter, SurveyMeta, StudentProfile) {
+            /**
+             * @ngdoc function
+             * @name ngPortalApp.controller:SurveyCtrl
+             * @description
+             * # SurveyCtrl
+             * Controller of the ngPortalApp
+             */
+
+            $scope.surveys = SurveyMeta.surveys;
+            SurveyMeta.getSurveys();
 
             $scope.toggle = function(o) {
                 o = o || {};
                 o.shown = !o.shown;
             };
 
-            $http.get(PROFILE_ROOT + 'surveyAnswers', {
+
+            StudentProfile.get('surveyAnswers', {
                 params: {
                     user: USER,
                 }
-            }).success(function(d) {
+            }).then(function success(d) {
                 if (d && d.length && d[0].answers && d[0].answers.length) {
                     _.each(d[0].answers, function(ans) {
                         $scope.surveyData[ans.question] = ans.answer;
@@ -72,57 +315,29 @@ window.up.startSurveyPortlet = function(window, _, params) {
             });
 
             $scope.saveAnswers = function(answers) {
-                var method = answers.id ? 'PUT' : 'POST';
-                var url = PROFILE_ROOT + 'surveyAnswers' + (answers.id ? '/' + answers.id : '');
-
-                delete answers.id;
                 delete answers.user;
 
                 var data = {
-                    answers: _.map(answers, function(a, q) {
+                    answers: _(answers)
+                        .filter(function(a, q) {
+                            return q != 'id';
+                        }).map(function(a, q) {
                         return {question: q, answer: a};
-                    }),
+                        }).value(),
+                    id: answers.id,
                     user: USER
                 };
 
-                $http({
-                    method: method,
-                    url: url,
-                    data: data
-                }).success(function(savedAnswers) {
+                StudentProfile.save('surveyAnswers', data)
+                .then(function success(savedAnswers) {
                     answers.id = savedAnswers.id;
                 });
-
             };
 
-            $scope.save = function(survey) {
-                var method = survey.id ? 'PUT' : 'POST';
-                var base = '/survey-portlet/v1/surveys/';
-                var url = survey.id ? base + survey.id : base ;
+            $scope.addQ = SurveyMeta.addSq;
+            $scope.addA = SurveyMeta.addQa;
 
-                $http({
-                    method: method,
-                    url: url,
-                    data: survey,
-                });
-
-                survey = angular.copy(survey);
-
-                _.each(survey.surveyQuestions, function(q, i) {
-                    q = survey.surveyQuestions[i] = q.question;
-
-                    // _.each(q.questionAnswers, function(a, j) {
-                    //   q.questionAnswers[j] = a.answer;
-                    // });
-
-                    $http({
-                        method: 'PUT',
-                        url: base + 'questions/' + q.id,
-                        data: q
-                    });
-                });
-
-            };
+            $scope.save = SurveyMeta.saveSurvey;
 
             $scope.swapSeq = function(ele1, ele2) {
                 var tmp = ele1.sequence;
@@ -143,13 +358,13 @@ window.up.startSurveyPortlet = function(window, _, params) {
                 template: '<section class="question">' +
                     '<label class="text">{{def.question.text}}</label>' +
                     '<div class="answer" ng-repeat="ans in def.question.questionAnswers | orderBy:\'sequence\'">' +
-                        '<label title="{{ans.answer.altText}}" aria-label="{{ans.answer.altText}}" >' +
-                            '<img ng-if="ans.answer.imgUrl" ng-src="{{ans.answer.imgUrl}}" height="25px" width="25px"></img>' +
-                            '<input ng-if="def.numAllowedAnswers === 1" type="radio" ng-model="survey[def.question.id]" ng-value="ans.answer.id" />' +
-                            '<input ng-if="def.numAllowedAnswers > 1" type="checkbox" ng-model="survey[def.question.id][ans.answer.id]"/>' +
-                            '{{ans.answer.text}}' +
-                        '</label>' +
-                        '<span class="glyphicon glyphicon-info-sign" ng-if="ans.answer.helpText" title="{{ans.answer.helpText}}"></span>' +
+                    '<label title="{{ans.answer.altText}}" aria-label="{{ans.answer.altText}}" >' +
+                    '<img ng-if="ans.answer.imgUrl" ng-src="{{ans.answer.imgUrl}}" height="25px" width="25px"></img>' +
+                    '<input ng-if="def.numAllowedAnswers === 1" type="radio" ng-model="survey[def.question.id]" ng-value="ans.answer.id" />' +
+                    '<input ng-if="def.numAllowedAnswers > 1" type="checkbox" ng-model="survey[def.question.id][ans.answer.id]"/>' +
+                    '{{ans.answer.text}}' +
+                    '</label>' +
+                    '<span class="glyphicon glyphicon-info-sign" ng-if="ans.answer.helpText" title="{{ans.answer.helpText}}"></span>' +
                     '</div>' +
                     '</section>',
                 restrict: 'E',
