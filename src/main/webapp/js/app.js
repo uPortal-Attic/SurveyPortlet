@@ -100,13 +100,15 @@ window.up.startSurveyPortlet = function(window, _, params) {
         .service('SurveyMeta', function($http, $filter, $q) {
             var sm = this;
 
+            var currentId = -1;
+
             var root = '/survey-portlet/v1/surveys/';
 
             function newQuestion (q) {
                 return $http({
                     method: 'POST',
                     data: q,
-                    url: root + 'questions/'
+                    url: root + 'questions'
                 });
             }
 
@@ -214,7 +216,7 @@ window.up.startSurveyPortlet = function(window, _, params) {
                     helpText: null,
                     altText: null,
                     imgHeight: 0,
-                    imgWidth: 0,
+                    imgWidth: 0
                 }
             };
 
@@ -230,7 +232,7 @@ window.up.startSurveyPortlet = function(window, _, params) {
                 question.questionAnswers = question.questionAnswers || [];
 
                 var newA = angular.copy(qaDef);
-                newA.sequence = question.questionAnswers.length;
+                newA.sequence = question.questionAnswers.length + 1;
 
                 question.questionAnswers.push(newA);
             };
@@ -239,10 +241,10 @@ window.up.startSurveyPortlet = function(window, _, params) {
             var sqDef = {
                 sequence: 1,
                 question: {
-                    canonicalName: '',
-                    text: '',
-                    altText: '',
-                    helpText: ''
+                    canonicalName: null,
+                    text: null,
+                    altText: null,
+                    helpText: null,
                 },
                 numAllowedAnswers: 1
             };
@@ -258,19 +260,18 @@ window.up.startSurveyPortlet = function(window, _, params) {
                 survey.surveyQuestions = survey.surveyQuestions || [];
 
                 var newSq = angular.copy(sqDef);
-                newSq.sequence = survey.surveyQuestions.length;
+                newSq.sequence = survey.surveyQuestions.length + 1;
 
                 survey.surveyQuestions.push(newSq);
             };
 
             var surveyDef = {
-                surveyQuestions: [],
-                canonicalName: '',
-                text: '',
-                title: '',
-                description: '',
-                altText: '',
-                helpText: ''
+                canonicalName: null,
+                text: null,
+                title: null,
+                description: null,
+                altText: null,
+                helpText: null
             };
 
             /**
