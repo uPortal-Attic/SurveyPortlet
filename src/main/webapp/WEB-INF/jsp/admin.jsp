@@ -36,7 +36,6 @@
     <section
         class="survey"
         ng-repeat="survey in surveys"
-        ng-show="survey.surveyQuestions.length"
         ng-init="current = {q:0}; survey.editable = true">
         <header>
             <span class="title">{{survey.title}}:</span>
@@ -83,13 +82,37 @@
             <div class="form-group form-group-sm">
                 <label class="col-sm-2 control-label" for="title-{{$index}}">Title</label>
                 <div class="col-sm-10">
-                    <input class="form-control" ng-model="survey.title" type="text" id="title-{{$index}}" placeholder="Title">
+                    <input
+                    class="form-control"
+                    required
+                    ng-model="survey.title"
+                    type="text"
+                    id="title-{{$index}}"
+                    placeholder="Title">
                 </div>
             </div>
             <div class="form-group form-group-sm">
                 <label class="col-sm-2 control-label" for="title-{{$index}}">Desription</label>
                 <div class="col-sm-10">
-                    <input class="form-control" ng-model="survey.description" type="text" id="description-{{$index}}" placeholder="Title">
+                    <input
+                    class="form-control"
+                    required
+                    ng-model="survey.description"
+                    type="text"
+                    id="description-{{$index}}"
+                    placeholder="Title">
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label" for="title-{{$index}}">Unique Name</label>
+                <div class="col-sm-10">
+                    <input
+                    class="form-control"
+                    required
+                    ng-model="survey.canonicalName"
+                    type="text"
+                    id="description-{{$index}}"
+                    placeholder="Title">
                 </div>
             </div>
 
@@ -158,6 +181,7 @@
             </div>
         </div>
     </section>
+    <a ng-click="surveys.push({status: 'UNPUBLISHED', canonicalName: ''})" class="btn btn-success btn-md">Add Survey</a>
 </div>
 
 <script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>

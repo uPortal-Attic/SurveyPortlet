@@ -299,6 +299,7 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
                 if (sm.surveysById[s.id]) {
                     _.extend(sm.surveysById[s.id], s);
                 } else {
+                    sm.surveysById[s.id] = s;
                     sm.surveys.push(s);
                 }
 
@@ -319,8 +320,13 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
         var method = survey.id ? 'PUT' : 'POST';
         var url = survey.id ? root + survey.id : root ;
 
-        var requests = [];
+        _.extend(survey, {
+            editable: undefined,
+            lastUpdateDate: (new window.Date()).getTime()
+        });
 
+
+        var requests = [];
         requests.push($http({
             method: method,
             url: url,
@@ -459,7 +465,7 @@ app
         delete answers.user;
 
         var data = {
-            answers: _(answers)
+            answers: _.chain(answers)
             .filter(function(a, q) {
                 return q != 'id';
             }).map(function(a, q) {
