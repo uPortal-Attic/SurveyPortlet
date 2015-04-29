@@ -254,8 +254,10 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
 
             return $http({
                 method: 'POST',
-                url: root + s.id + '/questions/' + q.id,
+                url: root + s.id + '/questions/' + newQ.id,
                 data: sq
+            }).success(function(newQ) {
+                _.extend(sq, newQ);
             });
         });
     }
@@ -295,7 +297,7 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
         .success(function(surveys) {
             _.each(surveys, function(s) {
                 if (sm.surveysById[s.id]) {
-                    _.merge(sm.surveysById[s.id], s);
+                    _.extend(sm.surveysById[s.id], s);
                 } else {
                     sm.surveys.push(s);
                 }
@@ -317,109 +319,109 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
         var method = survey.id ? 'PUT' : 'POST';
         var url = survey.id ? root + survey.id : root ;
 
-    var requests = [];
+        var requests = [];
 
-    requests.push($http({
-        method: method,
-        url: url,
-        data: survey,
-    }));
+        requests.push($http({
+            method: method,
+            url: url,
+            data: survey,
+        }));
 
-    survey = angular.copy(survey);
+        survey = angular.copy(survey);
 
-    _.each(survey.surveyQuestions, function(q, i) {
+        _.each(survey.surveyQuestions, function(q, i) {
 
-        if ( q.question.id ){
-            requests.push($http({
-                method: 'PUT',
-                url: root + 'questions/' + q.question.id,
-                data: q.question
-            }));
-        } else {
-            requests.push(newSurveyQuestion(survey, q));
+            if ( q.question.id ){
+                requests.push($http({
+                    method: 'PUT',
+                    url: root + 'questions/' + q.question.id,
+                    data: q.question
+                }));
+            } else {
+                requests.push(newSurveyQuestion(survey, q));
+            }
+        });
+
+        return $q.all(requests);
+    };
+
+    var qaDef = {
+        sequence: 0,
+        canonicalName: null,
+        answer: {
+            text: null,
+            imgUrl: null,
+            helpText: null,
+            altText: null,
+            imgHeight: 0,
+            imgWidth: 0
         }
-    });
+    };
 
-    return $q.all(requests);
-};
+    /**
+     * @ngdoc
+     * @methodOf cccPortal.service:SurveyMeta
+     * @name cccPortal.service:SurveyMeta#addQa
+     * @param {Question} question A Question object that will have a
+     * new answer.
+     * @description Adds an empty answer to a given question
+     */
+    sm.addQa = function(question) {
+        question.questionAnswers = question.questionAnswers || [];
 
-var qaDef = {
-    sequence: 0,
-    canonicalName: null,
-    answer: {
+        var newA = angular.copy(qaDef);
+        newA.sequence = question.questionAnswers.length + 1;
+
+        question.questionAnswers.push(newA);
+    };
+
+    var sqDef = {
+        sequence: 1,
+        question: {
+            canonicalName: null,
+            status: "UNPUBLISHED",
+            text: null,
+            altText: null,
+            helpText: null,
+        },
+        numAllowedAnswers: 1
+    };
+
+    /**
+     * @ngdoc
+     * @methodOf cccPortal.service:SurveyMeta
+     * @name cccPortal.service:SurveyMeta#addSq
+     * @param {Object} survey The survey to add a question to.
+     * @description Addsa a new survey question to a survey
+     */
+    sm.addSq = function(survey) {
+        survey.surveyQuestions = survey.surveyQuestions || [];
+
+        var newSq = angular.copy(sqDef);
+        newSq.sequence = survey.surveyQuestions.length + 1;
+
+        survey.surveyQuestions.push(newSq);
+    };
+
+    var surveyDef = {
+        canonicalName: null,
         text: null,
-        imgUrl: null,
-        helpText: null,
+        title: null,
+        description: null,
         altText: null,
-        imgHeight: 0,
-        imgWidth: 0
-    }
-};
+        helpText: null
+    };
 
-/**
- * @ngdoc
- * @methodOf cccPortal.service:SurveyMeta
- * @name cccPortal.service:SurveyMeta#addQa
- * @param {Question} question A Question object that will have a
- * new answer.
- * @description Adds an empty answer to a given question
- */
-sm.addQa = function(question) {
-    question.questionAnswers = question.questionAnswers || [];
-
-var newA = angular.copy(qaDef);
-newA.sequence = question.questionAnswers.length + 1;
-
-question.questionAnswers.push(newA);
-            };
-
-            var sqDef = {
-                sequence: 1,
-                question: {
-                    canonicalName: null,
-                    status: "UNPUBLISHED",
-                    text: null,
-                    altText: null,
-                    helpText: null,
-                },
-                numAllowedAnswers: 1
-            };
-
-            /**
-             * @ngdoc
-             * @methodOf cccPortal.service:SurveyMeta
-             * @name cccPortal.service:SurveyMeta#addSq
-             * @param {Object} survey The survey to add a question to.
-             * @description Addsa a new survey question to a survey
-             */
-            sm.addSq = function(survey) {
-                survey.surveyQuestions = survey.surveyQuestions || [];
-
-                var newSq = angular.copy(sqDef);
-                newSq.sequence = survey.surveyQuestions.length + 1;
-
-                survey.surveyQuestions.push(newSq);
-            };
-
-            var surveyDef = {
-                canonicalName: null,
-                text: null,
-                title: null,
-                description: null,
-                altText: null,
-                helpText: null
-            };
-
-            /**
-             * @ngdoc
-             * @methodOf cccPortal.service:SurveyMeta
-             * @name cccPortal.service:SurveyMeta#newSurvey
-             * @description Returns a new survey object with appropriate keys.
-             */
-            sm.newSurvey = function() {
-                return angular.copy(surveyDef);
-            };
-        }]);
+    /**
+     * @ngdoc
+     * @methodOf cccPortal.service:SurveyMeta
+     * @name cccPortal.service:SurveyMeta#newSurvey
+     * @description Returns a new survey object with appropriate keys.
+     */
+    sm.newSurvey = function() {
+        return angular.copy(surveyDef);
+    };
+}]);
 
 app
 .controller('SurveyCtrl', ["$scope", "$filter", "SurveyMeta", "StudentProfile", function ($scope, $filter, SurveyMeta, StudentProfile) {
