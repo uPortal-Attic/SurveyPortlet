@@ -171,17 +171,27 @@ class JpaSurveyDao implements IJpaSurveyDao {
         Set<JpaQuestionAnswer> qaList = jpaQuestion.getJpaQuestionAnswers();
         if (qaList != null && !qaList.isEmpty()) {
             for (JpaQuestionAnswer qa : qaList) {
-                qa.getId().setJpaQuestion(jpaQuestion);
-                
                 JpaAnswer answer = qa.getId().getJpaAnswer();
+                
                 // This is not cascading... no idea why not
                 // so save it here first
-                if( answer.getId() == 0) {
-                    qaRepository.save(qa);
-                }
-                
                 createAnswer(answer);
+                
+                qa.getId().setJpaQuestion(jpaQuestion);
                 qa.getId().setJpaAnswer(answer);
+                
+                if( jpaQuestion.getId() != 0) { // only on question update
+                    JpaQuestionAnswer existingQA = qaRepository.findOne( qa.getId());
+                    if( existingQA != null) {
+                        existingQA.setSequence( qa.getSequence());
+                        existingQA.setLogic( qa.getLogic());
+                        existingQA.setCanonicalName( qa.getCanonicalName());
+                        qaRepository.save( existingQA);
+                    }
+                    else {
+                        qaRepository.save(qa);
+                    }
+                }
             }
         }
     }
