@@ -186,7 +186,7 @@
 
 <script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    window.up.startSurveyPortlet(window, underscore, {
+    window.up.startSurveyPortlet(window, up._, {
         n: '${n}'
     });
 </script>

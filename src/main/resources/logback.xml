@@ -83,7 +83,7 @@
   <!-- 
    | Setup default log level to INFO
    +-->
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="LOG" />
   </root>
 
