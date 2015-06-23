@@ -18,6 +18,7 @@
  */
 package org.jasig.portlet.survey.mvc;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
@@ -75,7 +76,8 @@ public class SurveyRestController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiMethod(description = "Create a survey", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    public @ApiResponseObject ResponseEntity<SurveyDTO> addSurvey(@ApiBodyObject @RequestBody SurveyDTO survey) {
+    public @ApiResponseObject ResponseEntity<SurveyDTO> addSurvey(@ApiBodyObject @RequestBody SurveyDTO survey, Principal principal) {
+        survey.setLastUpdateUser(principal.getName());
         SurveyDTO newSurvey = null;
         HttpStatus status = HttpStatus.CREATED;
 
@@ -84,7 +86,7 @@ public class SurveyRestController {
         }
         catch (Exception e) {
             status = HttpStatus.BAD_REQUEST;
-            log.error("Error linking question to survey", e);
+            log.error("Error creating survey: " + survey.toString(), e);
         }
 
         return new ResponseEntity<>(newSurvey, status);
@@ -242,7 +244,8 @@ public class SurveyRestController {
     @ApiMethod(description = "Update survey", responsestatuscode = "201 - Created")
     @RequestMapping(method = RequestMethod.PUT, value = "/{surveyId}")
     public ResponseEntity<SurveyDTO> updateSurvey(@ApiPathParam(name = "surveyId") @PathVariable Long surveyId,
-                    @ApiBodyObject @RequestBody SurveyDTO survey) {
+                    @ApiBodyObject @RequestBody SurveyDTO survey, Principal principal) {
+        survey.setLastUpdateUser(principal.getName());
         HttpStatus status = HttpStatus.CREATED;
         SurveyDTO updatedSurvey = null;
 
