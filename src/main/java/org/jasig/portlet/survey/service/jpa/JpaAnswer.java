@@ -51,8 +51,8 @@ public class JpaAnswer implements Serializable {
     private String helpText;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, updatable = false)
     private long id;
 
     @Column(name = "IMG_HEIGHT", nullable = true)
