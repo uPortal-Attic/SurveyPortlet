@@ -22,16 +22,7 @@ import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import javax.persistence.CascadeType;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.jasig.portlet.survey.PublishedState;
 
@@ -55,9 +46,19 @@ public class JpaSurvey implements Serializable {
     @Column(name = "DESCRIPTION", nullable = true)
     private String description;
 
+    @SequenceGenerator(
+            name = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY_GEN",
+            sequenceName = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY_SEQ",
+            allocationSize = 5
+    )
+    @TableGenerator(
+            name = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY_GEN",
+            pkColumnValue = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY",
+            allocationSize = 5
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY_GEN")
+    @Column(name = "ID", updatable = false)
     private long id;
 
     @OneToMany(mappedBy = "id.jpaSurvey", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})

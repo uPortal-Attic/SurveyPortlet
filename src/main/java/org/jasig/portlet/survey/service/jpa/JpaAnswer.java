@@ -21,13 +21,7 @@ package org.jasig.portlet.survey.service.jpa;
 import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
 
@@ -49,10 +43,20 @@ public class JpaAnswer implements Serializable {
     @Type(type = "org.hibernate.type.TextType")
     @Column(name = "HELP_TEXT", nullable = true)
     private String helpText;
-    
+
+    @SequenceGenerator(
+            name = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER_GEN",
+            sequenceName = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER_SEQ",
+            allocationSize = 5
+    )
+    @TableGenerator(
+            name = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER_GEN",
+            pkColumnValue = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER",
+            allocationSize = 5
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER_GEN")
+    @Column(name = "ID", updatable = false)
     private long id;
 
     @Column(name = "IMG_HEIGHT", nullable = true)
