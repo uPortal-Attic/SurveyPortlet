@@ -21,10 +21,7 @@ package org.jasig.portlet.survey.service.jpa;
 import java.util.List;
 
 import org.dozer.Mapper;
-import org.jasig.portlet.survey.service.dto.AnswerDTO;
-import org.jasig.portlet.survey.service.dto.QuestionAnswerDTO;
-import org.jasig.portlet.survey.service.dto.QuestionDTO;
-import org.jasig.portlet.survey.service.dto.SurveyDTO;
+import org.jasig.portlet.survey.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,4 +99,25 @@ class SurveyMapper implements ISurveyMapper {
         return beanMapper.map(qa, JpaQuestionAnswer.class);
     }
 
+    @Override
+    public ResponseDTO toResponse(JpaResponse response) {
+        ResponseDTO result = beanMapper.map(response, ResponseDTO.class);
+        return result;
+    }
+
+    @Override
+    public JpaResponse toJpaResponse(ResponseDTO response) {
+        return beanMapper.map(response, JpaResponse.class);
+    }
+
+    @Override
+    public ResponseAnswerDTO toResponseAnswer(JpaResponseAnswer answer) {
+        ResponseAnswerDTO result = beanMapper.map(answer, ResponseAnswerDTO.class);
+        return result;
+    }
+
+    @Override
+    public JpaResponseAnswer toJpaResponseAnswer(ResponseAnswerDTO answer) {
+        return beanMapper.map(answer, JpaResponseAnswer.class);
+    }
 }

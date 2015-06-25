@@ -53,5 +53,22 @@
         <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaAnswer</class-a>
         <class-b>org.jasig.portlet.survey.service.dto.AnswerDTO</class-b>
     </mapping>
-    
+
+    <mapping wildcard="true">
+        <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaResponse</class-a>
+        <class-b>org.jasig.portlet.survey.service.dto.ResponseDTO</class-b>
+        <field>
+            <a>jpaResponseAnswers</a>
+            <b>answers</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a is-accessible="true">org.jasig.portlet.survey.service.jpa.JpaResponseAnswer</class-a>
+        <class-b>org.jasig.portlet.survey.service.dto.ResponseAnswerDTO</class-b>
+        <field>
+            <a>id.jpaQuestion</a>
+            <b>question</b>
+        </field>
+    </mapping>
 </mappings>

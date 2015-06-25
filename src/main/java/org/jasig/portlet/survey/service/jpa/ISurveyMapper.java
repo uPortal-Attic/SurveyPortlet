@@ -20,10 +20,7 @@ package org.jasig.portlet.survey.service.jpa;
 
 import java.util.List;
 
-import org.jasig.portlet.survey.service.dto.AnswerDTO;
-import org.jasig.portlet.survey.service.dto.QuestionAnswerDTO;
-import org.jasig.portlet.survey.service.dto.QuestionDTO;
-import org.jasig.portlet.survey.service.dto.SurveyDTO;
+import org.jasig.portlet.survey.service.dto.*;
 
 public interface ISurveyMapper {
     SurveyDTO toSurvey(JpaSurvey survey);
@@ -40,4 +37,10 @@ public interface ISurveyMapper {
 
     public List<SurveyDTO> toSurveyList(List<JpaSurvey> jpaList);
     public List<QuestionAnswerDTO> toQuestionAnswerList(List<JpaQuestionAnswer> jpaList);
+
+    ResponseDTO toResponse(JpaResponse response);
+    JpaResponse toJpaResponse(ResponseDTO response);
+
+    ResponseAnswerDTO toResponseAnswer(JpaResponseAnswer answer);
+    JpaResponseAnswer toJpaResponseAnswer(ResponseAnswerDTO answer);
 }
