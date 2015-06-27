@@ -20,11 +20,7 @@ package org.jasig.portlet.survey.mvc.service;
 
 import java.util.List;
 
-import org.jasig.portlet.survey.service.dto.AnswerDTO;
-import org.jasig.portlet.survey.service.dto.QuestionDTO;
-import org.jasig.portlet.survey.service.dto.SurveyDTO;
-import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
-import org.jasig.portlet.survey.service.dto.ITextGroup;
+import org.jasig.portlet.survey.service.dto.*;
 
 public interface ISurveyDataService {
     public boolean addQuestionToSurvey(Long surveyId, Long questionId, SurveyQuestionDTO surveyQuestion);
@@ -42,4 +38,10 @@ public interface ISurveyDataService {
 
     public SurveyDTO updateSurvey(SurveyDTO survey);
     public QuestionDTO updateQuestion(QuestionDTO question);
+
+    ResponseDTO createResponse(ResponseDTO response);
+    ResponseDTO getResponse(long id);
+    List<ResponseDTO> getResponseByUser(String user);
+    ResponseDTO getResponseByUserAndSurvey(String user, long surveyId);
+    ResponseDTO updateResponse(ResponseDTO response);
 }

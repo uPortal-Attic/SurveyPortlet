@@ -26,12 +26,7 @@ import java.util.Set;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.jasig.portlet.survey.service.jpa.repo.JpaAnswerRepository;
-import org.jasig.portlet.survey.service.jpa.repo.JpaQuestionAnswerRepository;
-import org.jasig.portlet.survey.service.jpa.repo.JpaQuestionRepository;
-import org.jasig.portlet.survey.service.jpa.repo.JpaSurveyQuestionRepository;
-import org.jasig.portlet.survey.service.jpa.repo.JpaSurveyRepository;
-import org.jasig.portlet.survey.service.jpa.repo.JpaSurveyTextRepository;
+import org.jasig.portlet.survey.service.jpa.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +46,12 @@ class JpaSurveyDao implements IJpaSurveyDao {
 
     @Autowired
     private JpaSurveyRepository surveyRepository;
+
+    @Autowired
+    private JpaResponseRepository responseRepository;
+
+    @Autowired
+    private JpaResponseAnswerRepository responseAnswerRepository;
 
     @Autowired
     private JpaSurveyTextRepository surveyTextRepository;
@@ -131,6 +132,12 @@ class JpaSurveyDao implements IJpaSurveyDao {
         return question;
     }
 
+    @Override
+    public JpaAnswer getAnswer(Long id) {
+        JpaAnswer answer = answerRepository.findOne(id);
+        return answer;
+    }
+
     /**
      * Search for a JpaSurvey based on the specified id.
      * 
@@ -207,6 +214,35 @@ class JpaSurveyDao implements IJpaSurveyDao {
     public JpaSurvey updateSurvey(JpaSurvey survey) {
         JpaSurvey newSurvey = surveyRepository.save(survey);
         return newSurvey;
+    }
+
+    @Override
+    public void createResponse(JpaResponse jpaResponse) {
+        JpaResponse result = responseRepository.save(jpaResponse);
+    }
+
+    @Override
+    public JpaResponse getResponse(long id) {
+        return responseRepository.findOne(id);
+    }
+
+    @Override
+    public List<JpaResponse> getResponseByUser(String user) {
+        Iterable<?> responseIter = responseRepository.findByUser(user);
+        List<JpaResponse> responseList = IteratorUtils.toList(responseIter.iterator());
+        return responseList;
+    }
+
+    @Override
+    public JpaResponse getResponseByUserAndSurvey(String user, long surveyId) {
+        //return responseRepository.findByUserAndSurvey(user, surveyId);
+        return (JpaResponse) responseRepository.findByUser(user);
+    }
+
+    @Override
+    public JpaResponse updateResponse(JpaResponse jpaResponse) {
+        JpaResponse newResponse = responseRepository.save(jpaResponse);
+        return newResponse;
     }
 
 }

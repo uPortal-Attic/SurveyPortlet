@@ -43,4 +43,6 @@ public interface ISurveyMapper {
 
     ResponseAnswerDTO toResponseAnswer(JpaResponseAnswer answer);
     JpaResponseAnswer toJpaResponseAnswer(ResponseAnswerDTO answer);
+
+    List<ResponseDTO> toResponseList(List<JpaResponse> responseList);
 }

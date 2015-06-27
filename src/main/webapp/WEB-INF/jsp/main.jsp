@@ -69,7 +69,7 @@
                 <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData)")>Save</a>
+                <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>Save</a>
                 <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
             </div>
         </div>
@@ -81,6 +81,7 @@
 <script type="text/javascript">
     window.up.startSurveyPortlet(window, up._, {
         n: '${n}',
-        surveyName: "${portletPreferencesValues['surveyName'][0]}"
+        surveyName: "${portletPreferencesValues['surveyName'][0]}",
+        user: "${renderRequest.getRemoteUser()}"
     });
 </script>

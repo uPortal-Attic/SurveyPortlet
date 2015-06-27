@@ -26,11 +26,8 @@ import org.apache.commons.lang.Validate;
 import org.jasig.portlet.survey.IVariantStrategy;
 import org.jasig.portlet.survey.PublishedState;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
-import org.jasig.portlet.survey.service.dto.AnswerDTO;
-import org.jasig.portlet.survey.service.dto.ITextGroup;
-import org.jasig.portlet.survey.service.dto.QuestionDTO;
-import org.jasig.portlet.survey.service.dto.SurveyDTO;
-import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
+import org.jasig.portlet.survey.service.dto.*;
+import org.jasig.portlet.survey.service.jpa.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +36,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import org.jasig.portlet.survey.service.jpa.IJpaSurveyDao;
-import org.jasig.portlet.survey.service.jpa.ISurveyMapper;
-import org.jasig.portlet.survey.service.jpa.JpaQuestion;
-import org.jasig.portlet.survey.service.jpa.JpaSurvey;
-import org.jasig.portlet.survey.service.jpa.JpaSurveyQuestion;
-import org.jasig.portlet.survey.service.jpa.JpaSurveyText;
-import org.jasig.portlet.survey.service.jpa.JpaSurveyTextPK;
 
 /**
  * Service class for CRUD operations and moving to and from the business object models and the JPA impl for a survey.
@@ -248,7 +238,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
     /**
      * Update base survey data.  Questions/answer relationships will not be included in the update.
      * @param survey
-     * @return 
+     * @return
      */
     @Transactional
     @Override
@@ -258,15 +248,66 @@ public class JpaSurveyDataService implements ISurveyDataService {
             log.warn( "Cannot update survey");
             return null;
         }
-        
+
         // remove question/answer elements
         survey.setSurveyQuestions( null);
-        
+
         JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
         jpaSurvey.setLastUpdateDate(new Timestamp(new Date().getTime()));
         jpaSurvey = jpaSurveyDao.updateSurvey( jpaSurvey);
-        
+
         return surveyMapper.toSurvey(jpaSurvey);
+    }
+
+    @Transactional
+    @Override
+    public ResponseDTO createResponse(ResponseDTO response) {
+        JpaResponse jpaResponse = surveyMapper.toJpaResponse(response);
+        jpaSurveyDao.createResponse(jpaResponse);
+        return surveyMapper.toResponse(jpaResponse);
+    }
+
+    @Transactional//(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public ResponseDTO getResponse(long id) {
+        JpaResponse jpaResponse = jpaSurveyDao.getResponse(id);
+        log.debug(jpaResponse.toString());
+        return jpaResponse == null ? null : surveyMapper.toResponse(jpaResponse);
+    }
+
+    @Transactional//(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ResponseDTO> getResponseByUser(String user) {
+        List<JpaResponse> responseList = jpaSurveyDao.getResponseByUser(user);
+        if (responseList == null) {
+            return null;
+        }
+        return surveyMapper.toResponseList(responseList);
+    }
+
+    @Transactional//(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public ResponseDTO getResponseByUserAndSurvey(String user, long surveyId) {
+        JpaResponse jpaResponse = jpaSurveyDao.getResponseByUserAndSurvey(user, surveyId);
+        return jpaResponse == null ? null : surveyMapper.toResponse(jpaResponse);
+    }
+
+    @Transactional
+    @Override
+    public ResponseDTO updateResponse(ResponseDTO response) {
+        JpaResponse existingResponse = jpaSurveyDao.getResponse(response.getId());
+        if (existingResponse == null) {
+            log.warn("Cannot update response - does not exist", response.toString());
+            return null;
+        }
+
+        JpaResponse jpaResponse = surveyMapper.toJpaResponse(response);
+        log.debug("existing response: " + existingResponse.toString());
+        log.debug("source DTO response: " + response.toString());
+        log.debug("mapped response: " + jpaResponse.toString());
+        jpaResponse = jpaSurveyDao.updateResponse(jpaResponse);
+        log.debug("updated response: " + jpaResponse.toString());
+        return surveyMapper.toResponse(jpaResponse);
     }
 
 }

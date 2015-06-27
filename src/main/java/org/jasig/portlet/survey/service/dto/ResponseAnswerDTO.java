@@ -18,6 +18,9 @@
  */
 package org.jasig.portlet.survey.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -32,35 +35,52 @@ import java.util.Set;
 /**
  * Data Transfer Object of user response answers. Minimal to match JSON expectations.
  * The data required is a question ID and a multi-value answer. The answer may be one
- * ore more values but is considered a single answer to a particular question.
+ * ore more answer IDs but is considered a single answer to a particular question.
  *
  * @author Benito J. Gonzalez <bgonzalez@unicon.net>
  * @since 1.1
  */
 @ApiObject(name = "ResponseAnswerDTO")
+@JsonSerialize(using = ResponseAnswerDtoSerializer.class)
+@JsonDeserialize(using = ResponseAnswerDtoDeserializer.class)
 public class ResponseAnswerDTO implements Serializable {
     private static final long serialVersionUID = 1l;
 
     @ApiObjectField
-    private QuestionDTO question;
-    @ApiObjectField
-    private Set<AnswerDTO> answer = new HashSet<>();
+    private Long questionId;
 
-    public QuestionDTO getQuestion() {
-        return question;
+    @JsonIgnore
+    private boolean multiple = false;
+
+    @ApiObjectField
+    private Set<Long> answer = new HashSet<>();
+
+    public Long getQuestion() {
+        return questionId;
     }
 
-    public Set<AnswerDTO> getAnswer() {
+    public Boolean isMultiple() {
+        return multiple;
+    }
+    public Set<Long> getAnswer() {
         return Collections.unmodifiableSet(answer);
     }
 
-    public void setQuestion(QuestionDTO question) {
-        this.question = question;
+    public void setQuestion(Long questionId) {
+        this.questionId = questionId;
     }
 
-    public void setAnswer(Set<AnswerDTO> answer) {
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
+    }
+
+    public void setAnswer(Set<Long> answer) {
         this.answer.clear();
         this.answer.addAll(answer);
+    }
+
+    public void addAnswerId(Long answerId) {
+        this.answer.add(answerId);
     }
 
     @Override

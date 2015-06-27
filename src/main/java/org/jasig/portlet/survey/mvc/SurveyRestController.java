@@ -18,14 +18,13 @@
  */
 package org.jasig.portlet.survey.mvc;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
-import org.jasig.portlet.survey.service.dto.ITextGroup;
-import org.jasig.portlet.survey.service.dto.QuestionDTO;
-import org.jasig.portlet.survey.service.dto.SurveyDTO;
-import org.jasig.portlet.survey.service.dto.SurveyQuestionDTO;
+import org.jasig.portlet.survey.service.dto.*;
 import org.jsondoc.core.annotation.Api;
 import org.jsondoc.core.annotation.ApiBodyObject;
 import org.jsondoc.core.annotation.ApiMethod;
@@ -39,10 +38,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Api(name = "SurveyPortlet services", description = "Methods for managing surveys")
 @Controller
@@ -264,5 +260,97 @@ public class SurveyRestController {
 
         return new ResponseEntity<>(updatedSurvey, status);
 
+    }
+
+    @ApiMethod(description = "Fetch a user's answers for all surveys", responsestatuscode = "201")
+    @RequestMapping(method = RequestMethod.GET, value = "/surveyAnswers")
+    public @ApiResponseObject ResponseEntity<ResponseDTO> getResponsesByUser(Principal principal) {
+        /*
+         * User is passed as a parameter to support persisting to other backend stores.
+         * This method relies on the principal to determine the user.
+         */
+        HttpStatus status = HttpStatus.OK;
+        List<ResponseDTO> responses = null;
+        try {
+            responses = dataService.getResponseByUser(principal.getName());
+        } catch (Exception e) {
+            log.error("Error retrieving all survey responses for user: " + principal.getName(), e);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity(responses, status);
+    }
+
+    @ApiMethod(description = "Fetch a user's answers by id", responsestatuscode = "201")
+    @RequestMapping(method = RequestMethod.GET, value = "/surveyAnswers/{responseId}")
+    public @ApiResponseObject ResponseEntity<ResponseDTO> getResponse(
+            @ApiPathParam(name = "responseId") @PathVariable Long responseId,
+            Principal principal) {
+        ResponseDTO responseDTO = dataService.getResponse(responseId);
+        // Need to check principal matches user
+        if (!principal.getName().equals(responseDTO.getUser())) {
+            log.warn("Principal named '{}' getting answers for user '{}'", principal.getName(), responseDTO.getUser());
+        }
+        return new ResponseEntity(responseDTO, HttpStatus.OK);
+    }
+
+    @ApiMethod(description = "Create a user's response (answers)", responsestatuscode = "201")
+    @RequestMapping(method = RequestMethod.POST, value = "/surveyAnswers")
+    public @ApiResponseObject ResponseEntity<ResponseDTO> addResponse(
+            @ApiBodyObject @RequestBody ResponseDTO response,
+            Principal principal) {
+        response.setUser(principal.getName());
+        ResponseDTO newResponse = null;
+        HttpStatus status = HttpStatus.CREATED;
+
+        try {
+            newResponse = dataService.createResponse(response);
+        }
+        catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error("Error creating user" + principal.getName() + " response (answers): " + response.toString(), e);
+        }
+
+        return new ResponseEntity<>(newResponse, status);
+    }
+
+    @ApiMethod(description = "Update user's answers", responsestatuscode = "201")
+    @RequestMapping(method = RequestMethod.PUT, value = "/surveyAnswers/{responseId}")
+    public @ApiResponseObject ResponseEntity<ResponseDTO> updateResponse(
+            @ApiPathParam(name = "responseId") @PathVariable Long responseId,
+            //@ApiBodyObject @RequestBody ResponseDTO response,
+            @ApiBodyObject @RequestBody String body,
+            Principal principal) {
+        log.debug(body);
+        HttpStatus status = HttpStatus.CREATED;
+        final ObjectMapper objectMapper = new ObjectMapper();
+        ResponseDTO response = null;
+        try {
+            response = objectMapper.readValue(body, ResponseDTO.class);
+        } catch (IOException e) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error("Error parsing update to survey answers with id = " + responseId, e);
+            return new ResponseEntity<>(response, status);
+        }
+        log.debug(response.toString());
+        assert(responseId == response.getId());
+        ResponseDTO existingResponse = dataService.getResponse(responseId);
+        if (existingResponse == null) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error("Error no response with id = " + responseId);
+            return new ResponseEntity<>(response, status);
+        }
+        if (!existingResponse.getUser().equals(principal.getName())) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error("Updated response user does not match existing response user");
+            return new ResponseEntity<>(response, status);
+        }
+        ResponseDTO updatedResponse = null;
+        try {
+            updatedResponse = dataService.updateResponse(response);
+        } catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+            log.error("Error updating user" + principal.getName() + " response (answers): " + response.toString(), e);
+        }
+        return new ResponseEntity<>(updatedResponse, status);
     }
 }

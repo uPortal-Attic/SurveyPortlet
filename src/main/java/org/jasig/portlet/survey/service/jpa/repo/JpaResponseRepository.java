@@ -22,8 +22,11 @@ import org.jasig.portlet.survey.service.jpa.JpaResponse;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface JpaResponseRepository extends CrudRepository<JpaResponse, Long> {
 
-    public JpaResponse findByUser(String user);
+    //public JpaResponse findByUserAndSurvey(String user, long surveyId);
+    public List<JpaResponse> findByUser(String user);
 }

@@ -566,7 +566,7 @@
                     <hibernatetool>      
                         <jpaconfiguration persistenceunit="SurveyPU" 
                                           propertyFile="target/${project.build.finalName}/WEB-INF/classes/datasource.properties" />
-                        <hbm2ddl export="true" create="true" drop="true"/>             
+                        <hbm2ddl export="true" create="true" drop="true" outputfilename="sql.ddl"  haltonerror="true"/>
                         <classpath>
                             <path location="target/${project.build.finalName}/WEB-INF/classes" />
                         </classpath>

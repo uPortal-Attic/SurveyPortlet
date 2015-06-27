@@ -24,7 +24,8 @@ import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The persistent class for the survey_response_answer database table.
@@ -42,7 +43,7 @@ public class JpaResponseAnswer implements Serializable {
     @EmbeddedId
     private JpaResponseAnswerPK id;
 
-    @ManyToMany(targetEntity = JpaAnswer.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = JpaAnswer.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = JpaSurveyDataService.TABLENAME_PREFIX + "RESPONSE_ANSWERS",
             joinColumns = {
@@ -53,20 +54,20 @@ public class JpaResponseAnswer implements Serializable {
             },
             inverseJoinColumns = @JoinColumn(table = JpaSurveyDataService.TABLENAME_PREFIX + "ANSWER", name = "ANSWER_ID",
                     referencedColumnName = "ID"))
-    private List<JpaAnswer> answer;
+    private Set<JpaAnswer> answer = new HashSet<>();
 
     public JpaResponseAnswerPK getId() {
         return id;
     }
 
-    public List<JpaAnswer> getAnswer() {
-        return Collections.unmodifiableList(answer);
+    public Set<JpaAnswer> getAnswer() {
+        return Collections.unmodifiableSet(answer);
     }
     public void setId(JpaResponseAnswerPK id) {
         this.id = id;
     }
 
-    public void setAnswer(List<JpaAnswer> answer) {
+    public void setAnswer(Set<JpaAnswer> answer) {
         this.answer.clear();
         this.answer.addAll(answer);
     }
@@ -81,6 +82,10 @@ public class JpaResponseAnswer implements Serializable {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        //return ToStringBuilder.reflectionToString(this);
+        return new ToStringBuilder(this)
+                .append("ResponseId", id.getResponseId())
+                .append("QuestionId", id.getQuestionId())
+                .append("answer", answer).toString();
     }
 }

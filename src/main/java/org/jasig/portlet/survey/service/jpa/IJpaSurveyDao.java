@@ -35,6 +35,7 @@ public interface IJpaSurveyDao {
     public JpaSurveyText createSurveyText(JpaSurveyText text);
 
     public JpaQuestion getQuestion(Long id);
+    public JpaAnswer getAnswer(Long id);
     public List<JpaSurvey> getAllSurveys();
     public JpaSurvey getSurvey(Long id);
     public JpaSurvey getSurveyByCanonicalName(String canonicalName);
@@ -42,4 +43,14 @@ public interface IJpaSurveyDao {
 
     public JpaQuestion updateQuestion(JpaQuestion question);
     public JpaSurvey updateSurvey(JpaSurvey survey);
+
+    void createResponse(JpaResponse jpaResponse);
+
+    JpaResponse getResponse(long id);
+
+    List<JpaResponse> getResponseByUser(String user);
+
+    JpaResponse getResponseByUserAndSurvey(String user, long surveyId);
+
+    JpaResponse updateResponse(JpaResponse jpaResponse);
 }

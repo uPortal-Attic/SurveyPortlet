@@ -7,7 +7,7 @@ window.up.startSurveyPortlet = function(window, _, params) {
     var n = params.n;
 
     var MODULE_NAME = n + '-survey-portlet';
-    var USER = 'admin';
+    var USER = params.user;
 
     if (!window.angular) {
         var ANGULAR_SCRIPT_ID = 'angular-uportal-script';
@@ -176,7 +176,8 @@ app
 .service('StudentProfile', ["$http", "$q", "$timeout", function($http, $q, $timeout) {
     var sp = this;
 
-    var PROFILE_ROOT = 'https://portal-mock-api-dev.herokuapp.com/api/';
+    //var PROFILE_ROOT = 'https://portal-mock-api-dev.herokuapp.com/api/';
+    var PROFILE_ROOT = '/survey-portlet/v1/surveys/';
 
     /**
      * @ngdoc
@@ -191,7 +192,7 @@ app
      */
     sp.get = function(endpoint, cfg) {
         var deferred = $q.defer();
-        if (!endpoint) { 
+        if (!endpoint) {
             $timeout(function() {
                 deferred.reject('Missing endpoint for StudentProfile.get');
             });
@@ -217,7 +218,7 @@ app
         cfg = cfg || {};
         data = data || {};
 
-        var verb = data.id ? 'POST' : 'PUT';
+        var verb = data.id ? 'PUT' : 'POST';
         var url = PROFILE_ROOT + endpoint + (data.id ? '/' + data.id : '');
 
         $http(_.defaults({
@@ -461,20 +462,22 @@ app
         }
     });
 
-    $scope.saveAnswers = function(answers) {
+    $scope.saveAnswers = function(answers, survey) {
         delete answers.user;
 
         var data = {
             answers: _.chain(answers)
-            .filter(function(a, q) {
-                return q != 'id';
-            }).map(function(a, q) {
-                return {question: q, answer: a};
+            .omit('id')
+            .pairs()
+            .map(function(e) {
+                return {question: Number(e[0]), answer: e[1]};
             }).value(),
             id: answers.id,
-            user: USER
+            user: USER,
+            survey: survey.id
         };
-
+        console.log("Saving user answers ...");
+        console.log(data);
         StudentProfile.save('surveyAnswers', data)
         .then(function success(savedAnswers) {
             answers.id = savedAnswers.id;

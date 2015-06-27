@@ -19,10 +19,11 @@
 package org.jasig.portlet.survey.service.jpa.repo;
 
 import org.jasig.portlet.survey.service.jpa.JpaResponseAnswer;
+import org.jasig.portlet.survey.service.jpa.JpaResponseAnswerPK;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaResponseAnswerRepository extends CrudRepository<JpaResponseAnswer, Long> {
+public interface JpaResponseAnswerRepository extends CrudRepository<JpaResponseAnswer, JpaResponseAnswerPK> {
     
 }

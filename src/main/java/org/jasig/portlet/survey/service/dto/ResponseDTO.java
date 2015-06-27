@@ -44,6 +44,8 @@ public class ResponseDTO implements Serializable {
     private long id;
     @ApiObjectField(required = true)
     private String user;
+    @ApiObjectField(required = true)
+    private long survey;
     @ApiObjectField
     private Set<ResponseAnswerDTO> answers = new HashSet<>();
 
@@ -55,12 +57,20 @@ public class ResponseDTO implements Serializable {
         return user;
     }
 
+    public long getSurvey() {
+        return survey;
+    }
+
     public Set<ResponseAnswerDTO> getAnswers() {
         return Collections.unmodifiableSet(answers);
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setSurvey(long survey) {
+        this.survey = survey;
     }
 
     public void setUser(String user) {
@@ -70,6 +80,10 @@ public class ResponseDTO implements Serializable {
     public void setAnswers(Set<ResponseAnswerDTO> answers) {
         this.answers.clear();
         this.answers.addAll(answers);
+    }
+
+    public void addAnswer(ResponseAnswerDTO answer) {
+        this.answers.add(answer);
     }
 
     @Override

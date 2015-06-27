@@ -24,7 +24,8 @@ import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The persistent class for the survey_response database table.
@@ -55,8 +56,12 @@ public class JpaResponse implements Serializable {
     @Column(name = "USER", nullable = false)
     private String user;
 
+    @ManyToOne
+    @JoinColumn(name = "SURVEY_ID") //, table = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY")
+    private JpaSurvey survey;
+
     @OneToMany(mappedBy = "id.jpaResponse", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
-    private List<JpaResponseAnswer> jpaResponseAnswers;
+    private Set<JpaResponseAnswer> jpaResponseAnswers = new HashSet<>();
 
     public long getId() {
         return id;
@@ -66,8 +71,12 @@ public class JpaResponse implements Serializable {
         return user;
     }
 
-    public List<JpaResponseAnswer> getJpaResponseAnswers() {
-        return Collections.unmodifiableList(jpaResponseAnswers);
+    public JpaSurvey getSurvey() {
+        return survey;
+    }
+
+    public Set<JpaResponseAnswer> getJpaResponseAnswers() {
+        return Collections.unmodifiableSet(jpaResponseAnswers);
     }
 
     public void setId(long id) {
@@ -78,25 +87,33 @@ public class JpaResponse implements Serializable {
         this.user = user;
     }
 
-    public void setJpaResponseAnswers(List<JpaResponseAnswer> jpaResponseAnswers) {
+    public void setSurvey(JpaSurvey survey) {
+        this.survey = survey;
+    }
+
+    public void setJpaResponseAnswers(Set<JpaResponseAnswer> jpaResponseAnswers) {
         this.jpaResponseAnswers.clear();
         this.jpaResponseAnswers.addAll(jpaResponseAnswers);
     }
 
     public JpaResponseAnswer addJpaResponseAnswer(JpaResponseAnswer jpaResponseAnswer) {
-        getJpaResponseAnswers().add(jpaResponseAnswer);
+        this.jpaResponseAnswers.add(jpaResponseAnswer);
         jpaResponseAnswer.getId().setJpaResponse(this);
         return jpaResponseAnswer;
     }
 
     public JpaResponseAnswer removeJpaResponseAnswer(JpaResponseAnswer jpaResponseAnswer) {
-        getJpaResponseAnswers().remove(jpaResponseAnswer);
+        this.jpaResponseAnswers.remove(jpaResponseAnswer);
         jpaResponseAnswer.getId().setJpaResponse(null);
         return jpaResponseAnswer;
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        //return ToStringBuilder.reflectionToString(this);
+        return new ToStringBuilder(this)
+                .append("Id", id)
+                .append("user", user)
+                .append("answer count", jpaResponseAnswers.size()).toString();
     }
 }
