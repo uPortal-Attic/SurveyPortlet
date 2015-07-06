@@ -54,9 +54,10 @@
                 <div class="clearfix survey-nav">
                     Question {{current.q+1}} of {{survey.surveyQuestions.length}}
                     <div class="pull-right">
-                        <a class="btn btn-success btn-lg" ng-disabled="current.q < 1" ng-click="current.q = current.q-1">
-                            Prev
-                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        <a class="btn btn-success btn-lg"
+                           ng-disabled="current.q < 1"
+                           ng-click="current.q = current.q-1">
+                           Prev <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                         <a
                             class="btn btn-success btn-lg"
@@ -73,7 +74,7 @@
                 <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
             </div>
         </div>
-        </${n}-modal>
+        </modal>
     </section>
 </div>
 
