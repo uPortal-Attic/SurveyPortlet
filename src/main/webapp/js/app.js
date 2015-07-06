@@ -311,6 +311,15 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
         });
     };
 
+    sm.getSurveyByName = function(name) {
+        return $http.get(root + "surveyByName/" + name)
+        .success(function(survey) {
+            sm.surveysById[survey.id] = survey;
+            sm.surveys.push(survey);
+            return survey;
+        });
+    };
+
     /**
      * @ngdoc
      * @methodOf cccPortal.service:SurveyMeta
@@ -326,6 +335,17 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
             lastUpdateDate: (new window.Date()).getTime()
         });
 
+        survey = $http({
+            method: method,
+            url: url,
+            data: survey})
+        .success(function(survey) {
+            sm.surveysById[survey.id] = survey;
+            sm.surveys.push(survey);
+            return survey;
+        });
+
+        survey = sm.getSurveyByName(survey.canonicalName);
 
         var requests = [];
         requests.push($http({
@@ -441,7 +461,11 @@ app
      */
 
     $scope.surveys = SurveyMeta.surveys;
-    SurveyMeta.getSurveys();
+    if (surveyName) {
+        SurveyMeta.getSurveyByName(surveyName);
+    } else {
+        SurveyMeta.getSurveys();
+    }
 
     $scope.toggle = function(o) {
         o = o || {};
@@ -476,8 +500,6 @@ app
             user: USER,
             survey: survey.id
         };
-        console.log("Saving user answers ...");
-        console.log(data);
         StudentProfile.save('surveyAnswers', data)
         .then(function success(savedAnswers) {
             answers.id = savedAnswers.id;
