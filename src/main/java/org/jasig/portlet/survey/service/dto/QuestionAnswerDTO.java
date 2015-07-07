@@ -34,6 +34,8 @@ public class QuestionAnswerDTO implements Serializable {
     private String logic;
     @ApiObjectField
     private Integer sequence;
+    @ApiObjectField
+    private Integer value;
 
     public AnswerDTO getAnswer() {
         return answer;
@@ -51,6 +53,10 @@ public class QuestionAnswerDTO implements Serializable {
         return sequence;
     }
 
+    public Integer getValue() {
+        return value;
+    }
+
     public void setAnswer(AnswerDTO answer) {
         this.answer = answer;
     }
@@ -65,6 +71,10 @@ public class QuestionAnswerDTO implements Serializable {
 
     public void setSequence(Integer sequence) {
         this.sequence = sequence;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
     }
 
 }

@@ -165,6 +165,11 @@
                                 <input class="form-control" ng-model="a.answer[k]" type="text" id="{{k}}" placeholder="{{k}}">
                             </div>
                         </div>
+
+                        <div class="form-group form-group-sm">
+                          <label class="col-sm-2 control-label" for="value-{{$index}}">Value</label>
+                          <input class="form-control" ng-model="a.value" id="value-{{$index}}">
+                        </div>
                     </div>
                     <a ng-click="addA(q.question)" class="btn btn-sm btn-success">Add Answer</a>
                 </div>

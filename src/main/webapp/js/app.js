@@ -382,7 +382,8 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
             altText: null,
             imgHeight: 0,
             imgWidth: 0
-        }
+        },
+        value: 0
     };
 
     /**

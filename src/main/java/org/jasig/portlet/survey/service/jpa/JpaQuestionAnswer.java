@@ -46,13 +46,16 @@ public class JpaQuestionAnswer implements Serializable {
 
     @EmbeddedId
     private JpaQuestionAnswerPK id;
-    
+
     @Column(name = "LOGIC", nullable = true)
-    private String logic; 
+    private String logic;
 
     @Column(name = "SEQUENCE", nullable = true)
     private int sequence;
-    
+
+    @Column(name = "VALUE", nullable = true)
+    private Integer value;
+
     public String getCanonicalName() {
         return canonicalName;
     }
@@ -67,6 +70,10 @@ public class JpaQuestionAnswer implements Serializable {
 
     public int getSequence() {
         return sequence;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public void setCanonicalName(String canonicalName) {
@@ -85,5 +92,8 @@ public class JpaQuestionAnswer implements Serializable {
         this.sequence = sequence;
     }
 
-    
+    public void setValue(int value) {
+        this.value = value;
+    }
+
 }
