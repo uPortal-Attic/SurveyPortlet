@@ -44,4 +44,6 @@ public interface ISurveyDataService {
     List<ResponseDTO> getResponseByUser(String user);
     ResponseDTO getResponseByUserAndSurvey(String user, long surveyId);
     ResponseDTO updateResponse(ResponseDTO response);
+
+    SurveySummaryDTO getSurveySummary(Long surveyId);
 }

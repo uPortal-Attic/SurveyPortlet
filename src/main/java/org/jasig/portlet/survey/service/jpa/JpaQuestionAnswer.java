@@ -46,7 +46,7 @@ public class JpaQuestionAnswer implements Serializable {
 
     @EmbeddedId
     private JpaQuestionAnswerPK id;
-
+    
     @Column(name = "LOGIC", nullable = true)
     private String logic;
 

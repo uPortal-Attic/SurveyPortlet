@@ -90,7 +90,38 @@
             <role-link>Authenticated Users</role-link>
         </security-role-ref>
     </portlet>
-    
+
+    <portlet>
+        <portlet-name>survey-summary-portlet</portlet-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/survey-summary-portlet.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Survey Summary Portlet</title>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>surveyName</name>
+                <value></value>
+            </preference>
+        </portlet-preferences>
+        <security-role-ref>
+            <role-name>survey-admin</role-name>
+            <role-link>Portal Administrators</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>survey-user</role-name>
+            <role-link>Authenticated Users</role-link>
+        </security-role-ref>
+    </portlet>
+
     <user-attribute>
         <description>User Display Name</description>
         <name>displayName</name>

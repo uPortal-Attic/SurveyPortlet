@@ -72,3 +72,37 @@ html, html body, html div.view {
 
 [ng-cloak] {
   display: none; }
+
+.summary header p.description {
+    background-color: #ddd;
+    margin-left: 12px;
+    padding: 4px;
+}
+
+.summary header p.responseCount {
+    font-size: smaller;
+    font-weight: bolder;
+}
+
+.summary section.question table {
+    margin: 13px 10px 11px 10px;
+    width: auto;
+}
+
+.summary section.question table th {
+    color: white;
+    background-color: #61009F;
+    padding: 7px 10px;
+}
+
+.summary section.question table td {
+    padding: 2px;
+}
+
+.summary section.question table td:first-child {
+    font-size: smaller;
+    font-weight: bolder;
+    width: 3em;
+    padding-right: 5px;
+    text-align: right;
+}

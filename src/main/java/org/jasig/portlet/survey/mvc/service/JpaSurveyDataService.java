@@ -243,7 +243,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
     @Transactional
     @Override
     public SurveyDTO updateSurvey(SurveyDTO survey) {
-        JpaSurvey existingSurvey = jpaSurveyDao.getSurvey( survey.getId());
+        JpaSurvey existingSurvey = jpaSurveyDao.getSurvey(survey.getId());
         if( existingSurvey == null || existingSurvey.getStatus() == PublishedState.PUBLISHED) {
             log.warn( "Cannot update survey");
             return null;
@@ -252,7 +252,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         // remove question/answer elements
         survey.setSurveyQuestions( null);
 
-        JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey( survey);
+        JpaSurvey jpaSurvey = surveyMapper.toJpaSurvey(survey);
         jpaSurvey.setLastUpdateDate(new Timestamp(new Date().getTime()));
         jpaSurvey = jpaSurveyDao.updateSurvey( jpaSurvey);
 
@@ -267,7 +267,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return surveyMapper.toResponse(jpaResponse);
     }
 
-    @Transactional//(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public ResponseDTO getResponse(long id) {
         JpaResponse jpaResponse = jpaSurveyDao.getResponse(id);
@@ -275,7 +275,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return jpaResponse == null ? null : surveyMapper.toResponse(jpaResponse);
     }
 
-    @Transactional//(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<ResponseDTO> getResponseByUser(String user) {
         List<JpaResponse> responseList = jpaSurveyDao.getResponseByUser(user);
@@ -285,7 +285,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return surveyMapper.toResponseList(responseList);
     }
 
-    @Transactional//(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public ResponseDTO getResponseByUserAndSurvey(String user, long surveyId) {
         JpaResponse jpaResponse = jpaSurveyDao.getResponseByUserAndSurvey(user, surveyId);
@@ -310,4 +310,13 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return surveyMapper.toResponse(jpaResponse);
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public SurveySummaryDTO getSurveySummary(Long surveyId) {
+        List<JpaResponse> responses = jpaSurveyDao.getResponseBySurvey(surveyId);
+        SurveySummaryDTO summary = new SurveySummaryDTO(responses);
+        //summary.setResponses(responses);
+        log.debug(summary.toString());
+        return summary;
+    }
 }

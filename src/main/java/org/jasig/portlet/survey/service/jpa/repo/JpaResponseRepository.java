@@ -27,6 +27,7 @@ import java.util.List;
 @Repository
 public interface JpaResponseRepository extends CrudRepository<JpaResponse, Long> {
 
-    //public JpaResponse findByUserAndSurvey(String user, long surveyId);
     public List<JpaResponse> findByUser(String user);
+    public JpaResponse findByUserAndSurvey(String user, Long surveyId);
+    public List<JpaResponse> findBySurvey(Long surveyId);
 }

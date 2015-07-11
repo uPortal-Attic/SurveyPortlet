@@ -353,4 +353,21 @@ public class SurveyRestController {
         }
         return new ResponseEntity<>(updatedResponse, status);
     }
+
+    /**
+     * Return summary of user responses for a survey.
+     *
+     * @param survey    ID of survey
+     * @return
+     */
+    //@PreAuthorize("hasRole('ADMIN')")
+    @ApiMethod(description = "Return summary of user response for a survey", responsestatuscode = "201")
+    //@SuppressWarnings({ "unchecked", "rawtypes" })
+    @RequestMapping(method = RequestMethod.GET, value = "/{survey}/summary")
+    public @ApiResponseObject ResponseEntity<SurveySummaryDTO> getSurveySummary(@ApiPathParam(name = "survey") @PathVariable Long survey) {
+        SurveySummaryDTO summaryDTO = dataService.getSurveySummary(survey);
+        log.debug(summaryDTO.toString());
+        return new ResponseEntity(summaryDTO, HttpStatus.OK);
+    }
+
 }

@@ -206,19 +206,17 @@ class JpaSurveyDao implements IJpaSurveyDao {
     @Override
     public JpaQuestion updateQuestion(JpaQuestion question) {
         setupQuestionForSave( question, false);
-        JpaQuestion updatedQuestion = questionRepository.save(question);
-        return updatedQuestion;
+        return questionRepository.save(question);
     }
 
     @Override
     public JpaSurvey updateSurvey(JpaSurvey survey) {
-        JpaSurvey newSurvey = surveyRepository.save(survey);
-        return newSurvey;
+        return surveyRepository.save(survey);
     }
 
     @Override
-    public void createResponse(JpaResponse jpaResponse) {
-        JpaResponse result = responseRepository.save(jpaResponse);
+    public JpaResponse createResponse(JpaResponse jpaResponse) {
+        return responseRepository.save(jpaResponse);
     }
 
     @Override
@@ -229,20 +227,21 @@ class JpaSurveyDao implements IJpaSurveyDao {
     @Override
     public List<JpaResponse> getResponseByUser(String user) {
         Iterable<?> responseIter = responseRepository.findByUser(user);
-        List<JpaResponse> responseList = IteratorUtils.toList(responseIter.iterator());
-        return responseList;
+        return IteratorUtils.toList(responseIter.iterator());
     }
 
     @Override
     public JpaResponse getResponseByUserAndSurvey(String user, long surveyId) {
-        //return responseRepository.findByUserAndSurvey(user, surveyId);
-        return (JpaResponse) responseRepository.findByUser(user);
+        return responseRepository.findByUserAndSurvey(user, surveyId);
     }
 
     @Override
     public JpaResponse updateResponse(JpaResponse jpaResponse) {
-        JpaResponse newResponse = responseRepository.save(jpaResponse);
-        return newResponse;
+        return responseRepository.save(jpaResponse);
     }
 
+    @Override
+    public List<JpaResponse> getResponseBySurvey(Long surveyId) {
+        return responseRepository.findBySurvey(surveyId);
+    }
 }

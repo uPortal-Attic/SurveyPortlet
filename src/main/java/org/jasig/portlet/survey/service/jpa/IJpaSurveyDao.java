@@ -44,7 +44,7 @@ public interface IJpaSurveyDao {
     public JpaQuestion updateQuestion(JpaQuestion question);
     public JpaSurvey updateSurvey(JpaSurvey survey);
 
-    void createResponse(JpaResponse jpaResponse);
+    JpaResponse createResponse(JpaResponse jpaResponse);
 
     JpaResponse getResponse(long id);
 
@@ -53,4 +53,6 @@ public interface IJpaSurveyDao {
     JpaResponse getResponseByUserAndSurvey(String user, long surveyId);
 
     JpaResponse updateResponse(JpaResponse jpaResponse);
+
+    List<JpaResponse> getResponseBySurvey(Long surveyId);
 }
