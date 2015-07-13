@@ -27,9 +27,7 @@ window.up.startSurveySummaryApp = function(window, params) {
         // Call boostrap() on script load
         scr.addEventListener('load', bootstrap);
     } else {
-        console.log(window.up.ngApp);
-        register(window.up.ngApp);
-        // TODO: Should register() be replaced with boostrap() ?
+        bootstrap();
     }
 
     /*
