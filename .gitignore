@@ -20,3 +20,4 @@ npm-debug.log
 /intellij
 /.DS_Store
 .env
+phantomjsdriver.log
