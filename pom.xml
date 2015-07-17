@@ -20,7 +20,7 @@
     <!-- Dependency Version Properties -->
     <properties>
         <env>local</env>
-        <filters.file>../../filters/${env}.properties</filters.file>
+        <filters.file>src/main/filters/${env}.properties</filters.file>
         <commons-lang.version>2.6</commons-lang.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <hsqldb.version>2.3.2</hsqldb.version>
