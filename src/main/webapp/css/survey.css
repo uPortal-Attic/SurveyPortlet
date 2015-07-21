@@ -20,6 +20,8 @@
       padding: 0 1.5em; }
       .surveys section.survey .question survey-question section .answer label {
         font-weight: normal; }
+      .surveys section.survey .question survey-question section .answer label input {
+        margin-right: 4px; }
   .surveys section.survey .survey-glob {
     margin-top: 1.5em; }
   .surveys section.survey .survey-modal {
