@@ -43,9 +43,14 @@
   <jmxConfigurator />
 
   <!-- 
+   | Read in some settings from a properties file
+   +-->
+  <property resource="configuration.properties"/>
+
+  <!-- 
    | Specify a local property that sets up the logging directory
    +-->
-  <property scope="local" name="LOG_DIR" value="${survey.webapp.root}/../../logs" />
+  <property scope="local" name="LOG_DIR" value="${log.logfileDirectory}" />
 
   <!--
    | Setup a file based logger that rolls
