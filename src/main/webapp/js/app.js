@@ -460,10 +460,10 @@ app
      * # SurveyCtrl
      * Controller of the ngPortalApp
      */
-
+    var survey;
     $scope.surveys = SurveyMeta.surveys;
     if (surveyName) {
-        SurveyMeta.getSurveyByName(surveyName);
+        survey = SurveyMeta.getSurveyByName(surveyName);
     } else {
         SurveyMeta.getSurveys();
     }
@@ -477,13 +477,20 @@ app
     StudentProfile.get('surveyAnswers', {
         params: {
             user: USER,
+            survey: survey.id
         }
-    }).then(function success(d) {
-        if (d && d.length && d[0].answers && d[0].answers.length) {
-            _.each(d[0].answers, function(ans) {
-                $scope.surveyData[ans.question] = ans.answer;
-            });
-            $scope.surveyData.id = d[0].id;
+    }).then(function success(d, survey) {
+        console.log(d);
+        console.log(survey);
+        if (d && d.length) {
+            for (var i = 0; i < d.length; i++) {
+                if (d[i].survey == survey.id) {
+                    _.each(d[i].answers, function(ans) {
+                        $scope.surveyData[ans.question] = ans.answer;
+                    });
+                    $scope.surveyData.id = d[i].id;
+                }
+            }
         }
     });
 
