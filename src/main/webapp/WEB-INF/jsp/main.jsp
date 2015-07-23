@@ -32,17 +32,12 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/survey.css" type="text/css" charset="utf-8">
 
-<div id="${n}-survey-portlet" ng-cloak class="surveys" ng-controller="SurveyCtrl">
-    <section
-        class="survey"
-        ng-repeat="survey in surveys"
-        ng-show="survey.surveyQuestions.length"
-        ng-init="current = {q:0}; survey.editable = true">
-        <header>
-            <span class="title">{{survey.title}}:</span>
-            <span class="description">{{survey.description}}</span>
-            <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
-        </header>
+<div id="${n}-survey-portlet" ng-cloak class="survey" ng-controller="surveyController" ng-init="current = {q:0};">
+    <header>
+        <span class="title">{{survey.title}}:</span>
+        <span class="description">{{survey.description}}</span>
+        <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
+    </header>
 
         <modal class="survey-modal modal-content clearfix" shown="survey.shown">
         <header class="modal-header">
@@ -75,12 +70,11 @@
             </div>
         </div>
         </modal>
-    </section>
 </div>
 
-<script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/app.js" type="text/javascript" charset="utf-8"></script>
+<script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/survey.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    window.up.startSurveyPortlet(window, up._, {
+    window.up.startSurveyApp(window, up._, {
         n: '${n}',
         surveyName: "${portletPreferencesValues['surveyName'][0]}",
         user: "${renderRequest.getRemoteUser()}"

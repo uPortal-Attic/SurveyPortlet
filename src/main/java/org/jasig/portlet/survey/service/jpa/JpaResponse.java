@@ -36,7 +36,7 @@ import java.util.Set;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "JpaResponse.findBySurvey", query = "Select r from JpaResponse r where survey_id = ?1"),
-    @NamedQuery(name = "JpaResponse.findByUserAndSurvey", query = "Select r from JpaResponse r where user = :user and survey_id = :survey_Id")
+    @NamedQuery(name = "JpaResponse.findByUserAndSurvey", query = "Select r from JpaResponse r where user = ?1 and survey_id = ?2")
 })
 @Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "RESPONSE")
 public class JpaResponse implements Serializable {

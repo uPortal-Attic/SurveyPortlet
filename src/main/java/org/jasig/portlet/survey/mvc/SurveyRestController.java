@@ -264,20 +264,24 @@ public class SurveyRestController {
 
     @ApiMethod(description = "Fetch a user's answers for all surveys", responsestatuscode = "201")
     @RequestMapping(method = RequestMethod.GET, value = "/surveyAnswers")
-    public @ApiResponseObject ResponseEntity<ResponseDTO> getResponsesByUser(Principal principal) {
+    public @ApiResponseObject ResponseEntity<ResponseDTO> getResponsesByUser(
+            @RequestParam("survey") Long surveyId,
+            Principal principal) {
+        log.debug("GET surveyAnswers with survey = {}", surveyId);
         /*
          * User is passed as a parameter to support persisting to other backend stores.
          * This method relies on the principal to determine the user.
          */
         HttpStatus status = HttpStatus.OK;
-        List<ResponseDTO> responses = null;
+        ResponseDTO responseDTO = null;
         try {
-            responses = dataService.getResponseByUser(principal.getName());
+            responseDTO = dataService.getResponseByUserAndSurvey(principal.getName(), surveyId);
+            log.debug(responseDTO.toString());
         } catch (Exception e) {
-            log.error("Error retrieving all survey responses for user: " + principal.getName(), e);
+            log.error("Error retrieving all survey responses for user: " + principal.getName() + ", survey: " + surveyId, e);
             status = HttpStatus.BAD_REQUEST;
         }
-        return new ResponseEntity(responses, status);
+        return new ResponseEntity(responseDTO, status);
     }
 
     @ApiMethod(description = "Fetch a user's answers by id", responsestatuscode = "201")
