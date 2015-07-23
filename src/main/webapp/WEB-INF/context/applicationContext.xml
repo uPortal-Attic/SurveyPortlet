@@ -64,7 +64,7 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
-    
+
     <!-- Message source for this context, loaded from localized "messages_xx" files -->
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
@@ -73,8 +73,6 @@
             </list>
         </property>
     </bean>
-
-    <bean id="viewSelector" class="org.jasig.portlet.survey.mvc.ThemeNameViewSelectorImpl"/>
 
     <!-- Default View Resolver -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -91,7 +89,7 @@
             </list>
         </property>
     </bean>
-    
+
     <!-- Override/replace this by declaring an instance of type IVariantStrategy to provide a custom solution
          for determining variant text. The default (null) strategy always reads the default text for anything -->
     <bean class="org.jasig.portlet.survey.NullVariantStrategy"/>
