@@ -82,17 +82,17 @@ window.up.startSurveySummaryApp = function(window, params) {
         app.factory('surveyApiService', function($http) {
             var surveyApi = {};
 
-            surveyApi.getSurveyByName = function(surveyName) {
+            surveyApi.getSurveyByName = function(name) {
                 return $http({
                     method: 'GET',
-                    url: '/survey-portlet/v1/surveys/surveyByName/' + surveyName
+                    url: '/survey-portlet/v1/surveys/surveyByName/' + name
                 });
             }
 
             surveyApi.getSummary = function(surveyId) {
                 return $http({
                     method: 'GET',
-                    url: '/survey-portlet/v1/surveys/' + surveyId + "/summary"
+                    url: '/survey-portlet/v1/surveys/' + surveyId + '/summary'
                 });
             }
 
