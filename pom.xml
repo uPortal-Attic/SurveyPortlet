@@ -253,6 +253,11 @@
                 <version>1.4.3</version>
             </dependency>
             <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>underscorejs</artifactId>
+                <version>1.8.3</version>
+            </dependency>
+            <dependency>
                 <groupId>org.webjars.bower</groupId>
                 <artifactId>angular-mocks</artifactId>
                 <version>1.4.3</version>
@@ -421,6 +426,11 @@
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
             <version>1.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>underscorejs</artifactId>
+            <version>1.8.3</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.bower</groupId>
@@ -787,6 +797,7 @@
                     <jsTestSrcDir>${project.basedir}/src/test/webapp/js</jsTestSrcDir>
                     <preloadSources>
                         <source>/webjars/angularjs/angular.js</source>
+                        <source>/webjars/underscorejs/underscore.js</source>
                         <source>/webjars/angular-mocks/angular-mocks.js</source>
                     </preloadSources>
                     <specIncludes>
