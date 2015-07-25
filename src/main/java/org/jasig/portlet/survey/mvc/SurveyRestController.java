@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.jasig.portlet.survey.mvc;
 
 import java.io.IOException;
@@ -23,8 +24,11 @@ import java.security.Principal;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.jasig.portlet.survey.mvc.service.ISurveyDataService;
 import org.jasig.portlet.survey.service.dto.*;
+import org.jasig.portlet.survey.service.report.ISurveyReportGenerator;
+import org.jasig.portlet.survey.service.report.ISurveyReportMapper;
 import org.jsondoc.core.annotation.Api;
 import org.jsondoc.core.annotation.ApiBodyObject;
 import org.jsondoc.core.annotation.ApiMethod;
@@ -39,14 +43,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Api(name = "SurveyPortlet services", description = "Methods for managing surveys")
 @Controller
 @RequestMapping(value = SurveyRestController.REQUEST_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
 public class SurveyRestController {
-    static final String REQUEST_ROOT = "/v1/surveys";
+
+    public static final String REQUEST_ROOT = "/v1/surveys";
+
     @Autowired
     private ISurveyDataService dataService;
+
+    @Autowired
+    private ISurveyReportMapper reportMapper;
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
@@ -372,6 +383,31 @@ public class SurveyRestController {
         SurveySummaryDTO summaryDTO = dataService.getSurveySummary(survey);
         log.debug(summaryDTO.toString());
         return new ResponseEntity(summaryDTO, HttpStatus.OK);
+    }
+
+    /**
+     * Provides a visual (HTML) report based an individual user's responses to
+     * a survey.  This report typically appears when a user finishes a survey,
+     * and can be as simple or complex as needed.  Report generation supports
+     * pluggable strategies.
+     */
+    @ApiMethod(description = "Fetch the post-survey report that was generated based on the user's answers", responsestatuscode = "201")
+    @RequestMapping(method = RequestMethod.GET, value = "/surveyReport/{responseId}")
+    public @ApiResponseObject ModelAndView getSurveyReport(
+            @ApiPathParam(name = "responseId") @PathVariable Long responseId,
+            Principal principal) {
+
+        final ResponseDTO response = dataService.getResponse(responseId);
+        // Need to check principal matches user
+        if (!principal.getName().equals(response.getUser())) {
+            log.warn("Principal named '{}' displaying report prepared for user '{}'", principal.getName(), response.getUser());
+        }
+
+        final SurveyDTO survey = dataService.getSurvey(response.getSurvey());
+        ISurveyReportGenerator generator = reportMapper.getReportGenerator(survey);
+
+        return generator.generateReport(survey, response);
+
     }
 
 }

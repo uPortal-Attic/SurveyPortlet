@@ -113,6 +113,9 @@ window.up.startSurveyApp = function(window, _, params) {
                 };
                 surveyApiService.saveUserAnswers(data).success(function(response) {
                     answers.id = response.id;
+                    surveyApiService.getResponseReport(user, answers.id).success(function(response) {
+                        console.log(response);
+                    })
                 });
             }
 
@@ -148,6 +151,14 @@ window.up.startSurveyApp = function(window, _, params) {
                     method: verb,
                     url: url,
                     data: data
+                });
+            }
+
+            surveyApi.getResponseReport = function(user, responseId) {
+                return $http({
+                    method: 'GET',
+                    url: '/survey-portlet/v1/surveys/surveyReport/' + responseId,
+                    params: {user: user}
                 });
             }
 
