@@ -45,7 +45,7 @@
             <span class="description">{{survey.description}}</span>
         </header>
         <div class="modal-body">
-            <div class="question">
+            <div class="question" ng-hide="surveyComplete">
                 <div class="clearfix survey-nav">
                     Question {{current.q+1}} of {{survey.surveyQuestions.length}}
                     <div class="pull-right">
@@ -64,6 +64,7 @@
                 </div>
                 <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
             </div>
+            <div ng-if="surveyComplete" ng-include="'/survey-portlet/v1/surveys/surveyReport/' + surveyData.id"></div>
             <div class="modal-footer">
                 <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>Save</a>
                 <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>

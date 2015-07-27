@@ -23,4 +23,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h2>Hello World!</h2>
+<h2>Thank you for your response to &quot;<c:out value="${survey.title}" />&quot;</h2>
