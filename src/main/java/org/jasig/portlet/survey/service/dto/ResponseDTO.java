@@ -26,6 +26,7 @@ import org.jsondoc.core.annotation.ApiObjectField;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,6 +47,8 @@ public class ResponseDTO implements Serializable {
     private String user;
     @ApiObjectField(required = true)
     private long survey;
+    @ApiObjectField(required = true)
+    private Date lastUpdated;
     @ApiObjectField
     private Set<ResponseAnswerDTO> answers = new HashSet<>();
 
@@ -59,6 +62,10 @@ public class ResponseDTO implements Serializable {
 
     public long getSurvey() {
         return survey;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
     public Set<ResponseAnswerDTO> getAnswers() {
@@ -75,6 +82,10 @@ public class ResponseDTO implements Serializable {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public void setAnswers(Set<ResponseAnswerDTO> answers) {

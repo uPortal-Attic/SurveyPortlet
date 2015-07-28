@@ -117,6 +117,7 @@ class SurveyMapper implements ISurveyMapper {
         result.setId(response.getId());
         result.setUser(response.getUser());
         result.setSurvey(response.getSurvey().getId());
+        result.setLastUpdated(response.getLastUpdated());
 
         // Copy whether a question is multi-value for this survey
         Map<Long, Boolean> multivalues = new HashMap<>();
@@ -146,6 +147,7 @@ class SurveyMapper implements ISurveyMapper {
         jpaResponse.setId(response.getId());
         jpaResponse.setUser(response.getUser());
         jpaResponse.setSurvey(jpaSurveyDao.getSurvey(response.getSurvey()));
+        // NB:  Not setting lastUpdated b/c it is updated automatically when Hibernate persists
         for (ResponseAnswerDTO responseAnswer : response.getAnswers()) {
             JpaQuestion jpaQuestion = jpaSurveyDao.getQuestion(responseAnswer.getQuestion());
             //asset(jpaQuestion);

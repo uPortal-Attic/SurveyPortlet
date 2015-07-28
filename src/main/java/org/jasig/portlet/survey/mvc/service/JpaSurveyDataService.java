@@ -305,6 +305,9 @@ public class JpaSurveyDataService implements ISurveyDataService {
         log.debug("existing response: " + existingResponse.toString());
         log.debug("source DTO response: " + response.toString());
         log.debug("mapped response: " + jpaResponse.toString());
+
+        // Touch the lastUpdated filed to match this persist
+        jpaResponse.setLastUpdated(new Date());
         jpaResponse = jpaSurveyDao.updateResponse(jpaResponse);
         log.debug("updated response: " + jpaResponse.toString());
         return surveyMapper.toResponse(jpaResponse);

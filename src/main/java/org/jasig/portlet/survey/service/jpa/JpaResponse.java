@@ -72,11 +72,6 @@ public class JpaResponse implements Serializable {
     @OneToMany(mappedBy = "id.jpaResponse", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<JpaResponseAnswer> jpaResponseAnswers = new HashSet<>();
 
-    @PrePersist
-    private void update() {
-        lastUpdated = new Date();
-    }
-
     public long getId() {
         return id;
     }
@@ -103,6 +98,10 @@ public class JpaResponse implements Serializable {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public void setSurvey(JpaSurvey survey) {
