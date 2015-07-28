@@ -773,22 +773,3 @@ insert into survey_text (key, variant, alt_text, definition_text, help_text, tex
 values ('lifestyle_text', '', 'alt-text', 'def-text', 'help-text', 'survey-text');
 insert into survey_text (key, variant, alt_text, definition_text, help_text, text) 
 values ('onsitechildcare', '', 'On Site Childcare Notice', 'Click here for more information', 'What onsite means: blah blah', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-
-insert into survey_response (id, user, survey_id)
-values (9999336, 'admin', 99993);
-insert into survey_response_answer (response_id, question_id)
-values (9999336, 9999101);
-insert into survey_response_answers (response_id, question_id, answer_id)
-values (9999336, 9999101, 9999201);
-insert into survey_response_answers (response_id, question_id, answer_id)
-values (9999336, 9999101, 9999202);
-insert into survey_response_answers (response_id, question_id, answer_id)
-values (9999336, 9999101, 9999203);
-insert into survey_response_answer (response_id, question_id)
-values (9999336, 9999102);
-insert into survey_response_answers (response_id, question_id, answer_id)
-values (9999336, 9999102, 9999205);
-insert into survey_response_answer (response_id, question_id)
-values (9999336, 9999103);
-insert into survey_response_answers (response_id, question_id, answer_id)
-values (9999336, 9999103, 9999212);
