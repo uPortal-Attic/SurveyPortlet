@@ -263,6 +263,8 @@ public class JpaSurveyDataService implements ISurveyDataService {
     @Override
     public ResponseDTO createResponse(ResponseDTO response) {
         JpaResponse jpaResponse = surveyMapper.toJpaResponse(response);
+        // Touch the lastUpdated filed to match this persist
+        jpaResponse.setLastUpdated(new Date());
         jpaSurveyDao.createResponse(jpaResponse);
         return surveyMapper.toResponse(jpaResponse);
     }
