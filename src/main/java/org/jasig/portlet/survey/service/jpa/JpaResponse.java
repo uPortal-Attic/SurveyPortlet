@@ -22,8 +22,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,6 +62,9 @@ public class JpaResponse implements Serializable {
     @Column(name = "USER", nullable = false)
     private String user;
 
+    @Column(name = "LAST_UPDATED", nullable = false)
+    private Date lastUpdated;
+
     @ManyToOne
     @JoinColumn(name = "SURVEY_ID") //, table = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY")
     private JpaSurvey survey;
@@ -67,12 +72,21 @@ public class JpaResponse implements Serializable {
     @OneToMany(mappedBy = "id.jpaResponse", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<JpaResponseAnswer> jpaResponseAnswers = new HashSet<>();
 
+    @PrePersist
+    private void update() {
+        lastUpdated = new Date();
+    }
+
     public long getId() {
         return id;
     }
 
     public String getUser() {
         return user;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
     public JpaSurvey getSurvey() {
