@@ -287,7 +287,7 @@ public class SurveyRestController {
         ResponseDTO responseDTO = null;
         try {
             responseDTO = dataService.getResponseByUserAndSurvey(principal.getName(), surveyId);
-            log.debug(responseDTO.toString());
+            log.debug(responseDTO != null ? responseDTO.toString() : "response is null");
         } catch (Exception e) {
             log.error("Error retrieving all survey responses for user: " + principal.getName() + ", survey: " + surveyId, e);
             status = HttpStatus.BAD_REQUEST;

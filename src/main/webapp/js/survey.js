@@ -80,11 +80,13 @@ window.up.startSurveyApp = function(window, _, params) {
                 if ($scope.survey.id) {
                     surveyApiService.getUserAnswers(user, $scope.survey.id).success(function(response) {
                         console.log(response);
-                        $scope.answers = response;
-                        for (var j = 0; j < response.answers.length; j++) {
-                            $scope.surveyData[response.answers[j].question] = response.answers[j].answer;
+                        if (response) {
+                            $scope.answers = response;
+                            for (var j = 0; j < response.answers.length; j++) {
+                                $scope.surveyData[response.answers[j].question] = response.answers[j].answer;
+                            }
+                            $scope.surveyData.id = response.id;
                         }
-                        $scope.surveyData.id = response.id;
                     });
                 }
             });

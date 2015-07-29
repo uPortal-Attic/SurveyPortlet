@@ -233,7 +233,7 @@ class JpaSurveyDao implements IJpaSurveyDao {
     @Override
     public JpaResponse getResponseByUserAndSurvey(String user, long surveyId) {
         Iterable<JpaResponse> responseIter = responseRepository.findByUserAndSurvey(user, surveyId);
-        return responseIter == null ? null : responseIter.iterator().next();
+        return responseIter.iterator().hasNext() ? responseIter.iterator().next() : null;
     }
 
     @Override
