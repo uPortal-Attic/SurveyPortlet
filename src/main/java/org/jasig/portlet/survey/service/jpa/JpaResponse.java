@@ -55,7 +55,7 @@ public class JpaResponse implements Serializable {
             allocationSize = 5
     )
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = JpaSurveyDataService.TABLENAME_PREFIX + "RESPONSE_GEN")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = JpaSurveyDataService.TABLENAME_PREFIX + "RESPONSE_GEN")
     @Column(name = "ID", updatable = false)
     private long id;
 

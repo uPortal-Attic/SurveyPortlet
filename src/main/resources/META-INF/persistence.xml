@@ -49,7 +49,7 @@
             <property name="hibernate.max_fetch_depth" value="3" />
             <property name="hibernate.default_batch_fetch_size" value="4" />
             <property name="hibernate.jdbc.batch_size" value="25" />
-            <property name="hibernate.id.new_generator_mappings" value="true" />
+            <property name="hibernate.id.new_generator_mappings" value="false" />
 
             <property name="hibernate.cache.use_query_cache" value="true" />
             <property name="hibernate.cache.use_second_level_cache" value="true" />
