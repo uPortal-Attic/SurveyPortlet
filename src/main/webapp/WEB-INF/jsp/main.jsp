@@ -64,7 +64,7 @@
                 </div>
                 <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
             </div>
-            <div class="survey-report" ng-if="surveyComplete" ng-include="'/survey-portlet/v1/surveys/surveyReport/' + surveyData.id"></div>
+            <div class="survey-report"></div>
             <div class="modal-footer">
                 <a class="btn btn-pdf btn-lg" ng-if="surveyComplete" ng-click="createPdf(surveyData.id)")>PDF</a>
                 <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>Save</a>

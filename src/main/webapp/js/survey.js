@@ -117,11 +117,15 @@ window.up.startSurveyApp = function(window, _, params) {
                 };
                 surveyApiService.saveUserAnswers(data).success(function(response) {
                     answers.id = response.id;
-                    $scope.surveyComplete = true;
-                    $scope.$on('$includeContentLoaded', function () {
-                        // Report content has loaded;  eval() scripts, if any.
-                        eval($('.survey .modal-body .survey-report:visible').find('script').text());
-                    });
+                    $scope.surveyComplete = true;  // Auto-hides the question div
+                    /*
+                     * Use jQuery (rather than AngularJS) to inject the report
+                     * into the DOM so that scripts will be evaluated automatically.
+                     */
+                    $.get('/survey-portlet/v1/surveys/surveyReport/' + answers.id, function(reportContent) {
+                            $('.survey .modal-body .survey-report:visible').html(reportContent);
+                        }
+                    );
                 });
             }
 
