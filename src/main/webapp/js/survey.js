@@ -28,6 +28,8 @@ window.up = window.up || {};
 window.up.startSurveyApp = function(window, _, params) {
     'use strict';
 
+    var $ = up.jQuery;  // De-alias jQuery
+
     if (!window.angular) {
         // Angular not defined, look for <script>
         var ANGULAR_SCRIPT_ID = 'angular-uportal-script';
@@ -116,6 +118,10 @@ window.up.startSurveyApp = function(window, _, params) {
                 surveyApiService.saveUserAnswers(data).success(function(response) {
                     answers.id = response.id;
                     $scope.surveyComplete = true;
+                    $scope.$on('$includeContentLoaded', function () {
+                        // Report content has loaded;  eval() scripts, if any.
+                        eval($('.survey .modal-body .survey-report:visible').find('script').text());
+                    });
                 });
             }
 
