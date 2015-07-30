@@ -99,6 +99,11 @@ survey {
     top: 10%;
 }
 
+.survey .btn-pdf {
+    color: white;
+    background-color: #009;
+}
+
 /*
  * survey admin styling
  */

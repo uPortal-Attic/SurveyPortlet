@@ -66,6 +66,7 @@
             </div>
             <div class="survey-report" ng-if="surveyComplete" ng-include="'/survey-portlet/v1/surveys/surveyReport/' + surveyData.id"></div>
             <div class="modal-footer">
+                <a class="btn btn-pdf btn-lg" ng-if="surveyComplete" ng-click="createPdf(surveyData.id)")>PDF</a>
                 <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>Save</a>
                 <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
             </div>
@@ -73,6 +74,7 @@
         </modal>
 </div>
 
+<script src="${pageContext.request.contextPath}/js/jspdf.min.js" type="text/javascript"></script>
 <script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/survey.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     window.up.startSurveyApp(window, up._, {
