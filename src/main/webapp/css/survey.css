@@ -94,9 +94,9 @@ survey {
     color: black;
     z-index: 1051;
     position: fixed;
-    width: 40%;
-    left: 30%;
-    top: 10%;
+    width: 80%;
+    left: 10%;
+    top: 5%;
 }
 
 /*
