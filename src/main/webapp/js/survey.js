@@ -129,22 +129,6 @@ window.up.startSurveyApp = function(window, _, params) {
                 });
             }
 
-            // generate PDF
-            $scope.createPdf = function(answersID) {
-                // these values should be configurable
-                var pdf = new jsPDF('p', 'pt', 'letter');
-                // only one modal displayed at a time, so no concern about multi-portlet conflict
-                var source = $('.survey .modal-body .survey-report:visible').html();
-                console.log(source);
-                var margins = { top: 80, bottom: 60, left: 40, width: 522 };
-                pdf.fromHTML(
-                    source,
-                    margins.left, margins.top, {'width': margins.width},
-                    function(dispose) {pdf.save(surveyName +'.pdf');},
-                    margins
-                );
-            }
-
         });
 
         app.factory('surveyApiService', function($http) {
