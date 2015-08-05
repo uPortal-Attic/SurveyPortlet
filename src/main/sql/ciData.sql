@@ -24,7 +24,6 @@ values (99992, 'Test Survey 2 description', 's2_text', now(), 'admin', 0, 'Test 
 insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name) 
 values (99993, 'CCC Lifestyle Survey', 'lifestyle_text', now(), 'admin', 0, 'Lifestyle Survey', 'lifestyle');
 insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
-
 values (99994, 'Your Wellbeing - Student Assessment', 'uom_wellbeing_text', now(), 'admin', 0, 'Your Wellbeing', 'wellbeing');
 insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
 values (99995, 'Your Learning Student Assessment', 'uom_learning_text', now(), 'admin', 0, 'Your Learning', 'learning');
