@@ -135,6 +135,7 @@ class SurveyMapper implements ISurveyMapper {
             }
             result.addAnswer(responseAnswer);
         }
+        result.setFeedback(response.getFeedback());
         return result;
     }
 
@@ -161,6 +162,7 @@ class SurveyMapper implements ISurveyMapper {
             }
             jpaResponse.addJpaResponseAnswer(jpaResponseAnswer);
         }
+        jpaResponse.setFeedback(response.getFeedback());
         return jpaResponse;
     }
 

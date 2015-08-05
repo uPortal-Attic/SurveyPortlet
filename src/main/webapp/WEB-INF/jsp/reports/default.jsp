@@ -24,3 +24,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h2>Thank you for your response to &quot;<c:out value="${survey.title}" />&quot;</h2>
+<div class="feedback">
+    <h4>Would you like to provide feedback?</h4>
+    <textarea ng-model="surveyData.feedback" cols="80" rows="8">{{surveyData.feedback}}</textarea>
+</div>

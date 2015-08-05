@@ -19,6 +19,7 @@
 package org.jasig.portlet.survey.service.jpa;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Type;
 import org.jasig.portlet.survey.mvc.service.JpaSurveyDataService;
 
 import javax.persistence.*;
@@ -72,6 +73,11 @@ public class JpaResponse implements Serializable {
     @OneToMany(mappedBy = "id.jpaResponse", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<JpaResponseAnswer> jpaResponseAnswers = new HashSet<>();
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @Column(name = "FEEDBACK")
+    private String feedback;
+
     public long getId() {
         return id;
     }
@@ -92,6 +98,9 @@ public class JpaResponse implements Serializable {
         return Collections.unmodifiableSet(jpaResponseAnswers);
     }
 
+    public String getFeedback() {
+        return feedback;
+    }
     public void setId(long id) {
         this.id = id;
     }
@@ -123,6 +132,10 @@ public class JpaResponse implements Serializable {
         this.jpaResponseAnswers.remove(jpaResponseAnswer);
         jpaResponseAnswer.getId().setJpaResponse(null);
         return jpaResponseAnswer;
+    }
+
+    public void setFeedback(String fb) {
+        this.feedback = fb;
     }
 
     @Override

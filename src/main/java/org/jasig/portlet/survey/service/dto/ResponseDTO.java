@@ -51,6 +51,8 @@ public class ResponseDTO implements Serializable {
     private Date lastUpdated;
     @ApiObjectField
     private Set<ResponseAnswerDTO> answers = new HashSet<>();
+    @ApiObjectField
+    private String feedback;
 
     public long getId() {
         return id;
@@ -70,6 +72,10 @@ public class ResponseDTO implements Serializable {
 
     public Set<ResponseAnswerDTO> getAnswers() {
         return Collections.unmodifiableSet(answers);
+    }
+
+    public String getFeedback() {
+        return feedback;
     }
 
     public void setId(long id) {
@@ -95,6 +101,10 @@ public class ResponseDTO implements Serializable {
 
     public void addAnswer(ResponseAnswerDTO answer) {
         this.answers.add(answer);
+    }
+
+    public void setFeedback(String fb) {
+        this.feedback = fb;
     }
 
     @Override

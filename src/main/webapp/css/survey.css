@@ -99,6 +99,11 @@ survey {
     top: 5%;
 }
 
+.survey .feedback {
+    margin: 24px auto;
+    text-align:center;
+}
+
 /*
  * survey admin styling
  */

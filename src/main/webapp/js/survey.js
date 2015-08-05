@@ -71,9 +71,9 @@ window.up.startSurveyApp = function(window, _, params) {
      */
     function register(app) {
 
-        app.controller('surveyController', function($scope, surveyName, user, surveyApiService) {
+        app.controller('surveyController', function($scope, surveyName, user, surveyApiService, $compile) {
 
-            $scope.surveyData = {};
+            $scope.surveyData = {feedback: ""};
 
             // Load survey and user answers
             surveyApiService.getSurveyByName(surveyName).success(function(response) {
@@ -88,6 +88,9 @@ window.up.startSurveyApp = function(window, _, params) {
                                 $scope.surveyData[response.answers[j].question] = response.answers[j].answer;
                             }
                             $scope.surveyData.id = response.id;
+                            if (response.feedback) {
+                                $scope.surveyData.feedback = response.feedback;
+                            }
                         }
                     });
                 }
@@ -109,11 +112,13 @@ window.up.startSurveyApp = function(window, _, params) {
                     survey: survey.id,
                     answers: _.chain(answers)
                                 .omit('id')
+                                .omit('feedback')
                                 .pairs()
                                 .map(function(e) {
                                     return {question: Number(e[0]), answer: e[1]};
                                 })
-                                .value()
+                                .value(),
+                    feedback: answers.feedback
                 };
                 surveyApiService.saveUserAnswers(data).success(function(response) {
                     answers.id = response.id;
@@ -123,7 +128,7 @@ window.up.startSurveyApp = function(window, _, params) {
                      * into the DOM so that scripts will be evaluated automatically.
                      */
                     $.get('/survey-portlet/v1/surveys/surveyReport/' + answers.id, function(reportContent) {
-                            $('.survey .modal-body .survey-report:visible').html(reportContent);
+                            $compile($('.survey .modal-body .survey-report:visible').html(reportContent))($scope);
                         }
                     );
                 });
