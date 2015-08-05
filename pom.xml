@@ -800,6 +800,9 @@
                         <source>/webjars/underscorejs/underscore.js</source>
                         <source>/webjars/angular-mocks/angular-mocks.js</source>
                     </preloadSources>
+                    <sourceIncludes>
+                        <include>*.js</include>
+                    </sourceIncludes>
                     <specIncludes>
                         <include>*Spec.js</include>
                     </specIncludes>
