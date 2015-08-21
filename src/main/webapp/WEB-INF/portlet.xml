@@ -133,17 +133,13 @@
     </user-attribute>
 
     <filter>
-		<filter-name>SspSecurityFilter</filter-name>
-		<filter-class>org.jasig.portlet.survey.security.uportal.UPortalSecurityFilter</filter-class> 
-		<lifecycle>RENDER_PHASE</lifecycle>
-	</filter> 
-
-	<filter-mapping> 
-		<filter-name>SspSecurityFilter</filter-name>
-		<portlet-name>*</portlet-name> 
-	</filter-mapping>
+        <filter-name>SspSecurityFilter</filter-name>
+        <filter-class>org.jasig.portlet.survey.security.uportal.UPortalSecurityFilter</filter-class>
+        <lifecycle>RENDER_PHASE</lifecycle>
+    </filter>
     <filter-mapping>
-		<filter-name>SspSecurityFilter</filter-name>
-		<portlet-name>*</portlet-name>
-	</filter-mapping>
+        <filter-name>SspSecurityFilter</filter-name>
+        <portlet-name>*</portlet-name>
+    </filter-mapping>
+
 </portlet-app>
