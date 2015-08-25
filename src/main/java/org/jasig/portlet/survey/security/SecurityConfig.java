@@ -36,33 +36,29 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
     final private PreAuthenticatedAuthenticationProvider preAuthenticatedProvider;
     final private UportalPreAuthenticatedProcessingFilter processingFilter;
-    
+
     @Autowired
     private PortalPreAuthenticatedUserDetailsService detailsService;
-    
+
     public SecurityConfig() {
         preAuthenticatedProvider = new PreAuthenticatedAuthenticationProvider();
         processingFilter = new UportalPreAuthenticatedProcessingFilter();
     }
-    
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         preAuthenticatedProvider.setPreAuthenticatedUserDetailsService(detailsService);
         auth.authenticationProvider(preAuthenticatedProvider);
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         processingFilter.setAuthenticationManager( authenticationManager());
-        
+
         http
-            .authorizeRequests()
-                .antMatchers("/v1/**").hasRole("USER")
-                .anyRequest().authenticated()
-                .and()
             .jee()
                 .j2eePreAuthenticatedProcessingFilter(processingFilter)
                 .and()
@@ -72,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .csrf()
                 .disable();
-                
+
     }
-    
+
 }

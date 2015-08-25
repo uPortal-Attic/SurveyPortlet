@@ -87,19 +87,16 @@
   <!-- 
    | Setup default log level to INFO
    +-->
-  <root level="INFO">
+  <root level="WARN">
     <appender-ref ref="LOG" />
   </root>
 
   <!-- 
    | Turn up logging for portlet specific package
    +-->
-  
-  <logger name="org.jasig.portlet.survey" additivity="false" level="DEBUG">
+
+  <logger name="org.jasig.portlet.survey" additivity="false" level="INFO">
     <appender-ref ref="LOG" />
   </logger>
- 
-  <logger name="org.springframework.data" additivity="false" level="DEBUG">
-    <appender-ref ref="LOG" />
-  </logger> 
+
 </configuration>

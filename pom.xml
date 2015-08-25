@@ -31,14 +31,14 @@
         <portlet-api.version>2.0</portlet-api.version>
         <slf4j.version>1.7.5</slf4j.version>
         <servlet-api.version>3.0.1</servlet-api.version>
-        <spring.version>4.1.5.RELEASE</spring.version>        
+        <spring.version>4.1.6.RELEASE</spring.version>
         <spring-data.version>1.7.2.RELEASE</spring-data.version>
         <spring-security.version>4.0.0.RELEASE</spring-security.version>
         <!-- The JDBC Driver used by db-init -->
         <jdbc.groupId>org.postgresql</jdbc.groupId>
         <jdbc.artifactId>postgresql</jdbc.artifactId>
         <jdbc.version>9.3-1102-jdbc41</jdbc.version>  <!-- If using hsql must match hsqldb.version -->
-        
+
         <!-- use this instead for postgress
         <jdbc.groupId>org.postgresql</jdbc.groupId>
         <jdbc.artifactId>postgresql</jdbc.artifactId>
