@@ -33,7 +33,7 @@ import javax.persistence.Embeddable;
 public class JpaSurveyTextPK implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Column(name = "KEY", nullable = false, unique = false)
+    @Column(name = "TEXT_KEY", nullable = false, unique = false)
     private String key;
     
     /**
