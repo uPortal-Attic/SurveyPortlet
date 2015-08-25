@@ -92,4 +92,10 @@
     <!-- Override/replace this by declaring an instance of type IVariantStrategy to provide a custom solution
          for determining variant text. The default (null) strategy always reads the default text for anything -->
     <bean class="org.jasig.portlet.survey.NullVariantStrategy"/>
+
+    <!-- These are the survey roles that are allowed to see the individual responses of another person. -->
+    <util:list id="viewOtherUsersResponseRoles">
+        <value>SURVEY_ADMIN</value>
+    </util:list>
+
 </beans>
