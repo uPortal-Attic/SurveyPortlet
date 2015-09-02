@@ -309,7 +309,7 @@ app.service('SurveyMeta', ["$http", "$filter", "$q", function($http, $filter, $q
      * @name cccPortal.service:SurveyMeta#getSurveys
      * @description Retrieve the surveys from the metadata service and
      * refresh the sm.surveys array.
-     * @returns {Promise} A promise that will be resolved when 
+     * @returns {Promise} A promise that will be resolved when
      */
     sm.getSurveys = function() {
         return $http.get(root)
@@ -482,6 +482,26 @@ app
     $scope.surveys = SurveyMeta.surveys;
     if (surveyName) {
         survey = SurveyMeta.getSurveyByName(surveyName);
+
+        StudentProfile.get('surveyAnswers', {
+            params: {
+                user: USER,
+                survey: survey.id
+            }
+        }).then(function success(d, survey) {
+            console.log(d);
+            console.log(survey);
+            if (d && d.length) {
+                for (var i = 0; i < d.length; i++) {
+                    if (d[i].survey == survey.id) {
+                        _.each(d[i].answers, function(ans) {
+                            $scope.surveyData[ans.question] = ans.answer;
+                        });
+                        $scope.surveyData.id = d[i].id;
+                    }
+                }
+            }
+        });
     } else {
         SurveyMeta.getSurveys();
     }
@@ -491,26 +511,6 @@ app
         o.shown = !o.shown;
     };
 
-
-    StudentProfile.get('surveyAnswers', {
-        params: {
-            user: USER,
-            survey: survey.id
-        }
-    }).then(function success(d, survey) {
-        console.log(d);
-        console.log(survey);
-        if (d && d.length) {
-            for (var i = 0; i < d.length; i++) {
-                if (d[i].survey == survey.id) {
-                    _.each(d[i].answers, function(ans) {
-                        $scope.surveyData[ans.question] = ans.answer;
-                    });
-                    $scope.surveyData.id = d[i].id;
-                }
-            }
-        }
-    });
 
     $scope.saveAnswers = function(answers, survey) {
         delete answers.user;
