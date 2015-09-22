@@ -195,11 +195,16 @@
                 <version>${logback.version}</version>
                 <scope>runtime</scope>
             </dependency>
-            
+
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.7.2</version>
             </dependency>
             <dependency>
                 <groupId>commons-dbcp</groupId>
@@ -235,6 +240,16 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>13.0</version>
+            </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+                <version>1.1.6</version>
             </dependency>
             <!-- Database drivers -->
             <dependency>
@@ -341,7 +356,7 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        
+
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -364,10 +379,14 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
         <!-- End of logging section -->
-        
+
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -397,6 +416,14 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+        </dependency>
         <!-- Database drivers -->
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -406,7 +433,7 @@
 	        <groupId>${jdbc.groupId}</groupId>
 	        <artifactId>${jdbc.artifactId}</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jsondoc</groupId>
             <artifactId>jsondoc-core</artifactId>
@@ -566,7 +593,7 @@
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>2.3.1</version>
             </plugin>
-            
+
             <!-- Plug-in to add lifecycles to support db-init, data-import, and data-export -->
             <plugin>
                 <groupId>org.jasig.portal.maven</groupId>
@@ -593,8 +620,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <hibernatetool>      
-                        <jpaconfiguration persistenceunit="SurveyPU" 
+                    <hibernatetool>
+                        <jpaconfiguration persistenceunit="SurveyPU"
                                           propertyFile="target/${project.build.finalName}/WEB-INF/classes/datasource.properties" />
                         <hbm2ddl export="true" create="true" drop="true" outputfilename="sql.ddl"  haltonerror="true"/>
                         <classpath>
@@ -699,7 +726,7 @@
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
                 <version>1.5.3</version>
-                <executions>                
+                <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
@@ -738,10 +765,10 @@
 		        <artifactId>maven-antrun-plugin</artifactId>
 		        <version>1.8</version>
 		        <executions>
-		            <execution> 
+		            <execution>
 		                <phase>data-import</phase>
 		                <configuration>
-		                    <target>	
+		                    <target>
 		                        <echo>Running SQL load for survey</echo>
                                 <property file="target/${project.build.finalName}/WEB-INF/classes/datasource.properties"/>
 		                        <sql driver="${hibernate.connection.driver_class}"
@@ -825,7 +852,7 @@
                     <haltOnFailure>true</haltOnFailure>
                 </configuration>
             </plugin>
-<!--  
+<!--
 Left here as an example of how to use jetty to stand up the portlet in order to access the services.
 Run Jetty with: mvn -Djetty.port=9090 jetty:run-war >& mavenJetty.log &
 Stop Jetty with: mvn jetty:stop

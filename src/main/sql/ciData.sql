@@ -1,8 +1,8 @@
-insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name) 
+insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
 values (99991, 'Test Survey 1 description', 's1_text', now(), 'admin', 0, 'Test Survey 1', 'sur1');
-insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name) 
+insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
 values (99992, 'Test Survey 2 description', 's2_text', now(), 'admin', 0, 'Test Survey 2', 'sur2');
-insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name) 
+insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
 values (99993, 'CCC Lifestyle Survey', 'lifestyle_text', now(), 'admin', 0, 'Lifestyle Survey', 'lifestyle');
 insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
 
@@ -10,71 +10,77 @@ values (99994, 'Your Wellbeing - Student Assessment', 'uom_wellbeing_text', now(
 insert into survey_survey (id, description, text_key, last_update_date, last_update_user, status, title, canonical_name)
 values (99995, 'Your Learning Student Assessment', 'uom_learning_text', now(), 'admin', 0, 'Your Learning', 'learning');
 
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999101, 'Course types desired', 0, 'Indicate the types of courses you desire to take', 'courseType');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999102, 'Employment Status', 0, 'Please indicate the number of hours you are currently employed','employmentStatus');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999103, 'Childcare needed', 0, 'Please indicate the type of childcare needed to attend college', 'childcare');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999104, 'Willing Commute Distance', 0, 'How far would you commute in order to attend college?', 'commuteDistance');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999105, 'Commute Transportation', 0, 'Will you be using public transportation to attend college?', 'commutePublicTransport');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999106, 'Relocate in order to attend?', 0, 'Are you willing to relocate to attend college?', 'commuteRelocate');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999107, 'Change college based on interests?', 0, 'Are you willing to change your college choice based on your needs and interests?', 'changeBasedOnInterests');
-insert into survey_question (id, alt_text, status, text, canonical_name) 
+insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999108, 'Select all that apply', 0, 'Please select all of the following that apply to you:', 'studentAtrributes');
 
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999201, 'Someone to talk to', 0, 'There is usually someone I can talk to about my day-to-day problems', 'someoneTalkTo');
+values (9999201, 'Someone to talk to', 0, 'There is  someone I can talk to about my personal problems', 'someoneTalkTo');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999202, 'My circle limited', 0, 'I find my circle of friends and acquaintances too limited', 'limitedCircle');
+values (9999202, 'I have enough friends', 0, 'I feel that I have enough friends and acquaintances in my life', 'enoughFriends');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999203, 'Enough close people', 0, 'There are enough people I feel close to', 'closePeople');
+values (9999203, 'Not enough time with others', 0, 'I feel like I don''t spend enough time doing things with others', 'closePeople');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999204, 'People care about me', 0, 'There are people in my life who really care about me', 'caringPeople');
+values (9999204, 'People care about me', 0, 'I feel there are people in my life who really care about me', 'caringPeople');
+
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999205, 'I get out', 0, 'I get out and about enough', 'getOut');
+values (9999205, 'I get out', 0, 'I get out and about in the open air enough', 'getOut');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999206, 'I enjoy being active', 0, 'I enjoy physical activities like walking, gardening, dancing', 'enjoyGettingPhysical');
+values (9999206, 'I dislike physical activity', 0, 'I dislike physical activities like walking, gardening, dancing', 'dislikePhysical');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999207, 'I find time to be active', 0, 'I find the time to be physically active most weeks', 'findTimeToBeActive');
+values (9999207, 'I find time to be active', 0, 'Being physically active is part of my daily routine', 'findTimeToBeActive');
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999208, 'I do different activities', 0, 'I get involved in different sports and physical activities', 'differentActivities');
+
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999209, 'I know my thoughts', 0, 'I am aware of what thoughts are passing through my mind', 'myThoughts');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999210, 'I can express my feelings', 0, 'I''m good at finding words to describe my feelings', 'expressFeelings');
+values (9999210, 'I cannot express my feelings', 0, 'I find it hard to find words to describe my feelings', 'expressFeelings');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999211, 'I have challenges focusing', 0, 'When I do things, my mind wanders off and I''m easily distracted', 'mindWanders');
+values (9999211, 'I can focus', 0, 'I can focus on what I need to do without getting distracted', 'noDistractions');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999212, 'I find it hard to describe what I am thinking', 0, 'It''s hard for me to find the words to describe what I''m thinking', 'findWords');
+values (9999212, 'I take notice of my surroundings', 0, 'I take time to notice what''s going on around me', 'takeNotice');
+
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999213, 'I get things done', 0, 'Most days I feel a sense of accomplishment from what I do', 'senseOfAccomplishment');
+values (9999213, 'I feel accomplishment', 0, 'I feel a sense of accomplishment from the tings I do', 'senseOfAccomplishment');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999214, 'I find things that interest me', 0, 'I think the world’s too interesting to feel bored very often', 'worldIsInteresting');
+values (9999214, 'I am bored', 0, 'I find my day to day life boring', 'boring');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999215, 'I enjoy learning', 0, 'I love learning new things', 'loveLearning');
+values (9999215, 'I enjoy learning', 0, 'I love discovering and trying new things', 'loveDiscovering');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999216, 'I do worthwhile things', 0, 'I generally feel that what I do in my life is valuable and worthwhile', 'feelValuable');
+values (9999216, 'I do fun things', 0, 'I like doing things just for fun', 'justForFun');
+
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999217, 'I help others', 0, 'I feel that I have helped someone in big or small ways', 'helpSomeone');
+values (9999217, 'I help others', 0, 'I feel that I help others in big or small ways', 'helpOthers');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999218, 'I volunteer', 0, 'I volunteer my time to help others', 'volunteer');
+values (9999218, 'I volunteer', 0, 'I am happy to volunteer my time to help others', 'volunteer');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999219, 'I matter to others', 0, 'I feel that I make a difference to other people’s lives', 'makeDifference');
+values (9999219, 'I make a difference', 0, 'I feel that I make a positive difference to other people’s lives', 'makeDifference');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999220, 'I help others be positive', 0, 'I actively contribute to the happiness and wellbeing of others', 'positiveVibes');
+values (9999220, 'I am unkind', 0, 'I find it hard to be kind and positive to others', 'hardToBeKind');
+
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999221, 'I am self-sufficient', 0, 'I feel able to take care of myself', 'takeCareSelf');
+values (9999221, 'I take care of myself', 0, 'I take good care of myself physically', 'takeCareSelf');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999222, 'I take care of myself physically', 0, 'I make sure I treat my body well', 'takeCareOfBody');
+values (9999222, 'I take risks', 0, 'I take dangerous risks with my safetly or my health', 'takeRisks');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999223, 'I keep balance between my needs and interests', 0, 'I have a good balance in my life', 'lifeBalance');
+values (9999223, 'I have balance', 0, 'I have a good work/life balance', 'lifeBalance');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999224, 'I do not take dangerous risks', 0, 'I don’t take risks with my physical or mental health', 'noRisks');
+values (9999224, 'I take care of my mental state', 0, 'I make a real effort to look after my mental health', 'makeEffort');
+
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999301, 'I am a team player', 0, 'I know how to work well in groups', 'teamPlayer');
 insert into survey_question (id, alt_text, status, text, canonical_name)
@@ -124,121 +130,121 @@ values (9999323, 'I can select revising methods appropriately', 0, 'I understand
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999324, 'I often include time for revision in my work', 0, 'I often build revision into my regular term-time work', 'revisionIncluded');
 
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (2, 1, 9999101, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 2, 9999102, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 3, 9999103, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 4, 9999104, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 5, 9999105, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 6, 9999106, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 5, 9999107, 99993);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 6, 9999108, 99993);
 
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 1, 9999201, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 2, 9999202, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 3, 9999203, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 4, 9999204, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 5, 9999205, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 6, 9999206, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 7, 9999207, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 8, 9999208, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 9, 9999209, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 10, 9999210, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 11, 9999211, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 12, 9999212, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 13, 9999213, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 14, 9999214, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 15, 9999215, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 16, 9999216, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 17, 9999217, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 18, 9999218, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 19, 9999219, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 20, 9999220, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 21, 9999221, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 22, 9999222, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 23, 9999223, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 24, 9999224, 99994);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 1, 9999301, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 2, 9999302, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 3, 9999303, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 4, 9999304, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 5, 9999305, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 6, 9999306, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 7, 9999307, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 8, 9999308, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 9, 9999309, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 10, 9999310, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 11, 9999311, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 12, 9999312, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 13, 9999313, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 14, 9999314, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 15, 9999315, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 16, 9999316, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 17, 9999317, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 18, 9999318, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 19, 9999319, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 20, 9999320, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 21, 9999321, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 22, 9999322, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 23, 9999323, 99995);
-insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id) 
+insert into survey_survey_question (num_allowed_answers, sequence, question_id, survey_id)
 values (1, 24, 9999324, 99995);
 
-insert into survey_answer (id, alt_text, text) 
+insert into survey_answer (id, alt_text, text)
 values (9999201, 'Online courses', 'Online (including telecourse)');
 insert into survey_answer (id, alt_text, text)
 values (9999202, 'Face-to-face courses', 'Face-to-face courses');
@@ -302,67 +308,67 @@ values (9999303, 'Sometimes', 'Sometimes');
 insert into survey_answer (id, alt_text, text)
 values (9999304, 'Usually', 'Usually');
 
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999101, 9999201, 'onlinecoursespreference');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999101, 9999202, 'face2facepreference');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (3, 9999101, 9999203, 'hybridcoursepreference');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999102, 9999205, 'work1-10');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999102, 9999204, 'nohoursworked');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (4, 9999102, 9999207, 'work20-25');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (3, 9999102, 9999206, 'work11-19');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (6, 9999102, 9999209, 'work30-35');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (5, 9999102, 9999208, 'work25-30');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, logic) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, logic)
 values (2, 9999103, 9999212, 'onsitechildcareprefernce', 'POPUPTEXT|onsitechildcare,NOTIFICATION|childcare');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999103, 9999211, 'nochildcareneeded');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (7, 9999102, 9999210, 'work35-40');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, logic) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, logic)
 values (3, 9999103, 9999213, 'offsitechildcarepreference', 'NOTIFICATION|childcare');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999104, 9999214, 'commuteLT15');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999104, 9999215, 'commute15_30');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (3, 9999104, 9999216, 'commute31_45');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (4, 9999104, 9999217, 'commuteOver45');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999105, 9999218, 'yesPublicTransport');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999105, 9999219, 'noPublicTransport');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999106, 9999218, 'yesRelocate');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999106, 9999219, 'noRelocate');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999107, 9999218, 'yesChangeCollege');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999107, 9999219, 'noChangeCollege');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (1, 9999108, 9999220, 'isFosterYouth');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (2, 9999108, 9999221, 'isVeteran');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (3, 9999108, 9999222, 'isCalWORKs');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (4, 9999108, 9999223, 'isDSPS');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (5, 9999108, 9999224, 'isEOPS');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (6, 9999108, 9999225, 'hasClubInterest');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (7, 9999108, 9999226, 'hasTutoringInterest');
-insert into survey_question_answer (sequence, question_id, answer_id, canonical_name) 
+insert into survey_question_answer (sequence, question_id, answer_id, canonical_name)
 values (8, 9999108, 9999227, 'hasFinancialAidInterest');
 
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -374,21 +380,21 @@ values (3, 9999201, 9999303, 'someoneTalkToSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999201, 9999304, 'someoneTalkToUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999202, 9999301, 'limitedCircleNever', 0);
+values (1, 9999202, 9999301, 'enoughFriendsNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999202, 9999302, 'limitedCircleRarely', 1);
+values (2, 9999202, 9999302, 'enoughFriendsRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999202, 9999303, 'limitedCircleSometimes', 2);
+values (3, 9999202, 9999303, 'enoughFriendsSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999202, 9999304, 'limitedCircleUsually', 3);
+values (4, 9999202, 9999304, 'enoughFriendsUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999203, 9999301, 'closePeopleNever', 0);
+values (1, 9999203, 9999301, 'closePeopleNever', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999203, 9999302, 'closePeopleRarely', 1);
+values (2, 9999203, 9999302, 'closePeopleRarely', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999203, 9999303, 'closePeopleSometimes', 2);
+values (3, 9999203, 9999303, 'closePeopleSometimes', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999203, 9999304, 'closePeopleUsually', 3);
+values (4, 9999203, 9999304, 'closePeopleUsually', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999204, 9999301, 'caringPeopleNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -406,13 +412,13 @@ values (3, 9999205, 9999303, 'getOutSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999205, 9999304, 'getOutUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999206, 9999301, 'enjoyGettingPhysicalNever', 0);
+values (1, 9999206, 9999301, 'dislikePhysicalNever', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999206, 9999302, 'enjoyGettingPhysicalRarely', 1);
+values (2, 9999206, 9999302, 'dislikePhysicalRarely', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999206, 9999303, 'enjoyGettingPhysicalSometimes', 2);
+values (3, 9999206, 9999303, 'dislikePhysicalSometimes', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999206, 9999304, 'enjoyGettingPhysicalUsually', 3);
+values (4, 9999206, 9999304, 'dislikePhysicalUsually', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999207, 9999301, 'findTimeToBeActiveNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -438,29 +444,29 @@ values (3, 9999209, 9999303, 'myThoughtsSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999209, 9999304, 'myThoughtsUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999210, 9999301, 'expressFeelingsNever', 0);
+values (1, 9999210, 9999301, 'expressFeelingsNever', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999210, 9999302, 'expressFeelingsRarely', 1);
+values (2, 9999210, 9999302, 'expressFeelingsRarely', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999210, 9999303, 'expressFeelingsSometimes', 2);
+values (3, 9999210, 9999303, 'expressFeelingsSometimes', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999210, 9999304, 'expressFeelingsUsually', 3);
+values (4, 9999210, 9999304, 'expressFeelingsUsually', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999211, 9999301, 'mindWandersNever', 0);
+values (1, 9999211, 9999301, 'noDistractionsNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999211, 9999302, 'mindWandersRarely', 1);
+values (2, 9999211, 9999302, 'noDistractionsRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999211, 9999303, 'mindWandersSometimes', 2);
+values (3, 9999211, 9999303, 'noDistractionsSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999211, 9999304, 'mindWandersUsually', 3);
+values (4, 9999211, 9999304, 'noDistractionsUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999212, 9999301, 'findWordsNever', 0);
+values (1, 9999212, 9999301, 'takeNoticeNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999212, 9999302, 'findWordsRarely', 1);
+values (2, 9999212, 9999302, 'takeNoticeRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999212, 9999303, 'findWordsSometimes', 2);
+values (3, 9999212, 9999303, 'takeNoticeSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999212, 9999304, 'findWordsUsually', 3);
+values (4, 9999212, 9999304, 'takeNoticeUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999213, 9999301, 'senseOfAccomplishmentNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -470,37 +476,37 @@ values (3, 9999213, 9999303, 'senseOfAccomplishmentSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999213, 9999304, 'senseOfAccomplishmentUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999214, 9999301, 'worldIsInterestingNever', 0);
+values (1, 9999214, 9999301, 'boringNever', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999214, 9999302, 'worldIsInterestingRarely', 1);
+values (2, 9999214, 9999302, 'boringRarely', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999214, 9999303, 'worldIsInterestingSometimes', 2);
+values (3, 9999214, 9999303, 'boringSometimes', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999214, 9999304, 'worldIsInterestingUsually', 3);
+values (4, 9999214, 9999304, 'boringUsually', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999215, 9999301, 'loveLearningNever', 0);
+values (1, 9999215, 9999301, 'loveDiscoveringNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999215, 9999302, 'loveLearningRarely', 1);
+values (2, 9999215, 9999302, 'loveDiscoveringRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999215, 9999303, 'loveLearningSometimes', 2);
+values (3, 9999215, 9999303, 'loveDiscoveringSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999215, 9999304, 'loveLearningUsually', 3);
+values (4, 9999215, 9999304, 'loveDiscoveringUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999216, 9999301, 'feelValuableNever', 0);
+values (1, 9999216, 9999301, 'justForFunNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999216, 9999302, 'feelValuableRarely', 1);
+values (2, 9999216, 9999302, 'justForFunRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999216, 9999303, 'feelValuableSometimes', 2);
+values (3, 9999216, 9999303, 'justForFunSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999216, 9999304, 'feelValuableUsually', 3);
+values (4, 9999216, 9999304, 'justForFunUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999217, 9999301, 'helpSomeoneNever', 0);
+values (1, 9999217, 9999301, 'helpOthersNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999217, 9999302, 'helpSomeoneRarely', 1);
+values (2, 9999217, 9999302, 'helpOthersRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999217, 9999303, 'helpSomeoneSometimes', 2);
+values (3, 9999217, 9999303, 'helpOthersSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999217, 9999304, 'helpSomeoneUsually', 3);
+values (4, 9999217, 9999304, 'helpOthersUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999218, 9999301, 'volunteerNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -518,13 +524,13 @@ values (3, 9999219, 9999303, 'makeDifferenceSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999219, 9999304, 'makeDifferenceUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999220, 9999301, 'positiveVibesNever', 0);
+values (1, 9999220, 9999301, 'hardToBeKindsNever', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999220, 9999302, 'positiveVibesRarely', 1);
+values (2, 9999220, 9999302, 'hardToBeKindsRarely', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999220, 9999303, 'positiveVibesSometimes', 2);
+values (3, 9999220, 9999303, 'hardToBeKindsSometimes', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999220, 9999304, 'positiveVibesUsually', 3);
+values (4, 9999220, 9999304, 'hardToBeKindsUsually', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999221, 9999301, 'takeCareSelfNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -534,13 +540,13 @@ values (3, 9999221, 9999303, 'takeCareSelfSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999221, 9999304, 'takeCareSelfUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999222, 9999301, 'takeCareOfBodyNever', 0);
+values (1, 9999222, 9999301, 'takeRisksNever', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999222, 9999302, 'takeCareOfBodyRarely', 1);
+values (2, 9999222, 9999302, 'takeRisksRarely', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999222, 9999303, 'takeCareOfBodySometimes', 2);
+values (3, 9999222, 9999303, 'takeRisksSometimes', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999222, 9999304, 'takeCareOfBodyUsually', 3);
+values (4, 9999222, 9999304, 'takeRisksUsually', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999223, 9999301, 'lifeBalanceNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -550,13 +556,14 @@ values (3, 9999223, 9999303, 'lifeBalanceSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999223, 9999304, 'lifeBalanceUsually', 3);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (1, 9999224, 9999301, 'noRisksNever', 0);
+values (1, 9999224, 9999301, 'makeEffortNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (2, 9999224, 9999302, 'noRisksRarely', 1);
+values (2, 9999224, 9999302, 'makeEffortRarely', 1);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (3, 9999224, 9999303, 'noRisksSometimes', 2);
+values (3, 9999224, 9999303, 'makeEffortSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
-values (4, 9999224, 9999304, 'noRisksUsually', 3);
+values (4, 9999224, 9999304, 'makeEffortUsually', 3);
+
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (1, 9999301, 9999301, 'teamPlayerNever', 0);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
@@ -750,7 +757,7 @@ values (3, 9999324, 9999303, 'revisionIncludedSometimes', 2);
 insert into survey_question_answer (sequence, question_id, answer_id, canonical_name, value)
 values (4, 9999324, 9999304, 'revisionIncludedUsually', 3);
 
-insert into survey_text (text_key, variant, alt_text, definition_text, help_text, text) 
+insert into survey_text (text_key, variant, alt_text, definition_text, help_text, text)
 values ('lifestyle_text', '', 'alt-text', 'def-text', 'help-text', 'survey-text');
-insert into survey_text (text_key, variant, alt_text, definition_text, help_text, text) 
+insert into survey_text (text_key, variant, alt_text, definition_text, help_text, text)
 values ('onsitechildcare', '', 'On Site Childcare Notice', 'Click here for more information', 'What onsite means: blah blah', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
