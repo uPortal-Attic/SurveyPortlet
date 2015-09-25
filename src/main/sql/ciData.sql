@@ -108,7 +108,7 @@ values (9999312, 'I consider the source of information', 0, 'I often think about
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999313, 'I can form opinions based on other''s work', 0, 'I feel comfortable forming opinions on the work of others', 'opinionsBasedOnOthers');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999314, 'I can incorporate my work', 0, 'I understand how incorporate my opinion into analysis of the work of others', 'incorporateMyWork');
+values (9999314, 'I can incorporate my work', 0, 'I understand how to incorporate my opinion into analysis of the work of others', 'incorporateMyWork');
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999315, 'I can summarize what I have read', 0, 'I know how to summarise and rephrase what I have read ', 'rephrase');
 insert into survey_question (id, alt_text, status, text, canonical_name)
@@ -120,7 +120,7 @@ values (9999318, 'I can include my ideas within academic work', 0, 'I feel comfo
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999319, 'I can present my ideas for maximum impact', 0, 'I understand how to structure my ideas for maximum impact', 'maxImpact');
 insert into survey_question (id, alt_text, status, text, canonical_name)
-values (9999320, 'I welcome feedback', 0, 'I often ask use feedback on one assignment to improve the next', 'welcomeFeedback');
+values (9999320, 'I welcome feedback', 0, 'I often use feedback on one assignment to improve the next', 'welcomeFeedback');
 insert into survey_question (id, alt_text, status, text, canonical_name)
 values (9999321, 'I know how to revise', 0, 'I know what I need to revise effectively', 'revise');
 insert into survey_question (id, alt_text, status, text, canonical_name)
