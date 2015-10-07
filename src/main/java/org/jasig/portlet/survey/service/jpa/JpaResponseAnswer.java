@@ -43,7 +43,7 @@ public class JpaResponseAnswer implements Serializable {
     @EmbeddedId
     private JpaResponseAnswerPK id;
 
-    @ManyToMany(targetEntity = JpaAnswer.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = JpaAnswer.class, fetch = FetchType.LAZY)
     @JoinTable(
             name = JpaSurveyDataService.TABLENAME_PREFIX + "RESPONSE_ANSWERS",
             joinColumns = {

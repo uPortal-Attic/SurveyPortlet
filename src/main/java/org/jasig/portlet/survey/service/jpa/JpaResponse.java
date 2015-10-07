@@ -39,7 +39,8 @@ import java.util.Set;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "JpaResponse.findBySurvey", query = "Select r from JpaResponse r where survey_id = ?1"),
-    @NamedQuery(name = "JpaResponse.findByUserAndSurvey", query = "Select r from JpaResponse r where user = ?1 and survey_id = ?2")
+    @NamedQuery(name = "JpaResponse.findByUserAndSurvey", query = "Select r from JpaResponse r where user = ?1 and survey_id = ?2"),
+    @NamedQuery(name = "JpaResponse.findByUser", query = "Select r from JpaResponse r where user = ?1")
 })
 @Table(name = JpaSurveyDataService.TABLENAME_PREFIX + "RESPONSE")
 public class JpaResponse implements Serializable {
@@ -66,11 +67,11 @@ public class JpaResponse implements Serializable {
     @Column(name = "LAST_UPDATED", nullable = false)
     private Date lastUpdated;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "SURVEY_ID") //, table = JpaSurveyDataService.TABLENAME_PREFIX + "SURVEY")
     private JpaSurvey survey;
 
-    @OneToMany(mappedBy = "id.jpaResponse", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "id.jpaResponse", fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
     private Set<JpaResponseAnswer> jpaResponseAnswers = new HashSet<>();
 
     @Lob
@@ -144,6 +145,6 @@ public class JpaResponse implements Serializable {
         return new ToStringBuilder(this)
                 .append("Id", id)
                 .append("user", user)
-                .append("answer count", jpaResponseAnswers.size()).toString();
+                .append("answer count", getJpaResponseAnswers().size()).toString();
     }
 }

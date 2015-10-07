@@ -19,8 +19,9 @@
 package org.jasig.portlet.survey.service.jpa.repo;
 
 import org.jasig.portlet.survey.service.jpa.JpaSurveyQuestion;
+import org.jasig.portlet.survey.service.jpa.JpaSurveyQuestionPK;
 import org.springframework.data.repository.CrudRepository;
 
-public interface JpaSurveyQuestionRepository extends CrudRepository<JpaSurveyQuestion, Long> {
-    
+public interface JpaSurveyQuestionRepository extends CrudRepository<JpaSurveyQuestion, JpaSurveyQuestionPK> {
+
 }

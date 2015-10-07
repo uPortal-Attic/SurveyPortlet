@@ -55,9 +55,9 @@ public class JpaSurveyDataService implements ISurveyDataService {
 
     @Autowired
     private IVariantStrategy variantStrategy;
-    
+
     /**
-     * 
+     *
      * @param surveyId
      * @param questionId
      * @param surveyQuestion
@@ -70,13 +70,13 @@ public class JpaSurveyDataService implements ISurveyDataService {
         JpaSurveyQuestion sq = new JpaSurveyQuestion();
         sq.setNumAllowedAnswers( surveyQuestion.getNumAllowedAnswers());
         sq.setSequence( surveyQuestion.getSequence());
-        
+
         JpaSurveyQuestion newSurveyQuestion = jpaSurveyDao.attachQuestionToSurvey(surveyId, questionId, sq);
         return newSurveyQuestion != null;
     }
 
     /**
-     * 
+     *
      * @param questionId
      * @param answer
      * @return
@@ -89,7 +89,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
 
     /**
      * Create a {@link JpaQuestion} from the data in question
-     * 
+     *
      * @param question
      * @return
      */
@@ -106,7 +106,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
 
     /**
      * Create a {@link JpaSurvey} from the data in survey
-     * 
+     *
      * @param survey
      * @return
      */
@@ -119,7 +119,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         jpaSurvey = jpaSurveyDao.createSurvey(jpaSurvey);
         return surveyMapper.toSurvey(jpaSurvey);
     }
-    
+
     @Transactional
     @Override
     public ITextGroup createTextGroup(ITextGroup textGroup) {
@@ -137,10 +137,10 @@ public class JpaSurveyDataService implements ISurveyDataService {
 
     /**
      * Return all surveys
-     * 
+     *
      * @return
      */
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public List<SurveyDTO> getAllSurveys() {
         List<JpaSurvey> surveyList = jpaSurveyDao.getAllSurveys();
@@ -156,12 +156,12 @@ public class JpaSurveyDataService implements ISurveyDataService {
 
     /**
      * Search for {@link JpaSurvey} specified by id.
-     * 
+     *
      * @param id
      * @return
      */
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public SurveyDTO getSurvey(long id) {
         JpaSurvey jpaSurvey = jpaSurveyDao.getSurvey(id);
         if (jpaSurvey == null) {
@@ -172,7 +172,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return result;
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public SurveyDTO getSurveyByName(String surveyName) {
         JpaSurvey jpaSurvey = jpaSurveyDao.getSurveyByCanonicalName(surveyName);
@@ -187,11 +187,11 @@ public class JpaSurveyDataService implements ISurveyDataService {
     /**
      * Search for survey questions for the specified survey.
      * Return only the question data.
-     * 
+     *
      * @param surveyId
      * @return
      */
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public List<SurveyQuestionDTO> getSurveyQuestions(Long surveyId) {
         JpaSurvey survey = jpaSurveyDao.getSurvey(surveyId);
@@ -208,7 +208,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
      * Retrieve the text group object based on the supplied key.
      * @see org.jasig.portlet.survey.mvc.service.ISurveyDataService#getTextGroup(java.lang.String)
      */
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public ITextGroup getTextGroup(String textKey) {
         return jpaSurveyDao.getText(textKey, variantStrategy.getVariantName());
@@ -216,7 +216,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
 
     /**
      * Update question details including embedded answer data
-     * 
+     *
      * @param question
      * @return {@link QuestionDTO} or null on error
      */
@@ -262,14 +262,17 @@ public class JpaSurveyDataService implements ISurveyDataService {
     @Transactional
     @Override
     public ResponseDTO createResponse(ResponseDTO response) {
+        log.debug("Entering createResponse()");
         JpaResponse jpaResponse = surveyMapper.toJpaResponse(response);
+        log.debug(jpaResponse.toString());
         // Touch the lastUpdated filed to match this persist
         jpaResponse.setLastUpdated(new Date());
         jpaSurveyDao.createResponse(jpaResponse);
+        log.debug("About to leave createResponse()");
         return surveyMapper.toResponse(jpaResponse);
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public ResponseDTO getResponse(long id) {
         JpaResponse jpaResponse = jpaSurveyDao.getResponse(id);
@@ -277,7 +280,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return jpaResponse == null ? null : surveyMapper.toResponse(jpaResponse);
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public List<ResponseDTO> getResponseByUser(String user) {
         List<JpaResponse> responseList = jpaSurveyDao.getResponseByUser(user);
@@ -287,7 +290,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return surveyMapper.toResponseList(responseList);
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public ResponseDTO getResponseByUserAndSurvey(String user, long surveyId) {
         JpaResponse jpaResponse = jpaSurveyDao.getResponseByUserAndSurvey(user, surveyId);
@@ -315,7 +318,7 @@ public class JpaSurveyDataService implements ISurveyDataService {
         return surveyMapper.toResponse(jpaResponse);
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public SurveySummaryDTO getSurveySummary(Long surveyId) {
         List<JpaResponse> responses = jpaSurveyDao.getResponseBySurvey(surveyId);

@@ -22,29 +22,29 @@ import java.io.Serializable;
 import javax.persistence.*;
 /**
  * The primary key class for the survey_survey_question database table.
- * 
+ *
  * @author chasegawa
  * @since 1.0
  */
 @Embeddable
-class JpaSurveyQuestionPK implements Serializable {
+public class JpaSurveyQuestionPK implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    @OneToOne(cascade = {CascadeType.PERSIST}) 
+
+    @OneToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "QUESTION_ID", nullable = false, insertable = false, updatable = false )
     private JpaQuestion jpaQuestion;
-    
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST}) 
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "SURVEY_ID", nullable = false, insertable = false, updatable = false)
     private JpaSurvey jpaSurvey;
-    
+
     public JpaSurveyQuestionPK() {}
-    
+
     public JpaSurveyQuestionPK(JpaQuestion jpaQuestion, JpaSurvey jpaSurvey) {
         this.jpaQuestion = jpaQuestion;
         this.jpaSurvey = jpaSurvey;
     }
-    
+
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -90,5 +90,5 @@ class JpaSurveyQuestionPK implements Serializable {
     public void setJpaQuestion(JpaQuestion jpaQuestion) {
         this.jpaQuestion = jpaQuestion;
     }
-    
+
 }

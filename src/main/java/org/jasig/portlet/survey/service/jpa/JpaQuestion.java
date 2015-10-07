@@ -29,7 +29,7 @@ import org.jasig.portlet.survey.PublishedState;
 
 /**
  * The persistent class for the survey_question database table.
- * 
+ *
  * @author chasegawa
  * @since 1.0
  */
@@ -46,7 +46,7 @@ public class JpaQuestion implements Serializable {
      */
     @Column(name = "CANONICAL_NAME", nullable = true, unique = true)
     private String canonicalName;
-    
+
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     @Column(name = "HELP_TEXT", nullable = true)
@@ -67,9 +67,9 @@ public class JpaQuestion implements Serializable {
     @Column(name = "ID", updatable = false)
     private long id;
 
-    @OneToMany(mappedBy = "id.jpaQuestion", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "id.jpaQuestion", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private Set<JpaQuestionAnswer> jpaQuestionAnswers;
-    
+
     @Column(name = "STATUS", nullable = false)
     private PublishedState status;
 
@@ -77,7 +77,7 @@ public class JpaQuestion implements Serializable {
     @Type(type = "org.hibernate.type.TextType")
     @Column(name = "TEXT", nullable = false)
     private String text;
-    
+
     public JpaQuestionAnswer addJpaQuestionAnswer(JpaQuestionAnswer jpaQuestionAnswer) {
         getJpaQuestionAnswers().add(jpaQuestionAnswer);
         jpaQuestionAnswer.getId().setJpaQuestion(this);

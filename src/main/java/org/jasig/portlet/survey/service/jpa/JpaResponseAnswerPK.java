@@ -34,11 +34,11 @@ import java.io.Serializable;
 public class JpaResponseAnswerPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.ALL})
     @JoinColumn(name = "RESPONSE_ID")
     private JpaResponse jpaResponse;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.ALL})
     @JoinColumn(name = "QUESTION_ID")
     private JpaQuestion jpaQuestion;
 
