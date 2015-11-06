@@ -49,17 +49,17 @@
                 <div class="clearfix survey-nav">
                     Question {{current.q+1}} of {{survey.surveyQuestions.length}}
                     <div class="pull-right">
-                        <a class="btn btn-success btn-lg"
+                        <button class="btn btn-success btn-lg"
                            ng-disabled="current.q < 1"
                            ng-click="current.q = current.q-1">
                            Prev <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a
+                        </button>
+                        <button
                             class="btn btn-success btn-lg"
                             ng-disabled="current.q >= survey.surveyQuestions.length-1"
                             ng-click="current.q = current.q+1">
                             Next <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <survey-question def="(survey.surveyQuestions | orderBy:'sequence')[current.q]" survey="surveyData"></survey-question>
