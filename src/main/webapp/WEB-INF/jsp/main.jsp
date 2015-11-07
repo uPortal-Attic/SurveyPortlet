@@ -56,7 +56,7 @@
                         </button>
                         <button
                             class="btn btn-success btn-lg"
-                            ng-disabled="current.q >= survey.surveyQuestions.length-1"
+                            ng-disabled="disableNextButton(current.q)"
                             ng-click="current.q = current.q+1">
                             Next <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>
