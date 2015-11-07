@@ -80,6 +80,7 @@ window.up.startSurveyApp = function(window, _, params) {
                 console.log(response);
                 $scope.survey = response;
                 if ($scope.survey.id) {
+                    $scope.survey.surveyQuestions.sort(function(a,b) {return a.sequence - b.sequence});
                     surveyApiService.getUserAnswers(user, $scope.survey.id).success(function(response) {
                         console.log(response);
                         if (response) {
@@ -101,6 +102,29 @@ window.up.startSurveyApp = function(window, _, params) {
                 o = o || {};
                 o.shown = !o.shown;
             };
+
+            // Determine if the next button should be enabled
+            $scope.disableNextButton = function(questionIdx) {
+                // short circuit if we have not loaded the data yet
+                if (!$scope.survey) {
+                    return true;
+                }
+
+                // Are we on the last question?
+                if (questionIdx >= $scope.survey.surveyQuestions.length - 1) {
+                    return true;
+                }
+
+                var questionId = $scope.survey.surveyQuestions[questionIdx].question.id;
+                var answers = $scope.surveyData[questionId];
+                if (answers) {
+                    if (Array.isArray(answers)) {
+                        return answers.length == 0;
+                    }
+                    return false;
+                }
+                return true;
+            }
 
             // callback to save user answers
             $scope.saveAnswers = function(answers, survey) {
