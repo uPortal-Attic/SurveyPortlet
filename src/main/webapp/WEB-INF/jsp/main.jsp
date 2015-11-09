@@ -66,7 +66,7 @@
             </div>
             <div class="survey-report"></div>
             <div class="modal-footer">
-                <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>Save</a>
+                <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>{{current.q < survey.surveyQuestions.length-1 ? 'Save' : 'Complete'}}</a>
                 <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
             </div>
         </div>
