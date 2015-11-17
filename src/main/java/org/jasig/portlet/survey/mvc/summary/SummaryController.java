@@ -34,7 +34,6 @@ import java.util.Map;
 /**
  * Survey summary portlet. Simple delivery of AngularJS app.
  *
- * @author Benito J. Gonzalez <bgonzalez@unicon>
  * @since  1.0
  */
 @Controller

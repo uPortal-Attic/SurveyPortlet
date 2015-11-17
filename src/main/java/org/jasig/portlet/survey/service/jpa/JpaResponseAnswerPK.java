@@ -27,7 +27,6 @@ import java.io.Serializable;
  * The primary key class for the survey_response_answer database table.
  * Reference to parent response and question that is answered.
  *
- * @author Benito J. Gonzalez <bgonzalez@unicon.net>
  * @since 1.0
  */
 @Embeddable

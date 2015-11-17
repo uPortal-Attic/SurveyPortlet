@@ -30,7 +30,7 @@ import java.io.IOException;
 /**
  * Custom serializer for {@link ResponseAnswerDTO}.
  *
- * @since 1.1
+ * @since 1.0
  */
 public final class ResponseAnswerDtoSerializer extends JsonSerializer<ResponseAnswerDTO> {
 

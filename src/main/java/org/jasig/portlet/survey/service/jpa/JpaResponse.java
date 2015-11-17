@@ -33,7 +33,6 @@ import java.util.Set;
 /**
  * The persistent class for the survey_response database table.
  *
- * @author Benito J. Gonzalez <bgonzalez@unicon.net>
  * @since 1.0
  */
 @Entity

@@ -35,8 +35,7 @@ import java.util.Map;
 /**
  * Data Transfer Object of survey response summary.
  *
- * @author Benito J. Gonzalez <bgonzalez@unicon.net>
- * @since 1.1
+ * @since 1.0
  */
 @ApiObject(name = "SurveySummaryDTO")
 public class SurveySummaryDTO implements Serializable {

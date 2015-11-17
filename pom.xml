@@ -5,6 +5,7 @@
         <groupId>org.jasig.parent</groupId>
         <artifactId>jasig-parent</artifactId>
         <version>39</version>
+        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -16,6 +17,12 @@
     <name>${project.artifactId}</name>
     <description>Portlet for creating and administering survey/questionnaires</description>
     <packaging>war</packaging>
+
+  <scm>
+    <connection>scm:git:git@github.com:Jasig/SurveyPortlet.git</connection>
+    <developerConnection>scm:git:git@github.com:Jasig/SurveyPortlet.git</developerConnection>
+    <url>https://github.com/Jasig/SurveyPortlet</url>
+  </scm>
 
     <!-- Dependency Version Properties -->
     <properties>

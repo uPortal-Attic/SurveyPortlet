@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 /**
  * Custom deserializer for {@link ResponseAnswerDTO}.
  *
- * @since 1.1
+ * @since 1.0
  */
 public final class ResponseAnswerDtoDeserializer extends JsonDeserializer<ResponseAnswerDTO> {
 

@@ -37,8 +37,7 @@ import java.util.Set;
  * The data required is a question ID and a multi-value answer. The answer may be one
  * ore more answer IDs but is considered a single answer to a particular question.
  *
- * @author Benito J. Gonzalez <bgonzalez@unicon.net>
- * @since 1.1
+ * @since 1.0
  */
 @ApiObject(name = "ResponseAnswerDTO")
 @JsonSerialize(using = ResponseAnswerDtoSerializer.class)

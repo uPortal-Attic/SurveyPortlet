@@ -34,8 +34,7 @@ import java.util.Set;
  * Data Transfer Object of user response. Minimal to match JSON expectations.
  * Note the lack of reference to a corresponding survey.
  *
- * @author Benito J. Gonzalez <bgonzalez@unicon.net>
- * @since 1.1
+ * @since 1.0
  */
 @ApiObject(name = "ResponseDTO")
 public class ResponseDTO implements Serializable {

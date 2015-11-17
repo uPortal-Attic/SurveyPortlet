@@ -73,7 +73,7 @@ public class SurveyRestController {
      * Security:  Requires SURVEY_ADMIN.
      *
      * @param question
-     * @return
+     * @return  new question in JSON format
      */
     @PreAuthorize("hasRole('SURVEY_ADMIN')")
     @ApiMethod(description = "Create a new question that is not associated with a survey.", responsestatuscode = "201 - Created")
@@ -89,7 +89,7 @@ public class SurveyRestController {
      * Security:  Requires SURVEY_ADMIN.
      *
      * @param survey
-     * @return
+     * @return  new survey in JSON format
      */
     @PreAuthorize("hasRole('SURVEY_ADMIN')")
     @ApiMethod(description = "Create a survey", responsestatuscode = "201")

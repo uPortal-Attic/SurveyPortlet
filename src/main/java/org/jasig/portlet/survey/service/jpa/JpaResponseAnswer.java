@@ -31,7 +31,6 @@ import java.util.Set;
  * The persistent class for the survey_response_answer database table.
  * The response answer for a particular question may be multi-value.
  *
- *  * @author Benito J. Gonzalez <bgonzalez@unicon.net>
  * @since 1.0
  */
 @Entity
