@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.jasig.parent</groupId>
@@ -12,7 +11,7 @@
 
     <groupId>org.jasig.portlet</groupId>
     <artifactId>survey-portlet</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>${project.artifactId}</name>
     <description>Portlet for creating and administering survey/questionnaires</description>
@@ -22,6 +21,7 @@
     <connection>scm:git:git@github.com:Jasig/SurveyPortlet.git</connection>
     <developerConnection>scm:git:git@github.com:Jasig/SurveyPortlet.git</developerConnection>
     <url>https://github.com/Jasig/SurveyPortlet</url>
+    <tag>survey-portlet-1.0.0</tag>
   </scm>
 
     <!-- Dependency Version Properties -->
@@ -628,9 +628,8 @@
                 </executions>
                 <configuration>
                     <hibernatetool>
-                        <jpaconfiguration persistenceunit="SurveyPU"
-                                          propertyFile="target/${project.build.finalName}/WEB-INF/classes/datasource.properties" />
-                        <hbm2ddl export="true" create="true" drop="true" outputfilename="sql.ddl"  haltonerror="true"/>
+                        <jpaconfiguration persistenceunit="SurveyPU" propertyFile="target/${project.build.finalName}/WEB-INF/classes/datasource.properties" />
+                        <hbm2ddl export="true" create="true" drop="true" outputfilename="sql.ddl" haltonerror="true" />
                         <classpath>
                             <path location="target/${project.build.finalName}/WEB-INF/classes" />
                         </classpath>
@@ -777,13 +776,8 @@
 		                <configuration>
 		                    <target>
 		                        <echo>Running SQL load for survey</echo>
-                                <property file="target/${project.build.finalName}/WEB-INF/classes/datasource.properties"/>
-		                        <sql driver="${hibernate.connection.driver_class}"
-                                     url="${hibernate.connection.url}"
-                                     userid="${hibernate.connection.username}"
-                                     password="${hibernate.connection.password}"
-                                     src="${basedir}/src/main/sql/ciData.sql"
-                                />
+                                <property file="target/${project.build.finalName}/WEB-INF/classes/datasource.properties" />
+		                        <sql driver="${hibernate.connection.driver_class}" url="${hibernate.connection.url}" userid="${hibernate.connection.username}" password="${hibernate.connection.password}" src="${basedir}/src/main/sql/ciData.sql" />
 	  	                    </target>
 		                </configuration>
 		                <goals>
