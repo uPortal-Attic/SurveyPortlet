@@ -87,7 +87,7 @@
   <!-- 
    | Setup default log level to INFO
    +-->
-  <root level="WARN">
+  <root level="${log.rootLevel}">
     <appender-ref ref="LOG" />
   </root>
 
