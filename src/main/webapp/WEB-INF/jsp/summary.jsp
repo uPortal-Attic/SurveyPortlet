@@ -38,11 +38,11 @@
         <p class="description">{{survey.description}}</p>
         <p class="responseCount">Total Responses = {{summary.responseCount}}</p>
     </header>
-    <section class="question" ng-repeat="questionData in survey.surveyQuestions">
+    <section class="question" ng-repeat="questionData in survey.surveyQuestions | orderBy:'sequence'">
         <table>
             <thead><tr><th colspan="2">{{questionData.question.text}}</th></tr></thead>
             <tbody>
-                <tr ng-repeat="answerData in questionData.question.questionAnswers">
+                <tr ng-repeat="answerData in questionData.question.questionAnswers | orderBy:'sequence'">
                     <td>{{summary.answerCounts[questionData.question.text][answerData.answer.text] || 0}}</td>
                     <td>{{answerData.answer.text}}</td>
                 </tr>
