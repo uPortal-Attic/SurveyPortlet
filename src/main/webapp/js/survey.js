@@ -80,7 +80,7 @@ window.up.startSurveyApp = function(window, _, params) {
                 console.log(response);
                 $scope.survey = response;
                 if ($scope.survey.id) {
-                    $scope.survey.surveyQuestions.sort(function(a,b) {return a.sequence - b.sequence});
+                   $scope.survey.surveyQuestions.sort(function(a,b) {return a.sequence - b.sequence});
                     surveyApiService.getUserAnswers(user, $scope.survey.id).success(function(response) {
                         console.log(response);
                         if (response) {
@@ -89,6 +89,7 @@ window.up.startSurveyApp = function(window, _, params) {
                                 $scope.surveyData[response.answers[j].question] = response.answers[j].answer;
                             }
                             $scope.surveyData.id = response.id;
+                            $scope.surveyData.lastUpdated = response.lastUpdated;
                             if (response.feedback) {
                                 $scope.surveyData.feedback = response.feedback;
                             }
@@ -102,6 +103,35 @@ window.up.startSurveyApp = function(window, _, params) {
                 o = o || {};
                 o.shown = !o.shown;
             };
+
+            // Start survey
+            $scope.startSurvey = function() {
+                $scope.survey.shown = true;
+                $scope.surveyComplete = false;
+                $scope.current = {q:0};
+                $('.survey .modal-body .survey-report').css("visibility", "hidden").css("display", "none");
+            }
+
+            // Cancel survey
+            $scope.cancelSurvey = function() {
+                $scope.survey.shown = false;
+                $scope.surveyComplete = false;
+            }
+
+            // Compile and display report
+            $scope.displayReport = function(answersId) {
+                $scope.survey.shown = true;
+                $scope.surveyComplete = true;  // Auto-hides the question div
+                /*
+                 * Use jQuery (rather than AngularJS) to inject the report
+                 * into the DOM so that scripts will be evaluated automatically.
+                 */
+                $.get('/survey-portlet/v1/surveys/surveyReport/' + answersId, function(reportContent) {
+                        $compile($('.survey .modal-body .survey-report').html(reportContent))($scope);
+                        $('.survey .modal-body .survey-report').css("display", "block").css("visibility", "visible");
+                    }
+                );
+            }
 
             // Determine if the next button should be enabled
             $scope.disableNextButton = function(questionIdx) {
@@ -137,6 +167,7 @@ window.up.startSurveyApp = function(window, _, params) {
                     answers: _.chain(answers)
                                 .omit('id')
                                 .omit('feedback')
+                                .omit('lastUpdated')
                                 .pairs()
                                 .map(function(e) {
                                     return {question: Number(e[0]), answer: e[1]};
@@ -146,15 +177,8 @@ window.up.startSurveyApp = function(window, _, params) {
                 };
                 surveyApiService.saveUserAnswers(data).success(function(response) {
                     answers.id = response.id;
-                    $scope.surveyComplete = true;  // Auto-hides the question div
-                    /*
-                     * Use jQuery (rather than AngularJS) to inject the report
-                     * into the DOM so that scripts will be evaluated automatically.
-                     */
-                    $.get('/survey-portlet/v1/surveys/surveyReport/' + answers.id, function(reportContent) {
-                            $compile($('.survey .modal-body .survey-report:visible').html(reportContent))($scope);
-                        }
-                    );
+                    answers.lastUpdated = response.lastUpdated;
+                    $scope.displayReport(answers.id);
                 });
             }
 
