@@ -799,7 +799,6 @@
                     </dependency>
                 </dependencies>
 		    </plugin>
-            <!--
             <plugin>
                 <groupId>com.github.klieber</groupId>
                 <artifactId>phantomjs-maven-plugin</artifactId>
@@ -815,11 +814,10 @@
                     <version>1.9.2</version>
                 </configuration>
             </plugin>
-            -->
             <plugin>
                 <groupId>com.github.searls</groupId>
                 <artifactId>jasmine-maven-plugin</artifactId>
-                <version>2.0-beta-02</version>
+                <version>2.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -841,7 +839,6 @@
                     <specIncludes>
                         <include>*Spec.js</include>
                     </specIncludes>
-<!--
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <webDriverCapabilities>
                         <capability>
@@ -849,7 +846,6 @@
                             <value>${phantomjs.binary}</value>
                         </capability>
                     </webDriverCapabilities>
--->
                     <haltOnFailure>true</haltOnFailure>
                 </configuration>
             </plugin>

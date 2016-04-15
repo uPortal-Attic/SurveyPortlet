@@ -54,14 +54,26 @@ survey {
     margin: 0 auto;
 }
 
-.survey header {
-    margin-bottom: 1.5em;
+.survey header.landing {
+    width: 100%;
+    float:  left;
+    margin: 0 auto;
 }
 
-.survey header .title {
-    font-size: 1.3em;
-    font-weight: bold;
-    margin-right: 0.5em;
+.survey header.landing .description {
+    display: block;
+    margin: 0.7em 1em;
+}
+
+.survey header.landing .last-report {
+    text-align: center;
+    border-radius: 0.3em;
+    padding: 0.5em;
+    margin: 0.5em 0.75em;
+}
+
+.survey header.landing .btn {
+    margin: 1.0em 0.7em;
 }
 
 .survey .survey-nav {

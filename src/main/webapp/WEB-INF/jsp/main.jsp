@@ -33,15 +33,17 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/survey.css" type="text/css" charset="utf-8">
 
 <div id="${n}-survey-portlet" ng-cloak class="survey" ng-controller="surveyController" ng-init="current = {q:0};">
-    <header>
-        <span class="title">{{survey.title}}:</span>
+    <header class="landing">
         <span class="description">{{survey.description}}</span>
-        <a class="btn btn-md btn-success" ng-click="toggle(survey)">Show Survey <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <div class="last-report alert-success" ng-show="surveyData.id">
+            You last completed <em>{{survey.title}}</em> on {{surveyData.lastUpdated | date:"dd/MM/yyyy"}}
+        </div>
+        <a class="btn btn-md btn-success pull-left" ng-click="displayReport(surveyData.id)" ng-show="surveyData.id">View your report</a>
+        <a class="btn btn-md btn-success pull-right" ng-click="startSurvey(survey)"><span ng-show="surveyData.id">Re-</span>Start <em>{{survey.title}}</em></a>
     </header>
 
         <modal class="survey-modal modal-content clearfix" shown="survey.shown">
         <header class="modal-header">
-            <span class="title">{{survey.title}}:</span>
             <span class="description">{{survey.description}}</span>
         </header>
         <div class="modal-body">
@@ -67,7 +69,7 @@
             <div class="survey-report"></div>
             <div class="modal-footer">
                 <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>{{current.q < survey.surveyQuestions.length-1 ? 'Save' : 'Complete'}}</a>
-                <a class="btn btn-warning btn-lg" ng-click="toggle(survey)">Cancel</a>
+                <a class="btn btn-warning btn-lg" ng-click="cancelSurvey(survey)">Cancel</a>
             </div>
         </div>
         </modal>
