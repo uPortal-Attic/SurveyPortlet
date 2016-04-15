@@ -42,7 +42,7 @@
         <a class="btn btn-md btn-success pull-right" ng-click="startSurvey(survey)"><span ng-show="surveyData.id">Re-</span>Start <em>{{survey.title}}</em></a>
     </header>
 
-        <modal class="survey-modal modal-content clearfix" shown="survey.shown">
+    <modal class="survey-modal modal-content clearfix" shown="survey.shown">
         <header class="modal-header">
             <span class="description">{{survey.description}}</span>
         </header>
@@ -68,11 +68,12 @@
             </div>
             <div class="survey-report"></div>
             <div class="modal-footer">
-                <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)")>{{current.q < survey.surveyQuestions.length-1 ? 'Save' : 'Complete'}}</a>
+                <a class="btn btn-primary btn-lg" ng-click="saveAnswers(surveyData,survey)">{{current.q < survey.surveyQuestions.length-1 ? 'Save' : 'Complete'}}</a>
                 <a class="btn btn-warning btn-lg" ng-click="cancelSurvey(survey)">Cancel</a>
             </div>
         </div>
-        </modal>
+    </modal>
+    <div ng-include="'${pageContext.request.contextPath}/approval.html'"></div>
 </div>
 
 <script id="survey-portlet-script" src="${pageContext.request.contextPath}/js/survey.js" type="text/javascript" charset="utf-8"></script>
