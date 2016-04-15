@@ -58,6 +58,8 @@ public class SurveyDTO implements ILookupTextable, Serializable {
     private String textKey;
     @ApiObjectField
     private String title;
+    @ApiObjectField
+    private boolean requireApproval;
 
     public String getAltText() {
         return altText;
@@ -109,6 +111,10 @@ public class SurveyDTO implements ILookupTextable, Serializable {
 
     public String getTitle() {
         return title;
+    }
+
+    public boolean getRequireApproval() {
+        return requireApproval;
     }
 
     /**
@@ -175,6 +181,10 @@ public class SurveyDTO implements ILookupTextable, Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setRequireApproval(boolean approval) {
+        requireApproval = approval;
     }
 
 }

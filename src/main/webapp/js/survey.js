@@ -74,6 +74,7 @@ window.up.startSurveyApp = function(window, _, params) {
         app.controller('surveyController', function($scope, surveyName, user, surveyApiService, $compile) {
 
             $scope.surveyData = {feedback: ""};
+            $scope.approved = false;
 
             // Load survey and user answers
             surveyApiService.getSurveyByName(surveyName).success(function(response) {
@@ -93,6 +94,7 @@ window.up.startSurveyApp = function(window, _, params) {
                             if (response.feedback) {
                                 $scope.surveyData.feedback = response.feedback;
                             }
+                            $scope.approved = true;
                         }
                     });
                 }
@@ -104,12 +106,29 @@ window.up.startSurveyApp = function(window, _, params) {
                 o.shown = !o.shown;
             };
 
+            // Approval was accepted
+            $scope.confirmApproval = function() {
+                $scope.approved = true;
+                $scope.approvalShow = false;
+                $scope.startSurvey();
+            }
+
+            // Approval was denied
+            $scope.denyApproval = function() {
+                $scope.approvalShow = false;
+            }
+
             // Start survey
             $scope.startSurvey = function() {
-                $scope.survey.shown = true;
-                $scope.surveyComplete = false;
-                $scope.current = {q:0};
-                $('.survey .modal-body .survey-report').css("visibility", "hidden").css("display", "none");
+                if (!$scope.survey.requireApproval || $scope.approved) {
+                    $scope.approvalShow = false;
+                    $scope.survey.shown = true;
+                    $scope.surveyComplete = false;
+                    $scope.current = {q:0};
+                    $('.survey .modal-body .survey-report').css("visibility", "hidden").css("display", "none");
+                } else {
+                    $scope.approvalShow = true;
+                }
             }
 
             // Cancel survey

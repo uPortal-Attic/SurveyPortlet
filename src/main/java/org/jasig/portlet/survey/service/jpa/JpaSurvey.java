@@ -79,6 +79,9 @@ public class JpaSurvey implements Serializable {
     @Column(name = "TITLE", nullable = false)
     private String title;
 
+    @Column(name = "REQUIRE_APPROVAL", nullable = true)
+    private Boolean requireApproval;
+
     public JpaSurveyQuestion addJpaSurveyQuestion(JpaSurveyQuestion jpaSurveyQuestion) {
         getJpaSurveyQuestions().add(jpaSurveyQuestion);
         jpaSurveyQuestion.getId().setJpaSurvey(this);
@@ -121,6 +124,10 @@ public class JpaSurvey implements Serializable {
         return title;
     }
 
+    public boolean getRequireApproval() {
+        return requireApproval == null ? false : requireApproval;
+    }
+
     public JpaSurveyQuestion removeJpaSurveyQuestion(JpaSurveyQuestion jpaSurveyQuestion) {
         getJpaSurveyQuestions().remove(jpaSurveyQuestion);
         jpaSurveyQuestion.getId().setJpaSurvey(null);
@@ -161,6 +168,10 @@ public class JpaSurvey implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setRequireApproval(boolean approval) {
+        requireApproval = approval;
     }
 
 }
