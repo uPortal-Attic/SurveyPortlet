@@ -120,12 +120,12 @@ window.up.startSurveyApp = function(window, _, params) {
 
             // Start survey
             $scope.startSurvey = function() {
+                $('.survey .modal-body .survey-report').css("visibility", "hidden").css("display", "none");
                 if (!$scope.survey.requireApproval || $scope.approved) {
                     $scope.approvalShow = false;
                     $scope.survey.shown = true;
                     $scope.surveyComplete = false;
                     $scope.current = {q:0};
-                    $('.survey .modal-body .survey-report').css("visibility", "hidden").css("display", "none");
                 } else {
                     $scope.approvalShow = true;
                 }
