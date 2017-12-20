@@ -8,4 +8,5 @@ Survey Portlet allows for creating, delivering, and recording multiple choice su
 
 Additional Resources:
 
+*   [Survey Administration](docs/ADMINISTRATION.md)
 *   [Database Description](docs/DATABASE.md)
