@@ -1,6 +1,6 @@
 # Administering the Survey Portlet
 
-Use the following steps to create an survey that you can add to your portal:
+Use the following steps to create a survey that you can add to your portal:
 
 1. Navigate to *Survey Admin tab* -> Add Survey button to display a new set of **Edit Survey** and **Preview Survey** buttons
 2. Click the **Edit Survey** button to display the *Title*, *Description*, and *Unique Name* fields, as well as the **Add Question**, **Save Survey**, and **Publish Survey** buttons
