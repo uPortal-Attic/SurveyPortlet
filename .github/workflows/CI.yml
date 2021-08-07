@@ -26,4 +26,6 @@ jobs:
           distribution: adopt-hotspot
           java-version: 8
       - name: Build and Test
+        # TODO investigate long build times on MacOS
+        timeout-minutes: 10
         run: mvn -B package
