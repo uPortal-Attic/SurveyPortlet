@@ -15,7 +15,8 @@ jobs:
         platform:
           - ubuntu-latest
           - windows-latest
-          - macos-latest
+          # TODO: re-enable when phantom supports MacOS or can be replaced
+          # - macos-latest
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
