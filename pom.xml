@@ -36,7 +36,7 @@
         <junit.version>4.13.2</junit.version>
         <logback.version>1.4.3</logback.version>
         <portlet-api.version>2.0</portlet-api.version>
-        <slf4j.version>1.7.32</slf4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <servlet-api.version>3.0.1</servlet-api.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <spring-data.version>1.7.2.RELEASE</spring-data.version>
