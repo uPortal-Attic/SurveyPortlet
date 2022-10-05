@@ -33,7 +33,7 @@
         <hsqldb.version>2.3.2</hsqldb.version>
         <java.version>1.7</java.version>
         <jstl.version>1.1.2</jstl.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.2</junit.version>
         <logback.version>1.0.13</logback.version>
         <portlet-api.version>2.0</portlet-api.version>
         <slf4j.version>1.7.32</slf4j.version>
