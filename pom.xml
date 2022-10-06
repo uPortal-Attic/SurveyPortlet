@@ -39,7 +39,7 @@
         <slf4j.version>1.7.36</slf4j.version>
         <servlet-api.version>3.0.1</servlet-api.version>
         <spring.version>4.1.6.RELEASE</spring.version>
-        <spring-data.version>1.7.2.RELEASE</spring-data.version>
+        <spring-data.version>1.11.23.RELEASE</spring-data.version>
         <spring-security.version>4.0.0.RELEASE</spring-security.version>
         <!-- The JDBC Driver used by db-init -->
         <jdbc.groupId>org.postgresql</jdbc.groupId>
