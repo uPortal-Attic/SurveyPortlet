@@ -272,7 +272,7 @@
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>angularjs</artifactId>
-                <version>1.4.3</version>
+                <version>1.8.2</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
@@ -459,7 +459,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
-            <version>1.4.3</version>
+            <version>1.8.2</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
