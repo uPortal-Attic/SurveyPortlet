@@ -674,7 +674,7 @@
             <plugin>
                 <groupId>org.jsondoc</groupId>
                 <artifactId>jsondoc-maven-plugin</artifactId>
-                <version>1.1.13</version>
+                <version>1.2.23</version>
                 <executions>
                     <execution>
                         <id>generate-jsondoc</id>
