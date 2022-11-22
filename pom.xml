@@ -53,7 +53,7 @@
          -->
         <logbackVersion>1.0.13</logbackVersion>
         <slf4jVersion>1.7.5</slf4jVersion>
-        <jackson.version>2.5.1</jackson.version>
+        <jackson.version>2.14.1</jackson.version>
     </properties>
 
     <dependencyManagement>
